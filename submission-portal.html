@@ -290,7 +290,7 @@ textarea#abstract { min-height: 150px; }
 
   </style>
 
-  <!-- Firebase (submission storage + database) and EmailJS (notification) -->
+  <!-- Firebase (database) and EmailJS (notification) -->
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -655,9 +655,11 @@ document.getElementById("year").textContent = new Date().getFullYear();
 /* =========================================================================
    Youth Research Project — journal submission logic
    -------------------------------------------------------------------------
-   No backend. Files go straight to Firebase Storage from the browser, the
-   record goes to Firestore, and a notification email goes out through
-   EmailJS -- the same two services already running the rest of the site.
+   No backend, no Firebase Storage, no Blaze plan. The author hosts their
+   own manuscript on Google Drive or Dropbox and submits a link; that link
+   is saved as plain text in Firestore, and a notification email goes out
+   through EmailJS -- the same two services already running the rest of
+   the site.
 
    The CONFIG block below is identical to the one in signup.html and
    dashboard.html. If you rotate a key, update it in all of them.
