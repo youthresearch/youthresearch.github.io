@@ -903,7 +903,21 @@ window.YRP = (function () {
               <li><a href="subject-public-health.html">Public Health</a></li>
               <li><a href="subject-sociology.html">Sociology</a></li>
             </ul>
-            <button data-pane="types"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.4 8.6 4.8-8.6 4.8-8.6-4.8L12 3.4Z"/><path d="m3.4 13 8.6 4.8L20.6 13"/></svg> Types of research</button>
+            <button type="button" class="dropdown-toggle" id="types-toggle" aria-expanded="false" aria-controls="types-sublist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.4 8.6 4.8-8.6 4.8-8.6-4.8L12 3.4Z"/><path d="m3.4 13 8.6 4.8L20.6 13"/></svg>
+              Types of research
+              <svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+            </button>
+            <ul class="side-sublist" id="types-sublist">
+              <li><a href="type-literature-review.html">Literature review</a></li>
+              <li><a href="type-research-proposal.html">Research proposal</a></li>
+              <li><a href="type-original-empirical-study.html">Original empirical study</a></li>
+              <li><a href="type-case-study.html">Case study</a></li>
+              <li><a href="type-survey-study.html">Survey study</a></li>
+              <li><a href="type-meta-analysis.html">Meta-analysis</a></li>
+              <li><a href="type-replication.html">Replication</a></li>
+              <li><a href="type-qualitative-interview-study.html">Qualitative / interview study</a></li>
+            </ul>
           </nav>
         </div>
 
@@ -1022,59 +1036,6 @@ window.YRP = (function () {
         </div>
 
 
-        <!-- TYPES OF RESEARCH -->
-        <div class="pane" id="pane-types">
-          <h2>Types of research</h2>
-          <p class="lede">Different papers do different jobs. Choose the format that matches the question you have and the resources you actually have.</p>
-
-          <details class="acc" open><summary>Literature review</summary><div class="body">
-            <p>You gather what's already known on a question and organize it into an argument about the state of the field. No new data. It's the best first project because it teaches you to read, and it doubles as step 2 of any later study.</p>
-            <p><strong>Shape:</strong> introduction and question → how you searched → themes in the findings (not source-by-source) → where the field disagrees → what's still missing → conclusion.</p>
-            <p style="margin-bottom:0;"><strong>Length:</strong> 8–15 pages, 20–40 sources. <strong>Common mistake:</strong> summarizing each paper in turn instead of grouping by theme.</p>
-          </div></details>
-
-          <details class="acc"><summary>Research proposal</summary><div class="body">
-            <p>A plan for a study you haven't run yet. Often what a mentorship, grant, or competition asks for first — and it's the document that makes your method survive contact with reality.</p>
-            <p><strong>Shape:</strong> problem and significance → short literature review → question and hypothesis → detailed methods → analysis plan → timeline → budget and materials → ethics.</p>
-            <p style="margin-bottom:0;"><strong>Length:</strong> 5–10 pages. <strong>Common mistake:</strong> methods too vague to follow. Write it so a stranger could run your study without asking you anything.</p>
-          </div></details>
-
-          <details class="acc"><summary>Original empirical study</summary><div class="body">
-            <p>You collect new data and analyze it. The most work and the most rewarding. Everything from a lab experiment to a survey to a coded set of interviews fits here.</p>
-            <p><strong>Shape:</strong> abstract → introduction → methods → results → discussion → limitations → references.</p>
-            <p style="margin-bottom:0;"><strong>Length:</strong> 10–20 pages. <strong>Common mistake:</strong> a sample too small to say anything. Decide how many you need before you start, and if you can't get it, say so honestly in limitations.</p>
-          </div></details>
-
-          <details class="acc"><summary>Case study</summary><div class="body">
-            <p>One person, organization, event, or place, examined in depth. Trades breadth for detail, and works well when you have unusual access — a local business, a family archive, a program at your school.</p>
-            <p><strong>Shape:</strong> why this case → background → evidence gathered → analysis → what it does and doesn't generalize to.</p>
-            <p style="margin-bottom:0;"><strong>Common mistake:</strong> claiming a single case proves a general rule. It illustrates, suggests, and complicates — that's enough.</p>
-          </div></details>
-
-          <details class="acc"><summary>Survey study</summary><div class="body">
-            <p>Structured questions to a defined group. Cheap and fast, but the quality of the writing in your questions <em>is</em> the quality of your data.</p>
-            <p><strong>Shape:</strong> question → sampling plan → instrument (with the full question wording in an appendix) → response rate → results → bias discussion.</p>
-            <p style="margin-bottom:0;"><strong>Common mistake:</strong> leading questions and a convenience sample presented as representative. Say exactly who answered and who couldn't.</p>
-          </div></details>
-
-          <details class="acc"><summary>Meta-analysis</summary><div class="body">
-            <p>Statistically combining results from many existing studies to get a single sharper estimate. Demanding, but powerful — and it needs no lab.</p>
-            <p><strong>Shape:</strong> question → search and inclusion criteria → coded study table → pooled effect → heterogeneity → publication bias.</p>
-            <p style="margin-bottom:0;"><strong>Needs:</strong> enough comparable studies reporting the same measure, and comfort with effect sizes. A mentor helps a lot here.</p>
-          </div></details>
-
-          <details class="acc"><summary>Replication</summary><div class="body">
-            <p>You rerun someone else's study to see whether the result holds. Genuinely valuable, deeply underrated, and an unusually good fit for a first project because the method is already written for you.</p>
-            <p><strong>Shape:</strong> the original study → what you changed and why → your results → comparison → what the difference means.</p>
-            <p style="margin-bottom:0;"><strong>Tip:</strong> email the original authors. They often send materials, and they're usually pleased someone asked.</p>
-          </div></details>
-
-          <details class="acc"><summary>Qualitative / interview study</summary><div class="body">
-            <p>Interviews, observation, or open-ended responses, analyzed for themes. Right when you want to know how people understand something, not how many.</p>
-            <p><strong>Shape:</strong> question → who you talked to and why → interview guide → coding process → themes with quoted evidence → your own position in the work.</p>
-            <p style="margin-bottom:0;"><strong>Common mistake:</strong> treating quotes as decoration. Every theme needs evidence, and disconfirming quotes belong in the paper too.</p>
-          </div></details>
-        </div>
 
         <!-- MY PROJECT -->
         <div class="pane" id="pane-project">
