@@ -274,6 +274,23 @@ textarea { resize: vertical; min-height: 90px; }
     .side-nav .admin-link { color: var(--warn); }
     .side-nav .admin-link:hover { background: var(--warn-tint); color: var(--warn); }
 
+    .side-nav .step-toggle { justify-content: space-between; }
+    .side-nav .step-toggle .chev { margin-left: auto; transition: transform 0.18s ease; opacity: 0.55; }
+    .side-nav .step-toggle[aria-expanded="true"] .chev { transform: rotate(90deg); opacity: 0.9; }
+    .step-sublist {
+      list-style: none; margin: 0.15rem 0 0.3rem; padding: 0;
+      max-height: 0; overflow: hidden; transition: max-height 0.22s ease;
+    }
+    .step-sublist.open { max-height: 20rem; }
+    .step-sublist a {
+      display: flex; align-items: baseline; gap: 0.55rem;
+      padding: 0.48rem 0.9rem 0.48rem 2.55rem; font-size: 0.88rem;
+      color: var(--body); text-decoration: none; border-radius: var(--radius-sm);
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+    .step-sublist a:hover { background: var(--paper); color: var(--lavender-deep); }
+    .step-sublist a .n { font-family: var(--font-display); color: var(--lavender-deep); flex: none; }
+
     /* ---- Panels -------------------------------------------------------- */
     .pane { display: none; animation: fadeUp 0.3s ease; }
     .pane.on { display: block; }
@@ -286,29 +303,6 @@ textarea { resize: vertical; min-height: 90px; }
     .stat .k { font-family: var(--font-display); font-size: 1.9rem; color: var(--ink); line-height: 1.1; }
     .stat .l { font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--body); }
 
-    /* Numbered step list — the order is the method, so numbering is real. */
-    .steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
-    .steps > li {
-      position: relative; padding: 1.3rem 0 1.4rem 3.6rem;
-      border-top: 1px solid var(--line);
-    }
-    .steps > li:first-child { border-top: none; padding-top: 0.4rem; }
-    .steps > li::before {
-      counter-increment: step; content: counter(step);
-      position: absolute; left: 0; top: 1.3rem;
-      width: 2.4rem; height: 2.4rem; border-radius: 50%;
-      display: grid; place-items: center;
-      font-family: var(--font-display); font-size: 1.05rem;
-      background: var(--lavender-tint); color: var(--lavender-deep);
-    }
-    .steps > li:first-child::before { top: 0.4rem; }
-    .steps h3 { font-size: 1.28rem; margin-bottom: 0.4rem; }
-    .steps p:last-child { margin-bottom: 0; }
-    .steps .do { font-size: 0.94rem; background: var(--cream-2); border-left: 2px solid var(--lavender); border-radius: 0 8px 8px 0; padding: 0.7rem 0.95rem; margin-top: 0.75rem; }
-    .steps .do strong { color: var(--ink); font-weight: 600; }
-
-    .step-check { display: flex; align-items: center; gap: 0.55rem; margin-top: 0.85rem; font-size: 0.9rem; }
-    .step-check input { width: 17px; height: 17px; accent-color: var(--lavender); }
 
     .tile-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
     .tile { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.2rem 1.35rem; }
@@ -855,7 +849,19 @@ window.YRP = (function () {
           <h4>Learn</h4>
           <nav class="side-nav" id="side-nav">
             <button data-pane="overview" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg> Overview</button>
-            <button data-pane="steps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6h11M9.5 12h11M9.5 18h11"/><circle cx="4.6" cy="6" r="1.4"/><circle cx="4.6" cy="12" r="1.4"/><circle cx="4.6" cy="18" r="1.4"/></svg> The 6 steps of research</button>
+            <button type="button" class="step-toggle" id="steps-toggle" aria-expanded="false" aria-controls="steps-sublist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6h11M9.5 12h11M9.5 18h11"/><circle cx="4.6" cy="6" r="1.4"/><circle cx="4.6" cy="12" r="1.4"/><circle cx="4.6" cy="18" r="1.4"/></svg>
+              The 6 steps of research
+              <svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+            </button>
+            <ul class="step-sublist" id="steps-sublist">
+              <li><a href="step-1-find-your-question.html"><span class="n">1</span> Find your question</a></li>
+              <li><a href="step-2-find-out-whats-known.html"><span class="n">2</span> Find out what's already known</a></li>
+              <li><a href="step-3-design-your-method.html"><span class="n">3</span> Design your method</a></li>
+              <li><a href="step-4-collect-your-data.html"><span class="n">4</span> Collect your data</a></li>
+              <li><a href="step-5-analyze-and-interpret.html"><span class="n">5</span> Analyze and interpret</a></li>
+              <li><a href="step-6-share-your-findings.html"><span class="n">6</span> Share your findings</a></li>
+            </ul>
             <button data-pane="citations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 5.2A1.7 1.7 0 0 1 6.2 3.5H19.5v14.2H6.2a1.7 1.7 0 0 0-1.7 1.7V5.2Z"/><path d="M4.5 19.4a1.7 1.7 0 0 1 1.7-1.7H19.5v2.8H6.2a1.7 1.7 0 0 1-1.7-1.1Z"/><path d="M8.5 8h7"/></svg> Ways to do citations</button>
             <button data-pane="subjects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1 5.1-2.1Z"/></svg> Research by subject</button>
             <button data-pane="types"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.4 8.6 4.8-8.6 4.8-8.6-4.8L12 3.4Z"/><path d="m3.4 13 8.6 4.8L20.6 13"/></svg> Types of research</button>
@@ -911,7 +917,7 @@ window.YRP = (function () {
           <div class="card">
             <h3>Start here</h3>
             <p>If you've never done research before, read <strong>The 6 steps of research</strong> end to end once — it's about a ten-minute read — then come back and work through it one step at a time. Most first projects stall at step 2, so give the literature review more time than feels necessary.</p>
-            <button class="btn btn--primary btn--sm" data-goto="steps">Open the 6 steps</button>
+            <a class="btn btn--primary btn--sm" href="step-1-find-your-question.html">Open the 6 steps</a>
           </div>
 
           <div class="card">
@@ -921,50 +927,6 @@ window.YRP = (function () {
           </div>
         </div>
 
-        <!-- THE 6 STEPS -->
-        <div class="pane" id="pane-steps">
-          <h2>The 6 steps of research</h2>
-          <p class="lede">This is the whole arc of a project, from a vague curiosity to something you can hand to another person. Tick each step off as you finish it — your progress saves to your account.</p>
-
-          <ol class="steps" id="steps-list">
-            <li>
-              <h3>Find your question</h3>
-              <p>Start from something you actually wonder about, then sharpen it until it can be answered with evidence. A good question is narrow, specific, and honest about what it's measuring. "Is social media bad?" can't be answered. "Do students who use their phones in the hour before bed report shorter sleep than students who don't?" can.</p>
-              <div class="do"><strong>Do this:</strong> write your question in one sentence. Underline the thing you'd measure and the group you'd measure it in. If either is missing, the question isn't ready.</div>
-              <label class="step-check"><input type="checkbox" data-step="0"> Mark this step done</label>
-            </li>
-            <li>
-              <h3>Find out what's already known</h3>
-              <p>Someone has almost certainly studied a piece of your question already. Reading them saves you from repeating work, tells you which methods hold up, and shows you the gap your project can fill. Search Google Scholar, PubMed, JSTOR, and ERIC. Read the abstract, then the discussion, then the methods — in that order, so you don't drown.</p>
-              <div class="do"><strong>Do this:</strong> collect 8–12 sources, and for each one write three lines — what they asked, what they found, what they missed. That file becomes your literature review.</div>
-              <label class="step-check"><input type="checkbox" data-step="1"> Mark this step done</label>
-            </li>
-            <li>
-              <h3>Design your method</h3>
-              <p>Decide exactly how you'll get an answer before you collect anything. Who or what are you studying, how many, how will you measure, and what would count as evidence against your idea? Write it in enough detail that a stranger could run it. If people are involved, plan consent — say who you are, what you're asking, and that they can stop at any time.</p>
-              <div class="do"><strong>Do this:</strong> write a one-page protocol and get an adult mentor or teacher to read it. Their first question is usually the flaw you'd have found three weeks in.</div>
-              <label class="step-check"><input type="checkbox" data-step="2"> Mark this step done</label>
-            </li>
-            <li>
-              <h3>Collect your data</h3>
-              <p>Run the plan and change nothing halfway through. Keep a dated log of what you did and anything that went sideways — a skipped session, a broken link, a survey someone abandoned. Store raw data separately from anything you edit, so you can always go back to the original.</p>
-              <div class="do"><strong>Do this:</strong> name files with a date and version, back them up somewhere that isn't your laptop, and strip names out of anything you'll share.</div>
-              <label class="step-check"><input type="checkbox" data-step="3"> Mark this step done</label>
-            </li>
-            <li>
-              <h3>Analyze and interpret</h3>
-              <p>Describe before you conclude. Count, average, chart. Then ask what the pattern could mean and, just as seriously, what else could explain it. Correlation isn't cause, small samples swing wildly, and the result you hoped for deserves the most suspicion. Report what you found, including the parts that didn't work.</p>
-              <div class="do"><strong>Do this:</strong> write the single sentence your data supports. Then write the strongest objection to it. Both go in your paper.</div>
-              <label class="step-check"><input type="checkbox" data-step="4"> Mark this step done</label>
-            </li>
-            <li>
-              <h3>Share your findings</h3>
-              <p>Research that stays on your hard drive isn't finished. Write it up in a standard structure — abstract, introduction, methods, results, discussion, references — so readers know where to look. Then put it somewhere real: the YRP Journal, a science fair, a school symposium, a preprint, or a talk to the class that inspired the question.</p>
-              <div class="do"><strong>Do this:</strong> write the abstract last, in 200 words, covering question, method, finding, and why it matters.</div>
-              <label class="step-check"><input type="checkbox" data-step="5"> Mark this step done</label>
-            </li>
-          </ol>
-        </div>
 
         <!-- CITATIONS -->
         <div class="pane" id="pane-citations">
@@ -1553,8 +1515,19 @@ document.addEventListener('click', (e) => {
   const nav = e.target.closest('.side-nav button[data-pane]');
   if (nav) { showPane(nav.dataset.pane); return; }
   const goto = e.target.closest('[data-goto]');
-  if (goto) showPane(goto.dataset.goto);
+  if (goto) { showPane(goto.dataset.goto); return; }
 });
+
+/* The 6 steps: a dropdown of real links, not a pane -- clicking it never
+   changes what's on screen, it just reveals the six step pages below it. */
+const stepsToggle = document.getElementById('steps-toggle');
+const stepsSublist = document.getElementById('steps-sublist');
+if (stepsToggle && stepsSublist) {
+  stepsToggle.addEventListener('click', () => {
+    const open = stepsSublist.classList.toggle('open');
+    stepsToggle.setAttribute('aria-expanded', open);
+  });
+}
 
 /* ---- Boot -------------------------------------------------------------- */
 YRP.guard().then((ctx) => {
@@ -1602,13 +1575,10 @@ function render(ctx) {
     : '—';
   document.getElementById('stat-logins').textContent = p.loginCount || 1;
 
-  // Progress checkboxes
+  // Steps are tracked from their own pages now (each has its own checkbox
+  // and writes straight to Firestore), so this just reads the saved count.
   const progress = Array.isArray(p.progress) ? p.progress : [];
-  document.querySelectorAll('[data-step]').forEach((box) => {
-    box.checked = progress.includes(Number(box.dataset.step));
-    box.addEventListener('change', saveProgress);
-  });
-  updateProgressStat();
+  document.getElementById('stat-progress').textContent = progress.length + '/6';
 
   // Last sign-in card
   const ll = p.lastLogin || {};
@@ -1642,16 +1612,6 @@ function flash(id, msg) {
   const el = document.getElementById(id);
   el.textContent = msg; el.classList.remove('hidden');
   setTimeout(() => el.classList.add('hidden'), 2600);
-}
-
-function updateProgressStat() {
-  const done = document.querySelectorAll('[data-step]:checked').length;
-  document.getElementById('stat-progress').textContent = done + '/6';
-}
-function saveProgress() {
-  updateProgressStat();
-  const done = Array.from(document.querySelectorAll('[data-step]:checked')).map(b => Number(b.dataset.step));
-  userRef.update({ progress: done }).catch(err => console.error(err));
 }
 
 /* ---- Saving ------------------------------------------------------------ */
