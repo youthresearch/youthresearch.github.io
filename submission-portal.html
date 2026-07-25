@@ -226,19 +226,6 @@ textarea#abstract { min-height: 150px; }
 .field-error { display: none; color: var(--danger); font-size: 0.84rem; margin-top: 0.4rem; }
 .field-error.show { display: block; }
 
-/* File upload dropzone */
-.file-drop {
-  border: 1.5px dashed color-mix(in srgb, var(--lavender) 45%, var(--line));
-  border-radius: var(--radius-sm); background: var(--cream); padding: 1.4rem;
-  text-align: center; position: relative; cursor: pointer; transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-.file-drop:hover, .file-drop.drag { border-color: var(--lavender); background: var(--lavender-tint); }
-.file-drop input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.file-drop .fd-icon { color: var(--lavender-deep); margin: 0 auto 0.6rem; width: 30px; height: 30px; }
-.file-drop .fd-label { font-weight: 500; font-size: 0.92rem; color: var(--ink); margin-bottom: 0.2rem; }
-.file-drop .fd-sub { font-size: 0.8rem; color: var(--body); }
-.file-drop .fd-filename { font-size: 0.86rem; color: var(--lavender-deep); font-weight: 600; margin-top: 0.5rem; word-break: break-all; }
-
 /* Additional author blocks */
 .author-extra {
   border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--cream);
@@ -300,7 +287,13 @@ textarea#abstract { min-height: 150px; }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
   </style>
+
+  <!-- Firebase (submission storage + database) and EmailJS (notification) -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -314,15 +307,15 @@ textarea#abstract { min-height: 150px; }
         </svg>
         <span class="brand-name">Youth Research <span class="grad-text">Project</span></span>
       </a>
-      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">☰</button>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">&#9776;</button>
       <nav class="nav" id="site-nav">
         <a href="index.html">Home</a>
         <a href="journal.html" class="current">Journal</a>
         <a href="leadership.html">Leadership</a>
         <a href="leadership.html#join">Get Involved</a>
         <span class="nav-actions">
-          <a class="btn btn--ghost" href="#top">My Account</a>
-          <a class="btn btn--primary" href="start-here.html">Start Here</a>
+          <a class="btn btn--ghost" href="signup.html#signin">Sign in</a>
+          <a class="btn btn--primary" href="dashboard.html">Dashboard</a>
         </span>
       </nav>
     </div>
@@ -350,11 +343,7 @@ textarea#abstract { min-height: 150px; }
               <span>Please fix the highlighted fields below and try again.</span>
             </div>
 
-            <form 
-                class="submission-form" 
-                id="submission-form" 
-                enctype="multipart/form-data"
-              novalidate>
+            <form class="submission-form" id="submission-form" novalidate>
 
               <!-- Manuscript details -->
               <div class="form-section">
@@ -425,7 +414,7 @@ textarea#abstract { min-height: 150px; }
                 <div class="form-section-head">
                   <span class="step-num">Section 2</span>
                   <h2>Author information</h2>
-                  <p>The primary author must be a high school student in grades 9–12.</p>
+                  <p>The primary author must be a high school student in grades 9&ndash;12.</p>
                 </div>
 
                 <div class="form-row-split">
@@ -444,7 +433,7 @@ textarea#abstract { min-height: 150px; }
                 <div class="form-row">
                   <label for="author-email">Corresponding email address<span class="required-mark">*</span></label>
                   <input type="email" id="author-email" name="author-email" required>
-                  <p class="field-error" id="err-author-email">Input required.</p>
+                  <p class="field-error" id="err-author-email">Enter a valid email address.</p>
                 </div>
 
                 <div class="form-row-split">
@@ -496,7 +485,7 @@ textarea#abstract { min-height: 150px; }
                 <div class="form-row">
                   <label for="keywords">Keywords<span class="required-mark">*</span></label>
                   <input type="text" id="keywords" name="keywords" placeholder="e.g. photosynthesis, chlorophyll, light intensity" required>
-                  <p class="field-help">List 4–6 terms, separated by commas.</p>
+                  <p class="field-help">List 4&ndash;6 terms, separated by commas.</p>
                   <p class="field-error" id="err-keywords">Input required.</p>
                 </div>
               </div>
@@ -505,31 +494,21 @@ textarea#abstract { min-height: 150px; }
               <div class="form-section">
                 <div class="form-section-head">
                   <span class="step-num">Section 4</span>
-                  <h2>Upload files</h2>
-                  <p>Attach your manuscript, including your reference list. You can add supporting materials separately if needed.</p>
+                  <h2>Manuscript link</h2>
+                  <p>Upload your manuscript to Google Drive or Dropbox, set sharing to "Anyone with the link can view," then paste the link below. This keeps your file under your own control -- we never store a copy.</p>
                 </div>
 
                 <div class="form-row">
-                  <label for="file-manuscript">Manuscript file (PDF or DOCX)<span class="required-mark">*</span></label>
-                  <div class="file-drop" id="drop-manuscript">
-                    <svg class="fd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-                    <p class="fd-label">Click to upload or drag a file here</p>
-                    <p class="fd-sub">PDF or DOCX, including your full manuscript and reference list</p>
-                    <p class="fd-filename" id="filename-manuscript"></p>
-                    <input type="file" id="file-manuscript" name="file-manuscript" accept=".pdf,.doc,.docx" required>
-                  </div>
-                  <p class="field-error" id="err-file-manuscript">Please attach your manuscript file.</p>
+                  <label for="ms-link">Manuscript link<span class="required-mark">*</span></label>
+                  <input type="url" id="ms-link" name="ms-link" placeholder="https://drive.google.com/file/d/..." required>
+                  <p class="field-help">Include your full manuscript and reference list in this one file. Double-check the link opens in a private/incognito window before submitting, so we know sharing is actually turned on.</p>
+                  <p class="field-error" id="err-ms-link">Please paste a valid link, and make sure sharing is set to "Anyone with the link."</p>
                 </div>
 
                 <div class="form-row">
-                  <label for="file-supporting">Supporting materials <span class="opt">(optional)</span></label>
-                  <div class="file-drop" id="drop-supporting">
-                    <svg class="fd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-4-4m4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-                    <p class="fd-label">Click to upload or drag a file here</p>
-                    <p class="fd-sub">Raw data, code, extra figures, or appendices</p>
-                    <p class="fd-filename" id="filename-supporting"></p>
-                    <input type="file" id="file-supporting" name="file-supporting">
-                  </div>
+                  <label for="supporting-link">Supporting materials link <span class="opt">(optional)</span></label>
+                  <input type="url" id="supporting-link" name="supporting-link" placeholder="https://drive.google.com/file/d/... or a folder link">
+                  <p class="field-help">Raw data, code, extra figures, or appendices. A shared folder link works too.</p>
                 </div>
               </div>
 
@@ -582,6 +561,7 @@ textarea#abstract { min-height: 150px; }
               <h4>Before you submit</h4>
               <ul>
                 <li>Review the <a href="journal.html#top">academic integrity standards</a></li>
+                <li>Set your Drive or Dropbox sharing to "Anyone with the link," and test the link in a private/incognito window first</li>
                 <li>Remove personal identifying info from figures/images if required by your teacher or program</li>
                 <li>Have your citations ready in the required format</li>
                 <li>Original research needs 5+ figures/tables; reports need 4 or fewer</li>
@@ -589,11 +569,11 @@ textarea#abstract { min-height: 150px; }
             </div>
             <div class="side-box">
               <h4>Timeline</h4>
-              <p>Most submissions receive an initial decision within 8–14 weeks of the editorial check.</p>
+              <p>Most submissions receive an initial decision within 8&ndash;14 weeks of the editorial check.</p>
             </div>
             <div class="side-box">
               <h4>Questions?</h4>
-              <p>Email <a href="mailto:hello@youthresearchproject.com?subject=YRP%20Journal%20submission%20question">hello@youthresearchproject.com</a> and we'll help.</p>
+              <p>Email <a href="mailto:publish@youthresearchproject.com?subject=YRP%20Journal%20submission%20question">publish@youthresearchproject.com</a> and we'll help.</p>
             </div>
           </aside>
 
@@ -645,380 +625,328 @@ textarea#abstract { min-height: 150px; }
           </ul>
         </div>
       </div>
-      <p class="foot-note">A free student resource. © <span id="year"></span> Youth Research Project.</p>
+      <p class="foot-note">A free student resource. &copy; <span id="year"></span> Youth Research Project.</p>
     </div>
   </footer>
 
   <script>
 // Header
 const header = document.querySelector(".site-header");
-
-if(header){
-
-window.addEventListener("scroll",()=>{
-
-header.classList.toggle(
-"scrolled",
-window.scrollY > 8
-);
-
-});
-
+if (header) {
+  window.addEventListener("scroll", () => {
+    header.classList.toggle("scrolled", window.scrollY > 8);
+  });
 }
-
 
 // Mobile menu
-
-const toggle =
-document.querySelector(".nav-toggle");
-
-const nav =
-document.getElementById("site-nav");
-
-
-if(toggle && nav){
-
-toggle.onclick=()=>{
-
-const open =
-nav.classList.toggle("open");
-
-toggle.setAttribute(
-"aria-expanded",
-open
-);
-
-};
-
+const toggle = document.querySelector(".nav-toggle");
+const nav = document.getElementById("site-nav");
+if (toggle && nav) {
+  toggle.onclick = () => {
+    const open = nav.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", open);
+  };
 }
-
-
 
 // Footer year
-
-document.getElementById("year").textContent =
-new Date().getFullYear();
+document.getElementById("year").textContent = new Date().getFullYear();
 
 
+/* =========================================================================
+   Youth Research Project — journal submission logic
+   -------------------------------------------------------------------------
+   No backend. Files go straight to Firebase Storage from the browser, the
+   record goes to Firestore, and a notification email goes out through
+   EmailJS -- the same two services already running the rest of the site.
 
+   The CONFIG block below is identical to the one in signup.html and
+   dashboard.html. If you rotate a key, update it in all of them.
+   ========================================================================= */
 
+/* ---- CONFIG ------------------------------------------------------------ */
+var firebaseConfig = {
+  apiKey: "AIzaSyAtPmyueju_3oMy3O1s62cC0TZCGGNqhco",
+  authDomain: "youth-research-project-e9a28.firebaseapp.com",
+  projectId: "youth-research-project-e9a28",
+  storageBucket: "youth-research-project-e9a28.firebasestorage.app",
+  messagingSenderId: "1064912974299",
+  appId: "1:1064912974299:web:38ca97ee28a42b219f37fe",
+  measurementId: "G-60SRGH5Z5Q"
+};
 
-/* ============================
-FILE UPLOAD
-============================ */
+/* EmailJS -- same account as the sign-in notifications, a SECOND template.
+   The free EmailJS plan allows exactly two templates, so this uses your
+   second (and last free) one. Create it per SETUP.md, then paste the
+   template ID below. Leave as-is and the notification just won't send --
+   the submission itself still saves fine either way. */
+var EMAILJS = {
+  publicKey:  "SqGcVCVa3kwCregul",
+  serviceId:  "service_r84p20g",
+  templateId: "YOUR_SUBMISSION_TEMPLATE_ID",
+  toEmail:    "publish@youthresearchproject.com"
+};
 
+var DASHBOARD_URL = "dashboard.html";
+/* ------------------------------------------------------------------------ */
 
-["manuscript","supporting"].forEach(key=>{
-
-
-const drop =
-document.getElementById(
-`drop-${key}`
-);
-
-
-const input =
-document.getElementById(
-`file-${key}`
-);
-
-
-const name =
-document.getElementById(
-`filename-${key}`
-);
-
-
-
-if(!drop || !input)
-return;
-
-
-
-input.addEventListener(
-"change",
-()=>{
-
-
-if(input.files.length){
-
-name.textContent =
-input.files[0].name;
-
+// The Firebase libraries load from Google's CDN in <head>. If they didn't
+// arrive -- no connection, an ad blocker, a school firewall -- say so
+// instead of throwing a raw ReferenceError the moment this script runs.
+var firebaseReady = (typeof firebase !== "undefined");
+var app, db;
+if (firebaseReady) {
+  app = firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore();
+  if (window.emailjs && EMAILJS.publicKey) {
+    try { emailjs.init({ publicKey: EMAILJS.publicKey }); } catch (e) {}
+  }
+} else {
+  console.error("[YRP] Firebase libraries did not load from gstatic.com.");
 }
 
+/* ---- Small helpers ------------------------------------------------------ */
+function $(id) { return document.getElementById(id); }
+function setFieldError(id, hasError) {
+  var field = $(id);
+  var err = $('err-' + id);
+  if (field) field.classList.toggle('invalid', hasError);
+  if (err) err.classList.toggle('show', hasError);
+}
+function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+function randomTrackId() {
+  return 'YRP-' + Math.floor(100000 + Math.random() * 900000);
+}
 
+/* ---- Additional authors -------------------------------------------------
+   The original markup had the button and container but nothing wired it up,
+   so "+ Add another author" did nothing and typed-in co-authors were never
+   actually captured. Fixed here. */
+var authorRowCount = 0;
+var authorsContainer = $('authors-container');
+var addAuthorBtn = $('add-author-btn');
+
+function addAuthorRow() {
+  authorRowCount++;
+  var n = authorRowCount;
+  var row = document.createElement('div');
+  row.className = 'author-extra';
+  row.dataset.authorRow = n;
+  row.innerHTML =
+    '<div class="author-extra-head">' +
+      '<span>Author ' + (n + 1) + '</span>' +
+      '<button type="button" class="author-remove" data-remove="' + n + '">Remove</button>' +
+    '</div>' +
+    '<div class="form-row-split">' +
+      '<div class="form-row">' +
+        '<label for="ax-first-' + n + '">First name</label>' +
+        '<input type="text" id="ax-first-' + n + '" data-field="first">' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<label for="ax-last-' + n + '">Last name</label>' +
+        '<input type="text" id="ax-last-' + n + '" data-field="last">' +
+      '</div>' +
+    '</div>' +
+    '<div class="form-row" style="margin-top:1rem;">' +
+      '<label for="ax-school-' + n + '">School <span class="opt">(optional, if different)</span></label>' +
+      '<input type="text" id="ax-school-' + n + '" data-field="school">' +
+    '</div>';
+  authorsContainer.appendChild(row);
+}
+if (addAuthorBtn) addAuthorBtn.addEventListener('click', addAuthorRow);
+if (authorsContainer) {
+  authorsContainer.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-remove]');
+    if (!btn) return;
+    var row = btn.closest('.author-extra');
+    if (row) row.remove();
+  });
+}
+function collectAdditionalAuthors() {
+  var rows = authorsContainer ? authorsContainer.querySelectorAll('.author-extra') : [];
+  var out = [];
+  rows.forEach(function (row) {
+    var first = row.querySelector('[data-field="first"]').value.trim();
+    var last = row.querySelector('[data-field="last"]').value.trim();
+    var school = row.querySelector('[data-field="school"]').value.trim();
+    if (first || last) out.push({ first: first, last: last, school: school });
+  });
+  return out;
+}
+
+/* ---- Abstract counter --------------------------------------------------- */
+var abstractEl = $('abstract');
+var counterEl = $('abstract-count');
+if (abstractEl && counterEl) {
+  var updateCount = function () {
+    var len = abstractEl.value.length;
+    counterEl.textContent = len + ' / 1800 characters';
+    counterEl.classList.toggle('over', len > 1800);
+  };
+  abstractEl.addEventListener('input', updateCount);
+  updateCount();
+}
+
+/* ---- Link validation -----------------------------------------------------
+   No file upload, no Firebase Storage, no Blaze plan required -- the
+   author hosts their own file on Drive or Dropbox and shares a link. */
+function looksLikeLink(value) {
+  if (!value) return false;
+  try {
+    var u = new URL(value);
+    return u.protocol === 'http:' || u.protocol === 'https:';
+  } catch (e) {
+    return false;
+  }
+}
+
+/* ---- Submit -------------------------------------------------------------- */
+var form = $('submission-form');
+var successBox = $('submission-success');
+var alertBox = $('form-alert');
+var alertText = alertBox.querySelector('span');
+var submitBtn = $('submit-btn');
+
+if (!firebaseReady) {
+  alertText.textContent = "Couldn't reach Google's servers, so submissions aren't working right now. Check your internet connection, and if you're on a school network or using an ad blocker, try again on a different connection.";
+  alertBox.classList.add('show');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submissions unavailable';
+}
+
+function showAlert(message) {
+  alertText.textContent = message;
+  alertBox.classList.add('show');
+  alertBox.scrollIntoView({ block: 'center', behavior: 'smooth' });
+}
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  alertBox.classList.remove('show');
+
+  if (!firebaseReady) {
+    showAlert("Couldn't reach Google's servers, so submissions aren't working right now. Check your internet connection, and if you're on a school network or using an ad blocker, try again on a different connection.");
+    return;
+  }
+
+  var title = $('ms-title').value.trim();
+  var msType = $('ms-type').value;
+  var field = $('field').value;
+  var authorFirst = $('author-first').value.trim();
+  var authorLast = $('author-last').value.trim();
+  var authorEmail = $('author-email').value.trim();
+  var school = $('school').value.trim();
+  var grade = $('grade').value;
+  var mentor = $('mentor').value.trim();
+  var abstractText = abstractEl.value.trim();
+  var keywords = $('keywords').value.trim();
+  var manuscriptLink = $('ms-link').value.trim();
+  var supportingLink = $('supporting-link').value.trim();
+  var decOriginal = $('dec-original').checked;
+  var decCited = $('dec-cited').checked;
+  var decAi = $('dec-ai').checked;
+  var decTerms = $('dec-terms').checked;
+
+  var hasError = false;
+  var flag = function (id, bad) { setFieldError(id, bad); if (bad) hasError = true; };
+
+  flag('ms-title', !title);
+  flag('ms-type', !msType);
+  flag('field', !field);
+  flag('author-first', !authorFirst);
+  flag('author-last', !authorLast);
+  flag('author-email', !isValidEmail(authorEmail));
+  flag('school', !school);
+  flag('grade', !grade);
+  flag('abstract', !abstractText || abstractText.length > 1800);
+  flag('keywords', !keywords);
+  flag('ms-link', !looksLikeLink(manuscriptLink));
+  if (supportingLink) flag('supporting-link', !looksLikeLink(supportingLink));
+
+  var declErr = $('err-declarations');
+  var declOk = decOriginal && decCited && decAi && decTerms;
+  declErr.classList.toggle('show', !declOk);
+  if (!declOk) hasError = true;
+
+  if (hasError) {
+    showAlert('Please fix the highlighted fields below and try again.');
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+
+  var docRef = db.collection('submissions').doc();
+  var trackId = randomTrackId();
+
+  docRef.set({
+    trackId: trackId,
+    status: 'new',
+    submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    title: title,
+    msType: msType,
+    field: field,
+    authorFirst: authorFirst,
+    authorLast: authorLast,
+    authorEmail: authorEmail,
+    school: school,
+    grade: grade,
+    additionalAuthors: collectAdditionalAuthors(),
+    mentor: mentor,
+    abstract: abstractText,
+    keywords: keywords,
+    manuscriptLink: manuscriptLink,
+    supportingLink: supportingLink || null
+  })
+    .then(function () {
+      return sendNotification({
+        title: title, msType: msType, field: field,
+        authorFirst: authorFirst, authorLast: authorLast, authorEmail: authorEmail,
+        school: school, grade: grade, mentor: mentor,
+        abstract: abstractText, keywords: keywords, trackId: trackId
+      });
+    })
+    .then(function () {
+      $('track-id').textContent = trackId;
+      form.classList.add('hide');
+      successBox.classList.add('show');
+      successBox.scrollIntoView({ behavior: 'smooth' });
+    })
+    .catch(function (err) {
+      console.error(err);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit manuscript';
+      showAlert('Submission failed: ' + (err && err.message ? err.message : 'please check your connection and try again.'));
+    });
 });
 
-
-
-
-drop.addEventListener(
-"dragover",
-e=>{
-
-e.preventDefault();
-
-drop.classList.add("drag");
-
-});
-
-
-
-drop.addEventListener(
-"dragleave",
-()=>{
-
-drop.classList.remove("drag");
-
-});
-
-
-
-
-drop.addEventListener(
-"drop",
-e=>{
-
-
-e.preventDefault();
-
-
-drop.classList.remove("drag");
-
-
-
-const files =
-e.dataTransfer.files;
-
-
-
-if(files.length){
-
-
-const dt =
-new DataTransfer();
-
-
-dt.items.add(files[0]);
-
-
-input.files =
-dt.files;
-
-
-
-name.textContent =
-files[0].name;
-
-
+/* ---- Notification email --------------------------------------------------
+   The manuscript and supporting links are plain Drive/Dropbox URLs the
+   author controls, so there's nothing sensitive to hide -- the email links
+   straight to the dashboard where an admin can see and open them. */
+function sendNotification(sub) {
+  if (!window.emailjs || EMAILJS.templateId === 'YOUR_SUBMISSION_TEMPLATE_ID') {
+    console.info('[YRP] Submission notification skipped — EmailJS template not configured yet.');
+    return Promise.resolve();
+  }
+  var params = {
+    to_email: EMAILJS.toEmail,
+    track_id: sub.trackId,
+    ms_title: sub.title,
+    ms_type: sub.msType,
+    field: sub.field,
+    author_name: sub.authorFirst + ' ' + sub.authorLast,
+    author_email: sub.authorEmail,
+    school: sub.school,
+    grade: sub.grade,
+    mentor: sub.mentor || '—',
+    keywords: sub.keywords,
+    abstract: sub.abstract,
+    dashboard_link: location.origin + location.pathname.replace(/[^/]*$/, '') + 'dashboard.html#submissions'
+  };
+  return emailjs.send(EMAILJS.serviceId, EMAILJS.templateId, params)
+    .catch(function (err) { console.warn('[YRP] Submission notification failed:', err); });
 }
 
-
-});
-
-
-});
-
-
-
-
-
-
-/* ============================
-ABSTRACT COUNTER
-============================ */
-
-
-const abstract =
-document.getElementById("abstract");
-
-
-const counter =
-document.getElementById("abstract-count");
-
-
-if(abstract && counter){
-
-
-function update(){
-
-counter.textContent =
-`${abstract.value.length} / 1800 characters`;
-
-}
-
-
-abstract.addEventListener(
-"input",
-update
-);
-
-
-update();
-
-
-}
-
-
-
-
-
-/* ============================
-SUBMISSION
-============================ */
-
-
-const form =
-document.getElementById(
-"submission-form"
-);
-
-
-const success =
-document.getElementById(
-"submission-success"
-);
-
-
-const alertBox =
-document.getElementById(
-"form-alert"
-);
-
-
-const button =
-document.getElementById(
-"submit-btn"
-);
-
-
-
-
-
-form.addEventListener(
-"submit",
-async(e)=>{
-
-
-e.preventDefault();
-
-
-
-const file =
-document.getElementById(
-"file-manuscript"
-);
-
-
-
-if(!file.files.length){
-
-alertBox.classList.add("show");
-
-alertBox.scrollIntoView();
-
-return;
-
-}
-
-
-
-
-button.disabled=true;
-
-button.textContent =
-"Submitting...";
-
-
-
-
-const data =
-new FormData(form);
-
-
-
-
-try{
-
-
-const response =
-await fetch(
-"/api/submissions",
-{
-
-method:"POST",
-
-body:data
-
-}
-);
-
-
-
-if(!response.ok){
-
-throw new Error();
-
-}
-
-
-
-const track =
-"YRP-" +
-Math.floor(
-100000 +
-Math.random()*900000
-);
-
-
-
-document.getElementById(
-"track-id"
-).textContent =
-track;
-
-
-
-form.classList.add("hide");
-
-
-success.classList.add(
-"show"
-);
-
-
-
-success.scrollIntoView({
-behavior:"smooth"
-});
-
-
-
-}
-
-catch(error){
-
-
-alert(
-"Submission failed. Please try again."
-);
-
-
-
-button.disabled=false;
-
-
-button.textContent =
-"Submit manuscript";
-
-
-}
-
-
-
-});
-</script>
-
+  </script>
 </body>
 </html>
