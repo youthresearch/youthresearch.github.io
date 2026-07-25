@@ -945,6 +945,7 @@ window.YRP = (function () {
           <h4>Administration</h4>
           <nav class="side-nav">
             <button data-pane="people" class="admin-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.2" cy="8.4" r="3.6"/><path d="M2.6 20.2c0-3.6 3-5.8 6.6-5.8s6.6 2.2 6.6 5.8"/><path d="M16.6 5.2a3.4 3.4 0 0 1 0 6.5"/><path d="M18.4 20.2c0-2.1.2-3.6-1.1-4.9"/></svg> Everyone's accounts</button>
+            <button data-pane="submissions" class="admin-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 3.6 3.9 9.9l6.9 3.3 3.3 6.9 6.7-16.5Z"/><path d="M10.8 13.2 20.8 3.6"/></svg> Journal submissions</button>
             <button data-pane="activity" class="admin-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12.4h3.9l2.7 7 4-15 2.8 8h4.6"/></svg> Recent sign-ins</button>
             <button data-pane="adminhelp" class="admin-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.2 19.3 6v5.5c0 4.2-3 8-7.3 9.3-4.3-1.3-7.3-5.1-7.3-9.3V6L12 3.2Z"/><path d="m9.2 12 2 2 3.8-3.8"/></svg> Admin reference</button>
           </nav>
@@ -1272,6 +1273,61 @@ window.YRP = (function () {
           </div>
         </div>
 
+        <!-- ===================== SUBMISSIONS ===================== -->
+        <div class="pane" id="pane-submissions">
+          <h2>Journal submissions</h2>
+          <p class="lede">Manuscripts submitted through the journal portal. Files are never public -- opening a submission generates a fresh, admin-only download link.</p>
+
+          <div class="notice notice--error hidden" id="sub-load-error"></div>
+
+          <div class="stat-grid">
+            <div class="stat"><div class="k" id="sub-s-total">&mdash;</div><div class="l">Submissions</div></div>
+            <div class="stat"><div class="k" id="sub-s-new">&mdash;</div><div class="l">Awaiting review</div></div>
+            <div class="stat"><div class="k" id="sub-s-progress">&mdash;</div><div class="l">In review</div></div>
+            <div class="stat"><div class="k" id="sub-s-decided">&mdash;</div><div class="l">Decided</div></div>
+          </div>
+
+          <div class="toolbar">
+            <input type="search" id="sub-q" placeholder="Search title, author, school...">
+            <select id="sub-filter-status">
+              <option value="">All statuses</option>
+              <option value="new">Awaiting review</option>
+              <option value="in-review">In review</option>
+              <option value="accepted">Accepted</option>
+              <option value="revise">Revise and resubmit</option>
+              <option value="declined">Declined</option>
+            </select>
+            <select id="sub-filter-field">
+              <option value="">All fields</option>
+            </select>
+            <span class="spacer"></span>
+            <span class="count-note" id="sub-count-note"></span>
+            <button class="btn btn--ghost btn--sm" id="sub-refresh">Refresh</button>
+          </div>
+
+          <div class="table-card">
+            <div class="table-scroll">
+              <table class="users">
+                <thead>
+                  <tr>
+                    <th data-sub-sort="title">Title <span class="arrow">&#8597;</span></th>
+                    <th data-sub-sort="author">Author <span class="arrow">&#8597;</span></th>
+                    <th data-sub-sort="field">Field <span class="arrow">&#8597;</span></th>
+                    <th data-sub-sort="msType">Type <span class="arrow">&#8597;</span></th>
+                    <th data-sub-sort="grade">Grade <span class="arrow">&#8597;</span></th>
+                    <th data-sub-sort="submittedAt">Submitted <span class="arrow">&#8597;</span></th>
+                    <th data-sub-sort="status">Status <span class="arrow">&#8597;</span></th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="sub-rows">
+                  <tr class="empty-row"><td colspan="8">Loading submissions&hellip;</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
         <!-- ===================== ACTIVITY ===================== -->
         <div class="pane" id="pane-activity">
           <h2>Recent sign-ins</h2>
@@ -1413,6 +1469,7 @@ function showPane(name) {
   document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === 'pane-' + name));
   allNavButtons().forEach(b => b.classList.toggle('active', b.dataset.pane === name));
   if (name === 'activity') loadActivity();
+  if (name === 'submissions' && !SUBMISSIONS_LOADED) loadSubmissions();
   history.replaceState(null, '', '#' + name);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1442,7 +1499,7 @@ YRP.guard().then((ctx) => {
   render(ctx);
   document.getElementById('veil').classList.add('gone');
 
-  const adminPanes = ['people', 'activity', 'adminhelp'];
+  const adminPanes = ['people', 'submissions', 'activity', 'adminhelp'];
   const hash = (location.hash || '').replace('#', '');
   if (hash && document.getElementById('pane-' + hash) &&
       (ctx.isAdmin || adminPanes.indexOf(hash) === -1)) {
@@ -1468,7 +1525,7 @@ function render(ctx) {
     // Not an admin: take the panels out of the page altogether rather than
     // just hiding them. (firestore.rules is what actually protects the data —
     // this only keeps the markup tidy.)
-    ['pane-people', 'pane-activity', 'pane-adminhelp', 'drawer', 'drawer-backdrop']
+    ['pane-people', 'pane-submissions', 'pane-activity', 'pane-adminhelp', 'drawer', 'drawer-backdrop']
       .forEach(function (id) {
         var el = document.getElementById(id);
         if (el) el.remove();
@@ -1598,6 +1655,207 @@ function loadUsers() {
     });
 }
 document.getElementById('refresh').addEventListener('click', loadUsers);
+
+/* =======================================================================
+   JOURNAL SUBMISSIONS
+   Manuscripts submitted through submission-portal.html. Files live in
+   Firebase Storage, never listed or linked publicly -- opening a
+   submission here calls getDownloadURL() live, in this authenticated
+   admin session, which is the only context where Storage's read rule
+   actually allows it to succeed.
+   ======================================================================= */
+let SUBMISSIONS = [];
+let SUBMISSIONS_LOADED = false;
+let subSortKey = 'submittedAt', subSortDir = -1;
+
+const STATUS_LABEL = {
+  'new': 'Awaiting review', 'in-review': 'In review',
+  'accepted': 'Accepted', 'revise': 'Revise & resubmit', 'declined': 'Declined'
+};
+const STATUS_PILL_CLASS = {
+  'new': 'pill', 'in-review': 'pill--admin',
+  'accepted': 'pill--ok', 'revise': 'pill--admin', 'declined': 'pill--off'
+};
+
+function loadSubmissions() {
+  document.getElementById('sub-load-error').classList.add('hidden');
+  YRP.db.collection('submissions').get()
+    .then((snap) => {
+      SUBMISSIONS = snap.docs.map(d => Object.assign({ id: d.id }, d.data()));
+      SUBMISSIONS_LOADED = true;
+      renderSubmissionStats();
+      populateSubFieldFilter();
+      renderSubmissionRows();
+    })
+    .catch((err) => {
+      console.error(err);
+      const box = document.getElementById('sub-load-error');
+      box.textContent = 'Could not load submissions: ' + err.message +
+        ' — if this says "permission denied", deploy firestore.rules and storage.rules from the project folder.';
+      box.classList.remove('hidden');
+      document.getElementById('sub-rows').innerHTML = '<tr class="empty-row"><td colspan="8">No submissions loaded.</td></tr>';
+    });
+}
+document.getElementById('sub-refresh').addEventListener('click', loadSubmissions);
+
+function renderSubmissionStats() {
+  document.getElementById('sub-s-total').textContent = SUBMISSIONS.length;
+  document.getElementById('sub-s-new').textContent = SUBMISSIONS.filter(s => s.status === 'new').length;
+  document.getElementById('sub-s-progress').textContent = SUBMISSIONS.filter(s => s.status === 'in-review' || s.status === 'revise').length;
+  document.getElementById('sub-s-decided').textContent = SUBMISSIONS.filter(s => s.status === 'accepted' || s.status === 'declined').length;
+}
+
+function populateSubFieldFilter() {
+  const sel = document.getElementById('sub-filter-field');
+  const current = sel.value;
+  const fields = Array.from(new Set(SUBMISSIONS.map(s => s.field).filter(Boolean))).sort();
+  sel.innerHTML = '<option value="">All fields</option>' +
+    fields.map(f => '<option value="' + esc(f) + '">' + esc(f) + '</option>').join('');
+  sel.value = current;
+}
+
+function subAuthorName(s) { return ((s.authorFirst || '') + ' ' + (s.authorLast || '')).trim() || '—'; }
+
+function filteredSubmissions() {
+  const q = document.getElementById('sub-q').value.trim().toLowerCase();
+  const status = document.getElementById('sub-filter-status').value;
+  const field = document.getElementById('sub-filter-field').value;
+
+  let list = SUBMISSIONS.filter(s => {
+    if (status && s.status !== status) return false;
+    if (field && s.field !== field) return false;
+    if (!q) return true;
+    return [s.title, subAuthorName(s), s.school, s.authorEmail].join(' ').toLowerCase().includes(q);
+  });
+
+  list.sort((a, b) => {
+    let x, y;
+    if (subSortKey === 'author') { x = subAuthorName(a); y = subAuthorName(b); }
+    else if (subSortKey === 'submittedAt') { x = toDate(a.submittedAt) || 0; y = toDate(b.submittedAt) || 0; }
+    else { x = a[subSortKey]; y = b[subSortKey]; }
+    if (x == null) x = ''; if (y == null) y = '';
+    if (typeof x === 'string') return x.localeCompare(y) * subSortDir;
+    return (x > y ? 1 : x < y ? -1 : 0) * subSortDir;
+  });
+  return list;
+}
+
+document.querySelectorAll('th[data-sub-sort]').forEach(th => {
+  th.addEventListener('click', () => {
+    const k = th.dataset.subSort;
+    if (subSortKey === k) subSortDir *= -1; else { subSortKey = k; subSortDir = 1; }
+    renderSubmissionRows();
+  });
+});
+['sub-q', 'sub-filter-status', 'sub-filter-field'].forEach(id =>
+  document.getElementById(id).addEventListener('input', renderSubmissionRows));
+
+function renderSubmissionRows() {
+  const list = filteredSubmissions();
+  const tbody = document.getElementById('sub-rows');
+  document.getElementById('sub-count-note').textContent = list.length + ' of ' + SUBMISSIONS.length + ' shown';
+
+  if (!list.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">No submissions match those filters.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = list.map(s => {
+    const statusLabel = STATUS_LABEL[s.status] || s.status || '—';
+    const pillClass = STATUS_PILL_CLASS[s.status] || 'pill';
+    return '<tr data-sub-id="' + s.id + '">' +
+      '<td class="who">' + esc(s.title || '—') + '<div class="sub">' + esc(s.trackId || '') + '</div></td>' +
+      '<td>' + esc(subAuthorName(s)) + '<div class="sub">' + esc(s.school || '') + '</div></td>' +
+      '<td>' + esc(s.field || '—') + '</td>' +
+      '<td>' + esc(s.msType || '—') + '</td>' +
+      '<td>' + esc(s.grade || '—') + '</td>' +
+      '<td>' + YRP.fmtDate(s.submittedAt) + '</td>' +
+      '<td><span class="pill ' + pillClass + '">' + esc(statusLabel) + '</span></td>' +
+      '<td class="actions"><button class="btn btn--ghost btn--sm" data-sub-view="' + s.id + '">Review</button></td>' +
+      '</tr>';
+  }).join('');
+}
+
+document.getElementById('sub-rows').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-sub-view]');
+  const row = e.target.closest('tr[data-sub-id]');
+  if (!row) return;
+  const s = SUBMISSIONS.find(x => x.id === row.dataset.subId);
+  if (s) openSubmissionDrawer(s);
+});
+
+function setSubmissionStatus(s, status) {
+  YRP.db.collection('submissions').doc(s.id).update({ status: status })
+    .then(() => {
+      s.status = status;
+      renderSubmissionStats();
+      renderSubmissionRows();
+      openSubmissionDrawer(s);
+    })
+    .catch(err => alert('Could not update status: ' + err.message));
+}
+
+function openSubmissionDrawer(s) {
+  const extraAuthors = Array.isArray(s.additionalAuthors) ? s.additionalAuthors : [];
+  const extraAuthorsHtml = extraAuthors.length
+    ? extraAuthors.map(a => esc((a.first || '') + ' ' + (a.last || '') + (a.school ? ' (' + a.school + ')' : '')).trim()).join('<br>')
+    : '—';
+
+  drawer.innerHTML =
+    '<button class="close" aria-label="Close">&times;</button>' +
+    '<h3>' + esc(s.title || '—') + '</h3>' +
+    '<p style="margin-bottom:0.4rem;">' + esc(s.trackId || '') + '</p>' +
+    '<span class="pill ' + (STATUS_PILL_CLASS[s.status] || 'pill') + '">' + esc(STATUS_LABEL[s.status] || s.status || '—') + '</span>' +
+    '<dl class="kv">' +
+      row('Type', s.msType || '—') +
+      row('Field', s.field || '—') +
+      row('Primary author', subAuthorName(s)) +
+      row('Author email', s.authorEmail || '—') +
+      row('School', s.school || '—') +
+      row('Grade', s.grade || '—') +
+      row('Additional authors', '') +
+    '</dl>' +
+    '<p style="font-size:0.9rem; margin:-0.8rem 0 1.2rem;">' + extraAuthorsHtml + '</p>' +
+    '<dl class="kv">' +
+      row('Mentor / advisor', s.mentor || '—') +
+      row('Keywords', s.keywords || '—') +
+      row('Submitted', YRP.fmtDate(s.submittedAt)) +
+    '</dl>' +
+    '<h4 style="font-family:var(--font-body);font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--body);">Abstract</h4>' +
+    '<p style="font-size:0.92rem;">' + esc(s.abstract || '—') + '</p>' +
+    '<h4 style="font-family:var(--font-body);font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--body);">Files</h4>' +
+    subFilesHtml(s) +
+    '<h4 style="font-family:var(--font-body);font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--body);">Set status</h4>' +
+    '<div class="drawer-actions" id="sub-status-actions"></div>';
+
+  drawer.querySelector('.close').addEventListener('click', closeDrawer);
+
+  const statusActions = drawer.querySelector('#sub-status-actions');
+  statusActions.innerHTML = Object.keys(STATUS_LABEL).map(key =>
+    '<button class="btn ' + (key === s.status ? 'btn--primary' : 'btn--ghost') + ' btn--sm" data-set-status="' + key + '">' +
+    STATUS_LABEL[key] + '</button>'
+  ).join('');
+  statusActions.querySelectorAll('[data-set-status]').forEach(btn => {
+    btn.addEventListener('click', () => setSubmissionStatus(s, btn.dataset.setStatus));
+  });
+
+  drawer.classList.add('open'); backdrop.classList.add('open'); drawer.setAttribute('aria-hidden', 'false');
+}
+
+// Plain Drive/Dropbox links the author submitted -- no Storage, no signed
+// URLs, nothing to generate. The author controls sharing on their own file.
+function subFilesHtml(s) {
+  const parts = [];
+  if (s.manuscriptLink) {
+    parts.push('<p><a href="' + esc(s.manuscriptLink) + '" target="_blank" rel="noopener">Manuscript link</a></p>');
+  }
+  if (s.supportingLink) {
+    parts.push('<p><a href="' + esc(s.supportingLink) + '" target="_blank" rel="noopener">Supporting materials link</a></p>');
+  }
+  if (!parts.length) return '<p style="font-size:0.88rem;">No links on this submission.</p>';
+  return parts.join('');
+}
+
 
 function toDate(ts) { if (!ts) return null; const d = ts.toDate ? ts.toDate() : new Date(ts); return isNaN(d) ? null : d; }
 
