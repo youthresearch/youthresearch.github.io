@@ -9,11 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Ovo&display=swap" rel="stylesheet">
+  <!-- Shared site theme (was inline; now shared with the dashboard pages) -->
   <style>
 /* =========================================================================
-   Youth Research Project | boho editorial theme
+   Youth Research Project | shared theme
    Warm cream · lavender accents · Ovo (display) + DM Sans (body)
-   (Shared styles copied from the rest of the site so this page matches.)
+   Shared by every page on the site.
    ========================================================================= */
 
 :root {
@@ -42,6 +43,8 @@
   --danger-tint: #f8e9ec;
   --success: #4f8a63;
   --success-tint: #e9f3ec;
+  --warn: #9a6b1f;
+  --warn-tint: #f7efe0;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -71,13 +74,12 @@ img, svg { display: block; max-width: 100%; }
 :focus-visible { outline: 2px solid var(--lavender); outline-offset: 3px; border-radius: 4px; }
 
 .grad-text { color: var(--lavender); -webkit-text-fill-color: var(--lavender); background: none; }
-
 .wrap { width: 100%; max-width: var(--measure); margin-inline: auto; padding-inline: var(--gutter); }
-.section { padding-block: clamp(3rem, 7vw, 5rem); position: relative; }
+.wrap--wide { max-width: 1360px; }
+.section { padding-block: clamp(2rem, 5vw, 3.5rem); position: relative; }
 
 .eyebrow {
   display: inline-block;
-  font-family: var(--font-body);
   font-weight: 500;
   font-size: 0.74rem;
   letter-spacing: 0.24em;
@@ -86,21 +88,13 @@ img, svg { display: block; max-width: 100%; }
   margin-bottom: 1rem;
 }
 
+/* ---- Buttons ---------------------------------------------------------- */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.82rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.9rem 1.7rem;
-  border-radius: 999px;
-  border: 1.5px solid transparent;
-  cursor: pointer;
-  text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  font-family: var(--font-body); font-weight: 500; font-size: 0.82rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.9rem 1.7rem; border-radius: 999px; border: 1.5px solid transparent;
+  cursor: pointer; text-decoration: none;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 .btn:hover { transform: translateY(-2px); }
@@ -109,48 +103,173 @@ img, svg { display: block; max-width: 100%; }
 .btn--primary:hover { background: var(--lavender); color: #fff; }
 .btn--ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
 .btn--ghost:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.btn--danger { background: transparent; color: var(--danger); border-color: var(--danger); }
+.btn--danger:hover { background: var(--danger); color: #fff; }
+.btn--sm { padding: 0.5rem 1rem; font-size: 0.68rem; letter-spacing: 0.1em; }
 .btn--block { width: 100%; }
 
-/* ---- Header --------------------------------------------------------- */
+/* ---- Header ----------------------------------------------------------- */
 .site-header {
   position: sticky; top: 0; z-index: 60;
-  background: rgba(248, 244, 239, 0.82);
+  background: rgba(248, 244, 239, 0.9);
   backdrop-filter: saturate(150%) blur(14px);
   -webkit-backdrop-filter: saturate(150%) blur(14px);
   border-bottom: 1px solid var(--line);
-  transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
-.site-header.scrolled { background: rgba(248, 244, 239, 0.95); box-shadow: 0 6px 24px -20px rgba(60,45,80,0.3); }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 74px; gap: 1rem; }
 .brand { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; }
 .brand svg { height: 38px; width: auto; }
-.brand .brand-name { font-family: var(--font-display); font-weight: 400; font-size: 1.28rem; color: var(--ink); line-height: 1; letter-spacing: 0.02em; }
-.brand .brand-name .grad-text { color: var(--lavender); -webkit-text-fill-color: var(--lavender); }
+.brand .brand-name { font-family: var(--font-display); font-size: 1.28rem; color: var(--ink); line-height: 1; letter-spacing: 0.02em; }
+.header-user { display: inline-flex; align-items: center; gap: 0.85rem; }
+.avatar {
+  width: 38px; height: 38px; border-radius: 50%; flex: none;
+  background: var(--lavender-tint); color: var(--lavender-deep);
+  display: grid; place-items: center; font-weight: 600; font-size: 0.9rem;
+  border: 1px solid var(--line);
+}
+.header-user .who { line-height: 1.2; text-align: right; }
+.header-user .who strong { display: block; color: var(--ink); font-weight: 500; font-size: 0.95rem; }
+.header-user .who span { font-size: 0.78rem; }
+@media (max-width: 620px) { .header-user .who { display: none; } }
+
+/* ---- Cards / panels --------------------------------------------------- */
+.card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow-sm);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+.card + .card { margin-top: 1.25rem; }
+
+.pill {
+  display: inline-block; font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.22rem 0.65rem; border-radius: 999px;
+  background: var(--lavender-tint); color: var(--lavender-deep);
+}
+.pill--admin { background: var(--warn-tint); color: var(--warn); }
+.pill--ok { background: var(--success-tint); color: var(--success); }
+.pill--off { background: var(--danger-tint); color: var(--danger); }
+
+.notice {
+  border-radius: var(--radius-sm); padding: 0.9rem 1.1rem;
+  font-size: 0.92rem; margin-bottom: 1.2rem; border: 1px solid transparent;
+}
+.notice--warn { background: var(--warn-tint); color: var(--warn); border-color: #e7d3ab; }
+.notice--error { background: var(--danger-tint); color: #7a2c40; border-color: #eccdd4; }
+.notice--ok { background: var(--success-tint); color: #2f6244; border-color: #cbe3d3; }
+.notice.hidden, .hidden { display: none !important; }
+
+/* ---- Forms ------------------------------------------------------------ */
+label { display: block; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.5rem; }
+input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="search"], select, textarea {
+  width: 100%; font-family: var(--font-body); font-size: 1rem; color: var(--ink);
+  background: var(--cream); border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+  padding: 0.8rem 1rem; transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--lavender); background: var(--paper); }
+textarea { resize: vertical; min-height: 90px; }
+
+/* ---- Loading veil ----------------------------------------------------- */
+.veil {
+  position: fixed; inset: 0; z-index: 200; background: var(--cream);
+  display: grid; place-items: center; gap: 1rem; text-align: center;
+}
+.veil.gone { display: none; }
+.spinner {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 3px solid var(--line); border-top-color: var(--lavender);
+  animation: spin 0.8s linear infinite; margin: 0 auto 0.9rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- Footer ----------------------------------------------------------- */
+.site-footer { background: var(--cream-2); border-top: 1px solid var(--line); padding-block: 2rem; margin-top: 3rem; }
+.site-footer .foot-note { font-size: 0.82rem; color: var(--body); letter-spacing: 0.05em; margin: 0; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* ---- Site header + nav (matches the rest of the site) ------------------ */
+.site-header.scrolled { background: rgba(248, 244, 239, 0.95); box-shadow: 0 6px 24px -20px rgba(60,45,80,0.3); }
 .nav { display: flex; align-items: center; gap: 1.7rem; }
 .nav a:not(.btn) {
   color: var(--ink); text-decoration: none; font-weight: 500; font-size: 0.82rem;
   letter-spacing: 0.12em; text-transform: uppercase; position: relative; transition: color 0.25s ease;
 }
 .nav a:not(.btn).current { color: var(--lavender-deep); }
-.nav a:not(.btn)::after {
-  content: ""; position: absolute; left: 0; bottom: -5px; height: 1.5px; width: 0;
-  background: var(--lavender); transition: width 0.22s ease;
+.nav a:not(.btn)::after { content: ""; position: absolute; left: 0; bottom: -5px; height: 1.5px; width: 0; background: var(--lavender); transition: width 0.22s ease; }
+.nav a:not(.btn):hover::after, .nav a:not(.btn).current::after { width: 100%; }
+.nav .btn { padding: 0.6rem 1.2rem; font-size: 0.72rem; }
+.nav-actions { display: inline-flex; align-items: center; gap: 0.6rem; }
+.nav-toggle { display: none; background: transparent; border: 1.5px solid var(--line); border-radius: 10px; padding: 0.45rem 0.6rem; cursor: pointer; color: var(--ink); font-size: 1.1rem; }
+@media (max-width: 900px) {
+  .nav-toggle { display: inline-flex; }
+  .nav { position: absolute; top: 74px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--cream); border-top: 1px solid var(--line); box-shadow: var(--shadow-sm);
+    padding: 0.5rem var(--gutter) 1.5rem; display: none; z-index: 70; }
+  .nav.open { display: flex; animation: fadeUp 0.25s ease; }
+  .nav a:not(.btn) { padding: 0.95rem 0; border-bottom: 1px solid var(--line); }
+  .nav-actions { flex-direction: column; align-items: stretch; margin-top: 1rem; gap: 0.6rem; }
+  .nav .btn { justify-content: center; padding: 0.85rem 1.2rem; font-size: 0.78rem; }
+  .nav .user-chip { justify-content: flex-start; }
 }
+
+/* Signed-in identity chip, styled like the rest of the nav */
+.user-chip { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--paper); }
+.user-chip .avatar { width: 30px; height: 30px; border-radius: 50%; flex: none; background: var(--lavender-tint);
+  color: var(--lavender-deep); display: grid; place-items: center; font-weight: 600; font-size: 0.76rem; border: none; }
+.user-chip .who { line-height: 1.15; }
+.user-chip .who strong { display: block; color: var(--ink); font-weight: 500; font-size: 0.86rem; letter-spacing: 0; text-transform: none; }
+.user-chip .who span { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--body); }
+
+/* ---- Page hero -------------------------------------------------------- */
+.page-hero { background: var(--cream-2); border-bottom: 1px solid var(--line); text-align: center;
+  padding-block: clamp(2.4rem, 5vw, 3.4rem) clamp(1.6rem, 3vw, 2.2rem); }
+.page-hero .wrap { max-width: 660px; }
+.page-hero h1 { font-size: clamp(2rem, 4.4vw, 3rem); margin-bottom: 0.6rem; }
+.page-hero p { font-size: 1.06rem; max-width: 56ch; margin-inline: auto; margin-bottom: 0; }
+
+/* ---- Footer ----------------------------------------------------------- */
+.site-footer { background: var(--cream-2); color: var(--body); border-top: 1px solid var(--line);
+  padding-block: clamp(3rem, 6vw, 4.5rem); margin-top: clamp(3rem, 6vw, 4.5rem); }
+.site-footer .foot-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .site-footer .foot-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
+.site-footer .brand-foot { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; margin-bottom: 1rem; }
+.site-footer .brand-foot .name { font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; color: var(--ink); letter-spacing: 0.02em; }
+.site-footer h4 { font-family: var(--font-body); color: var(--ink); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin-bottom: 1rem; }
+.site-footer ul { list-style: none; margin: 0; padding: 0; }
+.site-footer li { margin-bottom: 0.6rem; }
+.site-footer a { color: var(--body); text-decoration: none; }
+.site-footer a:hover { color: var(--lavender-deep); }
+.foot-note { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--body); letter-spacing: 0.05em; margin-bottom: 0; }
+.social-row li { margin-bottom: 0.7rem; }
+.social-row a { display: inline-flex; align-items: center; gap: 0.6rem; }
+.social-row svg { width: 20px; height: 20px; flex: none; }
+.social-row a.soon { opacity: 0.55; cursor: default; }
+.social-row a.soon span::after { content: " (soon)"; font-size: 0.78em; letter-spacing: 0.04em; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+
+  </style>
+  <style>
+/* ---- Page-specific styles ---------------------------------------------- */
+.site-header.scrolled { background: rgba(248, 244, 239, 0.95); box-shadow: 0 6px 24px -20px rgba(60,45,80,0.3); }
+.nav { display: flex; align-items: center; gap: 1.7rem; }
+.nav a:not(.btn) {
+  color: var(--ink); text-decoration: none; font-weight: 500; font-size: 0.82rem;
+  letter-spacing: 0.12em; text-transform: uppercase; position: relative; transition: color 0.25s ease;
+}
+.nav a:not(.btn).current { color: var(--lavender-deep); }
+.nav a:not(.btn)::after { content: ""; position: absolute; left: 0; bottom: -5px; height: 1.5px; width: 0; background: var(--lavender); transition: width 0.22s ease; }
 .nav a:not(.btn):hover::after, .nav a:not(.btn).current::after { width: 100%; }
 .nav .btn { padding: 0.6rem 1.2rem; font-size: 0.72rem; }
 .nav-actions { display: inline-flex; gap: 0.6rem; }
-.nav-toggle {
-  display: none; background: transparent; border: 1.5px solid var(--line);
-  border-radius: 10px; padding: 0.45rem 0.6rem; cursor: pointer; color: var(--ink); font-size: 1.1rem;
-}
+.nav-toggle { display: none; background: transparent; border: 1.5px solid var(--line); border-radius: 10px; padding: 0.45rem 0.6rem; cursor: pointer; color: var(--ink); font-size: 1.1rem; }
 @media (max-width: 900px) {
   .nav-toggle { display: inline-flex; }
-  .nav {
-    position: absolute; top: 74px; left: 0; right: 0;
-    flex-direction: column; align-items: stretch; gap: 0;
-    background: var(--cream); border-top: 1px solid var(--line);
-    box-shadow: var(--shadow-sm); padding: 0.5rem var(--gutter) 1.5rem; display: none;
-  }
+  .nav { position: absolute; top: 74px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--cream); border-top: 1px solid var(--line); box-shadow: var(--shadow-sm);
+    padding: 0.5rem var(--gutter) 1.5rem; display: none; }
   .nav.open { display: flex; animation: fadeUp 0.25s ease; }
   .nav a:not(.btn) { padding: 0.95rem 0; border-bottom: 1px solid var(--line); }
   .nav-actions { flex-direction: column; margin-top: 1rem; gap: 0.6rem; }
@@ -163,47 +282,23 @@ img, svg { display: block; max-width: 100%; }
 .page-hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.2rem); margin-bottom: 0.7rem; }
 .page-hero p { font-size: 1.08rem; max-width: 56ch; margin-inline: auto; }
 
-/* ---- Sign-up form card -------------------------------------------------- */
+/* ---- Sign-up form card ------------------------------------------------ */
 .signup-wrap { max-width: 620px; margin-inline: auto; }
-.signup-card {
-  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
-  box-shadow: var(--shadow-sm); padding: clamp(1.8rem, 5vw, 3rem);
-}
+.signup-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: clamp(1.8rem, 5vw, 3rem); }
 .form-row { margin-bottom: 1.3rem; }
 .form-row-split { display: grid; gap: 1.3rem; grid-template-columns: 1fr; margin-bottom: 1.3rem; }
 @media (min-width: 560px) { .form-row-split { grid-template-columns: 1fr 1fr; } }
 .form-row-split .form-row { margin-bottom: 0; }
-
-label {
-  display: block; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--ink); margin-bottom: 0.5rem;
-}
 label .opt { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--body); }
-
-input[type="text"], input[type="email"], select, textarea {
-  width: 100%; font-family: var(--font-body); font-size: 1rem; color: var(--ink);
-  background: var(--cream); border: 1.5px solid var(--line); border-radius: var(--radius-sm);
-  padding: 0.85rem 1rem; transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
-  outline: none; border-color: var(--lavender); background: var(--paper);
-}
 input.invalid, select.invalid { border-color: var(--danger); background: var(--danger-tint); }
-textarea { resize: vertical; min-height: 90px; }
-
 .field-error { display: none; color: var(--danger); font-size: 0.84rem; margin-top: 0.4rem; }
 .field-error.show { display: block; }
-
 .required-mark { color: var(--danger); margin-left: 0.2rem; }
+.field-hint { font-size: 0.82rem; color: var(--body); margin: 0.4rem 0 0; }
 
 .password-field { position: relative; }
 .password-field input { padding-right: 2.9rem; }
-.password-toggle {
-  position: absolute; top: 50%; right: 0.6rem; transform: translateY(-50%);
-  background: transparent; border: none; padding: 0.4rem; cursor: pointer;
-  color: var(--body); display: grid; place-items: center; border-radius: 8px;
-  transition: color 0.2s ease, background-color 0.2s ease;
-}
+.password-toggle { position: absolute; top: 50%; right: 0.6rem; transform: translateY(-50%); background: transparent; border: none; padding: 0.4rem; cursor: pointer; color: var(--body); display: grid; place-items: center; border-radius: 8px; transition: color 0.2s ease, background-color 0.2s ease; }
 .password-toggle:hover { color: var(--ink); background: var(--lavender-tint); }
 .password-toggle svg { width: 20px; height: 20px; }
 .password-toggle .eye-off { display: block; }
@@ -211,15 +306,8 @@ textarea { resize: vertical; min-height: 90px; }
 .password-toggle[aria-pressed="true"] .eye-off { display: none; }
 .password-toggle[aria-pressed="true"] .eye-on { display: block; }
 
-.password-hint { font-size: 0.82rem; color: var(--body); margin-top: 0.4rem; }
-
-/* ---- Social sign-in ---------------------------------------------------- */
 .social-grid { display: grid; gap: 0.7rem; grid-template-columns: 1fr; margin-bottom: 0.4rem; }
-.btn--social {
-  background: var(--paper); color: var(--ink); border-color: var(--line);
-  text-transform: none; letter-spacing: 0.01em; font-size: 0.94rem; font-weight: 500;
-  padding: 0.75rem 1.2rem; gap: 0.7rem;
-}
+.btn--social { background: var(--paper); color: var(--ink); border-color: var(--line); text-transform: none; letter-spacing: 0.01em; font-size: 0.94rem; font-weight: 500; padding: 0.75rem 1.2rem; gap: 0.7rem; }
 .btn--social:hover { background: var(--cream-2); border-color: var(--ink); transform: translateY(-2px); }
 .btn--social svg { width: 19px; height: 19px; flex: none; }
 
@@ -229,47 +317,54 @@ textarea { resize: vertical; min-height: 90px; }
 .checkbox-row a { color: var(--lavender-deep); }
 
 .form-note { font-size: 0.86rem; color: var(--body); margin-top: 1.1rem; text-align: center; }
-
-.form-alert {
-  display: none; align-items: flex-start; gap: 0.6rem; border-radius: var(--radius-sm);
-  padding: 0.9rem 1.1rem; font-size: 0.9rem; margin-bottom: 1.4rem;
-}
+.form-alert { display: none; align-items: flex-start; gap: 0.6rem; border-radius: var(--radius-sm); padding: 0.9rem 1.1rem; font-size: 0.9rem; margin-bottom: 1.4rem; }
 .form-alert.show { display: flex; }
 .form-alert--error { background: var(--danger-tint); color: #7a2c40; }
+.form-alert--warn { background: var(--warn-tint); color: var(--warn); }
 
-.signup-success {
-  display: none; text-align: center; padding: 1rem 0 0.5rem;
-}
+.signup-success { display: none; text-align: center; padding: 1rem 0 0.5rem; }
 .signup-success.show { display: block; }
-.signup-success .check-badge {
-  width: 62px; height: 62px; border-radius: 50%; background: var(--success-tint); color: var(--success);
-  display: grid; place-items: center; margin: 0 auto 1.3rem;
-}
+.signup-success .check-badge { width: 62px; height: 62px; border-radius: 50%; background: var(--success-tint); color: var(--success); display: grid; place-items: center; margin: 0 auto 1.3rem; }
 .signup-success h2 { font-size: 1.7rem; margin-bottom: 0.6rem; }
 .signup-success p { max-width: 42ch; margin-inline: auto; }
-
 .signup-form.hide { display: none; }
 
-.divider-word {
-  display: flex; align-items: center; gap: 0.9rem; margin: 1.6rem 0;
-  color: var(--body); font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase;
-}
+.divider-word { display: flex; align-items: center; gap: 0.9rem; margin: 1.6rem 0; color: var(--body); font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; }
 .divider-word::before, .divider-word::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-
 .signin-note { text-align: center; margin-top: 1.6rem; font-size: 0.96rem; }
 
-/* ---- Footer --------------------------------------------------------- */
-.site-footer { background: var(--cream-2); color: var(--body); border-top: 1px solid var(--line); padding-block: clamp(3rem, 6vw, 4.5rem); }
+/* ---- Create-account / Sign-in toggle ---------------------------------- */
+.mode-tabs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.25rem;
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 999px; padding: 0.28rem; margin-bottom: 1.7rem;
+}
+.mode-tabs button {
+  font: inherit; font-size: 0.76rem; font-weight: 500; letter-spacing: 0.13em;
+  text-transform: uppercase; padding: 0.66rem 0.5rem; border: none;
+  background: transparent; color: var(--body); border-radius: 999px; cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.mode-tabs button:hover { color: var(--ink); }
+.mode-tabs button.on { background: var(--ink); color: var(--cream); }
+.row-between { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.linky { background: none; border: none; padding: 0; font: inherit; font-size: 0.8rem;
+  color: var(--lavender-deep); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.form-alert--ok { background: var(--success-tint); color: #2f6244; }
+
+
+/* ---- Footer ----------------------------------------------------------- */
+.site-footer { padding-block: clamp(3rem, 6vw, 4.5rem); margin-top: 0; }
 .site-footer .foot-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
-@media (min-width: 720px) { .site-footer .foot-grid { grid-template-columns: 1.6fr 1fr 1fr; } }
+@media (min-width: 720px) { .site-footer .foot-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
 .site-footer .brand-foot { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; margin-bottom: 1rem; }
-.site-footer .brand-foot .name { font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; color: var(--ink); letter-spacing: 0.02em; }
+.site-footer .brand-foot .name { font-family: var(--font-display); font-size: 1.25rem; color: var(--ink); letter-spacing: 0.02em; }
 .site-footer h4 { font-family: var(--font-body); color: var(--ink); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin-bottom: 1rem; }
 .site-footer ul { list-style: none; margin: 0; padding: 0; }
 .site-footer li { margin-bottom: 0.6rem; }
 .site-footer a { color: var(--body); text-decoration: none; }
 .site-footer a:hover { color: var(--lavender-deep); }
-.foot-note { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--body); letter-spacing: 0.05em; }
+.foot-note { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
 .social-row li { margin-bottom: 0.7rem; }
 .social-row a { display: inline-flex; align-items: center; gap: 0.6rem; }
 .social-row svg { width: 20px; height: 20px; flex: none; }
@@ -277,16 +372,405 @@ textarea { resize: vertical; min-height: 90px; }
 .social-row a.soon span::after { content: " (soon)"; font-size: 0.78em; letter-spacing: 0.04em; }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
   </style>
-  <!--
-    FIREBASE AUTHENTICATION
-    Handles real Google / Apple / Microsoft sign-in without needing your
-    own backend server. See the setup steps in the script near the
-    bottom of this file (search for "FIREBASE CONFIG").
-  -->
+
+  <!-- Firebase (accounts + database) and EmailJS (sign-in notifications) -->
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+/* ===== assets/yrp-auth.js, inlined so this page works on its own =====
+   The CONFIG block below is the only thing you edit. It is identical in
+   signup.html and dashboard.html -- change it in both. */
+/* =========================================================================
+   Youth Research Project — shared auth + profile module
+   -------------------------------------------------------------------------
+   Everything you need to configure lives in the CONFIG block below.
+   Every page (signup, signin, dashboard, admin) loads this one file, so
+   you only fill your keys in once.
+
+   Requires, in this order, before this file:
+     firebase-app-compat.js
+     firebase-auth-compat.js
+     firebase-firestore-compat.js
+     (optional) @emailjs/browser  — for the sign-in notification email
+   ========================================================================= */
+
+window.YRP = (function () {
+  "use strict";
+
+  /* =======================================================================
+     1. CONFIG — fill these in
+     =======================================================================
+     A) FIREBASE  (Console > Project settings > General > Your apps > Web)
+        These are public identifiers. They are safe to commit to GitHub.
+        Your data is protected by the Firestore rules in firestore.rules,
+        not by hiding these values.
+     ---------------------------------------------------------------------- */
+  var firebaseConfig = {
+    apiKey: "AIzaSyAtPmyueju_3oMy3O1s62cC0TZCGGNqhco",
+    authDomain: "youth-research-project-e9a28.firebaseapp.com",
+    projectId: "youth-research-project-e9a28",
+    storageBucket: "youth-research-project-e9a28.firebasestorage.app",
+    messagingSenderId: "1064912974299",
+    appId: "1:1064912974299:web:38ca97ee28a42b219f37fe",
+    measurementId: "G-60SRGH5Z5Q"
+  };
+
+  /* B) ADMIN
+        The first admin account. Anyone signing in with this address gets the
+        Admin panel. Additional admins are granted from inside the panel.
+        This must match the address you sign in with, lowercase.            */
+  var ADMIN_EMAIL = "youthresearchproject26@gmail.com";
+
+  /* C) SIGN-IN NOTIFICATION EMAIL (EmailJS — free tier, no server needed)
+        Sign up at https://emailjs.com, connect the Gmail account, create a
+        template, then paste the three IDs here. Setup steps are in SETUP.md.
+        Leave as-is and no email is sent — everything else still works.     */
+  var EMAILJS = {
+    publicKey:  "YOUR_EMAILJS_PUBLIC_KEY",
+    serviceId:  "YOUR_EMAILJS_SERVICE_ID",
+    templateId: "YOUR_EMAILJS_TEMPLATE_ID",
+    toEmail:    "youthresearchproject26@gmail.com"
+  };
+
+  /* D) WHEN TO EMAIL
+        "new"   — only the first time an account is created (recommended)
+        "every" — every single sign-in (noisy once you have real traffic)  */
+  var NOTIFY_ON = "every";
+
+  /* E) Where to send people after they sign in. */
+  var DASHBOARD_URL = "dashboard.html";
+  var SIGNIN_URL = "signup.html#signin";
+  var SIGNIN_REMOVED_URL = "signup.html?removed=1#signin";
+
+  /* ===================================================================== */
+
+  var app = null, auth = null, db = null;
+  var configured = firebaseConfig.apiKey !== "YOUR_API_KEY";
+  var librariesMissing = false;
+
+  function init() {
+    if (!configured) return false;
+    // The Firebase libraries load from Google's CDN. If they didn't arrive --
+    // no connection, an ad blocker, a school firewall, or a preview sandbox
+    // that blocks outside scripts -- say so instead of throwing.
+    if (typeof firebase === "undefined") {
+      librariesMissing = true;
+      console.error("[YRP] Firebase libraries did not load from gstatic.com.");
+      return false;
+    }
+    if (!app) {
+      app = firebase.initializeApp(firebaseConfig);
+      auth = firebase.auth();
+      db = firebase.firestore();
+      try { auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL); } catch (e) {}
+      if (window.emailjs && EMAILJS.publicKey !== "YOUR_EMAILJS_PUBLIC_KEY") {
+        try { emailjs.init({ publicKey: EMAILJS.publicKey }); } catch (e) {}
+      }
+    }
+    return true;
+  }
+
+  function notConfiguredMessage() {
+    if (librariesMissing) {
+      return "Couldn't reach Google's Firebase servers, so sign-in is unavailable " +
+             "right now. Check your internet connection, and if you're using an ad " +
+             "blocker or a school network, try again on a different connection.";
+    }
+    return "Accounts aren't connected yet. Add your Firebase project keys in " +
+           "the CONFIG block at the top of this page's script (see SETUP.md) to turn sign-in on.";
+  }
+
+  /* ---------------------------------------------------------------------
+     Device + location context
+     Device comes from the browser. Approximate city/region comes from a
+     free IP lookup (ipapi.co) — it resolves the network the person is on,
+     not their exact address, and it fails quietly if the service is down.
+     --------------------------------------------------------------------- */
+  function parseDevice() {
+    var ua = navigator.userAgent || "";
+    var os = "Unknown OS", browser = "Unknown browser", type = "Desktop";
+
+    if (/Windows NT 10/.test(ua)) os = "Windows 10/11";
+    else if (/Windows/.test(ua)) os = "Windows";
+    else if (/iPhone/.test(ua)) { os = "iOS"; type = "Phone"; }
+    else if (/iPad/.test(ua)) { os = "iPadOS"; type = "Tablet"; }
+    else if (/Android/.test(ua)) { os = "Android"; type = /Mobile/.test(ua) ? "Phone" : "Tablet"; }
+    else if (/CrOS/.test(ua)) { os = "ChromeOS"; type = "Chromebook"; }
+    else if (/Mac OS X/.test(ua)) os = "macOS";
+    else if (/Linux/.test(ua)) os = "Linux";
+
+    if (/Edg\//.test(ua)) browser = "Edge";
+    else if (/OPR\//.test(ua)) browser = "Opera";
+    else if (/Chrome\//.test(ua) && !/Edg\//.test(ua)) browser = "Chrome";
+    else if (/Firefox\//.test(ua)) browser = "Firefox";
+    else if (/Safari\//.test(ua)) browser = "Safari";
+
+    if (type === "Desktop" && /Mobi/.test(ua)) type = "Phone";
+
+    return {
+      type: type,
+      os: os,
+      browser: browser,
+      label: browser + " on " + os + " (" + type + ")",
+      screen: (window.screen ? window.screen.width + "×" + window.screen.height : ""),
+      language: navigator.language || "",
+      userAgent: ua.slice(0, 400)
+    };
+  }
+
+  function lookupLocation() {
+    return fetch("https://ipapi.co/json/")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || d.error) return null;
+        return {
+          ip: d.ip || "",
+          city: d.city || "",
+          region: d.region || "",
+          country: d.country_name || "",
+          countryCode: d.country_code || "",
+          timezone: d.timezone || "",
+          label: [d.city, d.region, d.country_name].filter(Boolean).join(", ")
+        };
+      })
+      .catch(function () { return null; });
+  }
+
+  function collectContext() {
+    return lookupLocation().then(function (loc) {
+      return {
+        device: parseDevice(),
+        location: loc || { label: "Unavailable", ip: "", city: "", region: "", country: "", timezone: "" },
+        at: new Date().toISOString()
+      };
+    });
+  }
+
+  /* ---------------------------------------------------------------------
+     Profile write
+     Creates users/{uid} the first time, updates it on every sign-in, and
+     appends a row to users/{uid}/logins so the admin panel has a history.
+     --------------------------------------------------------------------- */
+  function ageFromDob(dob) {
+    if (!dob) return null;
+    var b = new Date(dob);
+    if (isNaN(b)) return null;
+    var t = new Date(), a = t.getFullYear() - b.getFullYear();
+    var m = t.getMonth() - b.getMonth();
+    if (m < 0 || (m === 0 && t.getDate() < b.getDate())) a--;
+    return (a >= 0 && a < 120) ? a : null;
+  }
+
+  function recordSignIn(user, extra) {
+    extra = extra || {};
+    var ref = db.collection("users").doc(user.uid);
+    var stamp = firebase.firestore.FieldValue.serverTimestamp();
+
+    return collectContext().then(function (ctx) {
+      return ref.get().then(function (snap) {
+        var isNew = !snap.exists;
+        var prev = snap.exists ? snap.data() : {};
+        var email = (user.email || extra.email || "").toLowerCase();
+
+        var names = splitName(user.displayName);
+        var first = extra.firstName || prev.firstName || names.first || "";
+        var last  = extra.lastName  || prev.lastName  || names.last  || "";
+        var dob   = extra.dob || prev.dob || "";
+
+        var payload = {
+          uid: user.uid,
+          email: email,
+          firstName: first,
+          lastName: last,
+          fullName: (first + " " + last).trim() || user.displayName || email,
+          dob: dob,
+          age: ageFromDob(dob),
+          grade: extra.grade || prev.grade || "",
+          school: extra.school !== undefined ? extra.school : (prev.school || ""),
+          interest: extra.interest !== undefined ? extra.interest : (prev.interest || ""),
+          provider: (user.providerData[0] && user.providerData[0].providerId) || "password",
+          photoURL: user.photoURL || prev.photoURL || "",
+          emailVerified: !!user.emailVerified,
+          lastLoginAt: stamp,
+          lastLogin: ctx,
+          loginCount: firebase.firestore.FieldValue.increment(1),
+          disabled: prev.disabled === true
+        };
+
+        if (isNew) {
+          payload.createdAt = stamp;
+          payload.signupContext = ctx;
+          // First admin is seeded by email; everyone else starts as a member.
+          payload.role = (email === ADMIN_EMAIL) ? "admin" : "member";
+        } else if (prev.role !== "admin" && email === ADMIN_EMAIL) {
+          payload.role = "admin";
+        }
+
+        payload.profileComplete = !!(payload.firstName && payload.lastName && payload.dob && payload.grade);
+
+        return ref.set(payload, { merge: true })
+          .then(function () {
+            return ref.collection("logins").add({
+              at: stamp,
+              device: ctx.device,
+              location: ctx.location,
+              provider: payload.provider
+            }).catch(function () { /* history is nice-to-have, never blocking */ });
+          })
+          .then(function () {
+            if (NOTIFY_ON === "every" || isNew) {
+              return sendSignInEmail(payload, ctx, isNew);
+            }
+          })
+          .then(function () { return { isNew: isNew, profile: payload }; });
+      });
+    });
+  }
+
+  function splitName(displayName) {
+    if (!displayName) return { first: "", last: "" };
+    var bits = displayName.trim().split(/\s+/);
+    return { first: bits.shift() || "", last: bits.join(" ") };
+  }
+
+  /* ---------------------------------------------------------------------
+     Sign-in notification email
+     Browsers can't send mail on their own, so this hands the message to
+     EmailJS, which delivers it to the inbox above. Never blocks sign-in.
+     --------------------------------------------------------------------- */
+  function sendSignInEmail(profile, ctx, isNew) {
+    if (!window.emailjs || EMAILJS.serviceId === "YOUR_EMAILJS_SERVICE_ID") {
+      console.info("[YRP] Sign-in email skipped — EmailJS not configured yet.");
+      return Promise.resolve();
+    }
+    var params = {
+      to_email: EMAILJS.toEmail,
+      event_type: isNew ? "New account created" : "Sign-in",
+      user_name: profile.fullName || "(no name on file)",
+      user_email: profile.email,
+      user_grade: profile.grade || "—",
+      user_school: profile.school || "—",
+      user_age: (profile.age === null || profile.age === undefined) ? "—" : String(profile.age),
+      sign_in_method: profile.provider,
+      location: ctx.location.label || "Unavailable",
+      ip_address: ctx.location.ip || "Unavailable",
+      device: ctx.device.label,
+      signed_in_at: new Date().toLocaleString()
+    };
+    return emailjs.send(EMAILJS.serviceId, EMAILJS.templateId, params)
+      .catch(function (err) { console.warn("[YRP] Sign-in email failed:", err); });
+  }
+
+  /* ---------------------------------------------------------------------
+     Page guards
+     guard({ admin: true }) sends non-admins back to the dashboard.
+     The real protection is in firestore.rules — this only controls what
+     the page bothers to render.
+     --------------------------------------------------------------------- */
+  function guard(opts) {
+    opts = opts || {};
+    return new Promise(function (resolve) {
+      if (!init()) {
+        window.location.replace(SIGNIN_URL);
+        return;
+      }
+      auth.onAuthStateChanged(function (user) {
+        if (!user) { window.location.replace(SIGNIN_URL); return; }
+        db.collection("users").doc(user.uid).get().then(function (snap) {
+          var profile = snap.exists ? snap.data() : {};
+          if (profile.disabled === true) {
+            auth.signOut().then(function () {
+              window.location.replace(SIGNIN_REMOVED_URL);
+            });
+            return;
+          }
+          var isAdmin = profile.role === "admin" ||
+                        (user.email || "").toLowerCase() === ADMIN_EMAIL;
+          if (opts.admin && !isAdmin) {
+            window.location.replace(DASHBOARD_URL);
+            return;
+          }
+          resolve({ user: user, profile: profile, isAdmin: isAdmin });
+        }).catch(function (err) {
+          console.error("[YRP] Could not load profile:", err);
+          resolve({ user: user, profile: {}, isAdmin: (user.email || "").toLowerCase() === ADMIN_EMAIL });
+        });
+      });
+    });
+  }
+
+  function signOut() {
+    if (!auth) return Promise.resolve();
+    return auth.signOut().then(function () { window.location.href = SIGNIN_URL; });
+  }
+
+  function providerFor(name) {
+    if (name === "Google") return new firebase.auth.GoogleAuthProvider();
+    if (name === "Apple") return new firebase.auth.OAuthProvider("apple.com");
+    if (name === "Microsoft") return new firebase.auth.OAuthProvider("microsoft.com");
+    return null;
+  }
+
+  function friendlyError(err) {
+    var map = {
+      "auth/email-already-in-use": "That email already has an account. Sign in instead.",
+      "auth/invalid-email": "That email address doesn't look right.",
+      "auth/weak-password": "Pick a password with at least 8 characters.",
+      "auth/wrong-password": "That password doesn't match this account.",
+      "auth/user-not-found": "No account uses that email yet.",
+      "auth/invalid-credential": "That email and password don't match an account.",
+      "auth/too-many-requests": "Too many tries. Wait a minute and try again.",
+      "auth/popup-closed-by-user": "The sign-in window closed before finishing.",
+      "auth/popup-blocked": "Your browser blocked the sign-in window. Allow pop-ups and try again.",
+      "auth/unauthorized-domain": "This domain isn't authorized in Firebase yet. Add it under Authentication > Settings > Authorized domains."
+    };
+    return map[err && err.code] || (err && err.message) || "Something went wrong. Try again.";
+  }
+
+  function initials(profile) {
+    var n = (profile.fullName || profile.email || "?").trim();
+    var parts = n.split(/\s+/);
+    if (parts.length > 1) return (parts[0][0] + parts[1][0]).toUpperCase();
+    return n.slice(0, 2).toUpperCase();
+  }
+
+  function fmtDate(ts) {
+    if (!ts) return "—";
+    var d = ts.toDate ? ts.toDate() : new Date(ts);
+    if (isNaN(d)) return "—";
+    return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) +
+           ", " + d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+  }
+
+  return {
+    init: init,
+    get auth() { return auth; },
+    get db() { return db; },
+    configured: function () { return configured; },
+    notConfiguredMessage: notConfiguredMessage,
+    ADMIN_EMAIL: ADMIN_EMAIL,
+    DASHBOARD_URL: DASHBOARD_URL,
+    SIGNIN_URL: SIGNIN_URL,
+    collectContext: collectContext,
+    parseDevice: parseDevice,
+    recordSignIn: recordSignIn,
+    sendSignInEmail: sendSignInEmail,
+    ageFromDob: ageFromDob,
+    guard: guard,
+    signOut: signOut,
+    providerFor: providerFor,
+    friendlyError: friendlyError,
+    initials: initials,
+    fmtDate: fmtDate
+  };
+})();
+
+  </script>
+
+
 </head>
 <body>
 
@@ -307,7 +791,7 @@ textarea { resize: vertical; min-height: 90px; }
         <a href="leadership.html">Leadership</a>
         <a href="leadership.html#join">Get Involved</a>
         <span class="nav-actions">
-          <a class="btn btn--ghost" href="#top">My Account</a>
+          <a class="btn btn--ghost" href="signup.html#signin">Sign in</a>
           <a class="btn btn--primary current" href="signup.html">Sign Up</a>
         </span>
       </nav>
@@ -315,28 +799,29 @@ textarea { resize: vertical; min-height: 90px; }
   </header>
 
   <main>
-    <!-- ===================== PAGE HERO ===================== -->
     <section class="page-hero">
       <div class="wrap">
-        <span class="eyebrow">Join for free</span>
-        <h1>Create your <span class="grad-text">account.</span></h1>
-        <p>Sign up to save your progress through the guides, track your project, and get updates when new resources go live.</p>
+        <span class="eyebrow" id="hero-eyebrow">Join for free</span>
+        <h1 id="hero-title">Create your <span class="grad-text">account.</span></h1>
+        <p id="hero-sub">Sign up to save your progress through the guides, track your project, and get updates when new resources go live.</p>
       </div>
     </section>
 
-    <!-- ===================== SIGN UP FORM ===================== -->
     <section class="section">
       <div class="wrap">
         <div class="signup-wrap">
           <div class="signup-card">
 
-            <!--
-              SOCIAL SIGN-IN
-              These buttons are wired to Firebase Authentication. Until you
-              add your own Firebase project config (see "FIREBASE CONFIG"
-              in the <script> near the bottom of this file), clicking them
-              will show a setup reminder instead of signing anyone in.
-            -->
+            <!-- Shown only while Firebase keys are still placeholders -->
+            <div class="form-alert form-alert--warn" id="setup-alert">
+              <span id="setup-alert-text"></span>
+            </div>
+
+            <div class="mode-tabs" role="tablist">
+              <button type="button" data-mode="signup" class="on">Create account</button>
+              <button type="button" data-mode="signin">Sign in</button>
+            </div>
+
             <div class="social-grid">
               <button type="button" class="btn btn--social btn--block" data-provider="Google">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -364,11 +849,10 @@ textarea { resize: vertical; min-height: 90px; }
               </button>
             </div>
 
-            <div class="divider-word">or sign up with email</div>
+            <div class="divider-word"><span id="divider-text">or sign up with email</span></div>
 
-            <!-- General error banner (shown by JS if the form is submitted with issues) -->
             <div class="form-alert form-alert--error" id="form-alert">
-              <span>Please fix the highlighted fields below and try again.</span>
+              <span id="form-alert-text">Fix the highlighted fields below, then try again.</span>
             </div>
 
             <form class="signup-form" id="signup-form" novalidate>
@@ -376,19 +860,19 @@ textarea { resize: vertical; min-height: 90px; }
                 <div class="form-row">
                   <label for="first-name">First name<span class="required-mark">*</span></label>
                   <input type="text" id="first-name" name="first-name" autocomplete="given-name" required>
-                  <p class="field-error" id="err-first-name">Input required.</p>
+                  <p class="field-error" id="err-first-name">Enter your first name.</p>
                 </div>
                 <div class="form-row">
                   <label for="last-name">Last name<span class="required-mark">*</span></label>
                   <input type="text" id="last-name" name="last-name" autocomplete="family-name" required>
-                  <p class="field-error" id="err-last-name">Input required.</p>
+                  <p class="field-error" id="err-last-name">Enter your last name.</p>
                 </div>
               </div>
 
               <div class="form-row">
                 <label for="email">Email address<span class="required-mark">*</span></label>
                 <input type="email" id="email" name="email" autocomplete="email" required>
-                <p class="field-error" id="err-email">Input required.</p>
+                <p class="field-error" id="err-email">Enter a valid email address.</p>
               </div>
 
               <div class="form-row-split">
@@ -401,7 +885,7 @@ textarea { resize: vertical; min-height: 90px; }
                       <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a20.6 20.6 0 0 1 5.06-5.94M9.9 4.24A10.6 10.6 0 0 1 12 4c7 0 11 7 11 7a20.7 20.7 0 0 1-2.34 3.32M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>
                     </button>
                   </div>
-                  <p class="field-error" id="err-password">Input required (8+ characters).</p>
+                  <p class="field-error" id="err-password">Use at least 8 characters.</p>
                 </div>
                 <div class="form-row">
                   <label for="password-confirm">Confirm password<span class="required-mark">*</span></label>
@@ -412,17 +896,19 @@ textarea { resize: vertical; min-height: 90px; }
                       <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a20.6 20.6 0 0 1 5.06-5.94M9.9 4.24A10.6 10.6 0 0 1 12 4c7 0 11 7 11 7a20.7 20.7 0 0 1-2.34 3.32M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>
                     </button>
                   </div>
-                  <p class="field-error" id="err-password-confirm">Passwords must match.</p>
+                  <p class="field-error" id="err-password-confirm">Both passwords need to match.</p>
                 </div>
               </div>
 
               <div class="form-row-split">
                 <div class="form-row">
-                  <label for="school">School <span class="opt">(optional)</span></label>
-                  <input type="text" id="school" name="school" autocomplete="organization">
+                  <label for="dob">Date of birth<span class="required-mark">*</span></label>
+                  <input type="date" id="dob" name="dob" autocomplete="bday" required>
+                  <p class="field-hint">Used to check you're old enough to join on your own.</p>
+                  <p class="field-error" id="err-dob">Enter your date of birth.</p>
                 </div>
                 <div class="form-row">
-                  <label for="grade">Grade level</label>
+                  <label for="grade">Grade level<span class="required-mark">*</span></label>
                   <select id="grade" name="grade" required>
                     <option value="" disabled selected>Select one</option>
                     <option value="9">9th grade</option>
@@ -431,8 +917,13 @@ textarea { resize: vertical; min-height: 90px; }
                     <option value="12">12th grade</option>
                     <option value="other">Other / not in high school</option>
                   </select>
-                  <p class="field-error" id="err-grade">Please select your grade level.</p>
+                  <p class="field-error" id="err-grade">Choose your grade level.</p>
                 </div>
+              </div>
+
+              <div class="form-row">
+                <label for="school">School <span class="opt">(optional)</span></label>
+                <input type="text" id="school" name="school" autocomplete="organization">
               </div>
 
               <div class="form-row">
@@ -442,29 +933,52 @@ textarea { resize: vertical; min-height: 90px; }
 
               <div class="checkbox-row">
                 <input type="checkbox" id="agree" name="agree" required>
-                <label for="agree">I agree to the Youth Research Project's terms and understand this is a free student resource.</label>
+                <label for="agree">I agree to the Youth Research Project's <a href="privacy.html">terms and privacy notice</a>, and I understand this is a free student resource.</label>
               </div>
-              <p class="field-error" id="err-agree" style="margin-top:-1.1rem; margin-bottom: 1.3rem;">Please confirm to continue.</p>
+              <p class="field-error" id="err-agree" style="margin-top:-1.1rem; margin-bottom: 1.3rem;">Check the box to continue.</p>
 
               <button type="submit" class="btn btn--primary btn--block" id="submit-btn">Create account</button>
 
-              <p class="form-note">We'll never share your information. Unsubscribe anytime.</p>
+              <p class="form-note">We record the city and device you sign in from to keep accounts secure. We never sell your information.</p>
             </form>
 
-            <!-- Success state, shown after client-side "submission" -->
+
+            <!-- Sign-in mode: shown when the "Sign in" tab is chosen -->
+            <form class="signin-form hidden" id="signin-form" novalidate>
+              <div class="form-row">
+                <label for="si-email">Email address</label>
+                <input type="email" id="si-email" name="si-email" autocomplete="email" required>
+              </div>
+              <div class="form-row">
+                <div class="row-between">
+                  <label for="si-password">Password</label>
+                  <button type="button" class="linky" id="reset-link">Forgot password?</button>
+                </div>
+                <div class="password-field">
+                  <input type="password" id="si-password" name="si-password" autocomplete="current-password" required>
+                  <button type="button" class="password-toggle" data-target="si-password" aria-pressed="false" aria-label="Show password">
+                      <svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                      <svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a20.6 20.6 0 0 1 5.06-5.94M9.9 4.24A10.6 10.6 0 0 1 12 4c7 0 11 7 11 7a20.7 20.7 0 0 1-2.34 3.32M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>
+                    </button>
+                </div>
+              </div>
+              <button type="submit" class="btn btn--primary btn--block" id="signin-btn">Sign in</button>
+              <p class="form-note">Signing in from a new place? We'll note the city and device so you can spot anything that wasn't you.</p>
+            </form>
+
             <div class="signup-success" id="signup-success">
               <div class="check-badge">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
               </div>
               <h2>You're in!</h2>
-              <p>Thanks for signing up. Check your inbox for a confirmation email, then head to Start Here to begin your first guide.</p>
+              <p>Your account is ready. Taking you to your dashboard…</p>
               <div style="margin-top:1.6rem;">
-                <a class="btn btn--ghost" href="start-here.html">Go to Start Here</a>
+                <a class="btn btn--ghost" href="dashboard.html">Open my dashboard</a>
               </div>
             </div>
 
             <div class="signin-note" id="signin-note">
-              Already have an account? <a href="#top">Sign in</a>
+              <span id="switch-note">Already have an account? <a href="#signin" data-mode-link="signin">Sign in</a></span>
             </div>
           </div>
         </div>
@@ -501,6 +1015,7 @@ textarea { resize: vertical; min-height: 90px; }
           <ul>
             <li><a href="start-here.html">Start Here</a></li>
             <li><a href="signup.html">Sign Up</a></li>
+            <li><a href="dashboard.html">My dashboard</a></li>
           </ul>
         </div>
         <div>
@@ -520,15 +1035,13 @@ textarea { resize: vertical; min-height: 90px; }
   </footer>
 
   <script>
-// Sticky header shadow on scroll
+/* ---- Chrome: sticky header, mobile nav, year --------------------------- */
 const header = document.querySelector('.site-header');
 if (header) {
   const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 }
-
-// Mobile nav toggle
 const toggle = document.querySelector('.nav-toggle');
 const nav = document.getElementById('site-nav');
 if (toggle && nav) {
@@ -541,25 +1054,41 @@ if (toggle && nav) {
     toggle.setAttribute('aria-expanded', false);
   }));
 }
+document.getElementById('year').textContent = new Date().getFullYear();
 
-// Footer year
-const yearEl = document.getElementById('year');
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+/* ---- Show / hide password --------------------------------------------- */
+document.querySelectorAll('.password-toggle').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const input = document.getElementById(btn.getAttribute('data-target'));
+    const hidden = input.type === 'password';
+    input.type = hidden ? 'text' : 'password';
+    btn.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+    btn.setAttribute('aria-label', hidden ? 'Hide password' : 'Show password');
+  });
+});
 
-/* ---------------------------------------------------------------------
-   SIGN-UP FORM
-   This is a front-end-only mock: it validates the fields and shows a
-   success state, but does NOT create a real account or send any data
-   anywhere yet. To make it functional, replace the `handleSubmit`
-   function below with a real request to your backend, form service
-   (e.g. Formspree, Google Forms), or auth provider (e.g. Firebase,
-   Supabase, Auth0) -- wherever you're storing YRP accounts.
-   --------------------------------------------------------------------- */
+/* =======================================================================
+   SIGN UP
+   Creates a real Firebase account, saves the profile to Firestore, and
+   emails the admin address that someone signed in. All of the wiring and
+   the keys live in the CONFIG block at the top of this page's script.
+   ======================================================================= */
 const form = document.getElementById('signup-form');
 const alertBox = document.getElementById('form-alert');
+const alertText = document.getElementById('form-alert-text');
 const successBox = document.getElementById('signup-success');
 const signinNote = document.getElementById('signin-note');
 const submitBtn = document.getElementById('submit-btn');
+const setupAlert = document.getElementById('setup-alert');
+
+const ready = YRP.init();
+if (!ready) {
+  document.getElementById('setup-alert-text').textContent = YRP.notConfiguredMessage();
+  setupAlert.classList.add('show');
+}
+
+// Cap the date picker so nobody can pick tomorrow.
+document.getElementById('dob').max = new Date().toISOString().split('T')[0];
 
 function setFieldError(id, hasError) {
   const field = document.getElementById(id);
@@ -567,157 +1096,198 @@ function setFieldError(id, hasError) {
   if (field) field.classList.toggle('invalid', hasError);
   if (err) err.classList.toggle('show', hasError);
 }
-
-function isValidEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+function showAlert(message) {
+  alertText.textContent = message;
+  alertBox.classList.add('show');
+  alertBox.scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
 
-if (form) {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+// True while a sign-up is mid-flight, so the "already signed in" redirect
+// below doesn't fire before the profile is saved and the email is sent.
+let inFlight = false;
 
-    const firstName = document.getElementById('first-name').value.trim();
-    const lastName = document.getElementById('last-name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-    const passwordConfirm = document.getElementById('password-confirm').value;
-    const grade = document.getElementById('grade').value;
-    const agree = document.getElementById('agree').checked;
-
-    let hasError = false;
-
-    setFieldError('first-name', !firstName); if (!firstName) hasError = true;
-    setFieldError('last-name', !lastName); if (!lastName) hasError = true;
-    setFieldError('email', !isValidEmail(email)); if (!isValidEmail(email)) hasError = true;
-
-    const passwordInvalid = !password || password.length < 8;
-    setFieldError('password', passwordInvalid); if (passwordInvalid) hasError = true;
-
-    const confirmInvalid = !passwordConfirm || passwordConfirm !== password;
-    setFieldError('password-confirm', confirmInvalid); if (confirmInvalid) hasError = true;
-
-    setFieldError('grade', !grade); if (!grade) hasError = true;
-
-    const agreeErr = document.getElementById('err-agree');
-    if (!agree) { agreeErr.classList.add('show'); hasError = true; }
-    else { agreeErr.classList.remove('show'); }
-
-    alertBox.classList.toggle('show', hasError);
-    if (hasError) return;
-
-    handleSubmit({ firstName, lastName, email, password, grade,
-      school: document.getElementById('school').value.trim(),
-      interest: document.getElementById('interest').value.trim() });
-  });
+function showSuccess(message) {
+  form.classList.add('hide');
+  signinForm.classList.add('hidden');
+  document.querySelector('.mode-tabs').style.display = 'none';
+  signinNote.style.display = 'none';
+  document.querySelector('.social-grid').style.display = 'none';
+  document.querySelector('.divider-word').style.display = 'none';
+  alertBox.classList.remove('show');
+  if (message) successBox.querySelector('p').textContent = message;
+  successBox.classList.add('show');
+  setTimeout(() => { window.location.href = 'dashboard.html'; }, 1400);
 }
 
-// Show/hide password toggles
-document.querySelectorAll('.password-toggle').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const targetId = btn.getAttribute('data-target');
-    const input = document.getElementById(targetId);
-    const isHidden = input.type === 'password';
-    input.type = isHidden ? 'text' : 'password';
-    btn.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
-    btn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
-  });
-});
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-/* ---------------------------------------------------------------------
-   FIREBASE CONFIG — fill this in with YOUR project's values
-   ---------------------------------------------------------------------
-   1. Go to https://console.firebase.google.com and create a free project.
-   2. In the project, go to Build > Authentication > Sign-in method, and
-      enable the providers you want: Google, Apple, Microsoft.
-        - Google: works immediately, no extra setup.
-        - Apple: requires an Apple Developer account ($99/yr) to register
-          a Services ID — see Firebase's "Apple" sign-in setup guide.
-        - Microsoft: requires registering an app in the Azure Portal
-          (free) — Firebase's "Microsoft" sign-in setup guide walks
-          through it.
-   3. In Project settings > General > Your apps, click "Add app" > Web,
-      and copy the firebaseConfig object it gives you. Paste it below,
-      replacing the placeholder values (these are public identifiers,
-      safe to expose in client-side code).
-   4. In Authentication > Settings > Authorized domains, add your GitHub
-      Pages domain (e.g. yourusername.github.io) or custom domain.
-   5. Push this file to GitHub — the buttons will then open a real
-      sign-in popup for each provider.
-   ------------------------------------------------------------------ */
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
+  const firstName = document.getElementById('first-name').value.trim();
+  const lastName = document.getElementById('last-name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const passwordConfirm = document.getElementById('password-confirm').value;
+  const dob = document.getElementById('dob').value;
+  const grade = document.getElementById('grade').value;
+  const agree = document.getElementById('agree').checked;
 
-let firebaseReady = false;
-try {
-  if (window.firebase && firebaseConfig.apiKey !== "YOUR_API_KEY") {
-    firebase.initializeApp(firebaseConfig);
-    firebaseReady = true;
-  }
-} catch (err) {
-  console.error("Firebase init failed:", err);
-}
+  let hasError = false;
+  const flag = (id, bad) => { setFieldError(id, bad); if (bad) hasError = true; };
 
-function signInWithProvider(providerName) {
-  if (!firebaseReady) {
-    alert(
-      "Sign in with " + providerName + " isn't connected yet.\n\n" +
-      "Add your Firebase project config in the script (search for " +
-      "\"FIREBASE CONFIG\" in signup.html) to activate this button."
-    );
-    return;
-  }
+  flag('first-name', !firstName);
+  flag('last-name', !lastName);
+  flag('email', !isValidEmail(email));
+  flag('password', !password || password.length < 8);
+  flag('password-confirm', !passwordConfirm || passwordConfirm !== password);
+  flag('dob', !dob || YRP.ageFromDob(dob) === null);
+  flag('grade', !grade);
 
-  let provider;
-  if (providerName === "Google") {
-    provider = new firebase.auth.GoogleAuthProvider();
-  } else if (providerName === "Apple") {
-    provider = new firebase.auth.OAuthProvider("apple.com");
-  } else if (providerName === "Microsoft") {
-    provider = new firebase.auth.OAuthProvider("microsoft.com");
-  } else {
-    return;
-  }
+  const agreeErr = document.getElementById('err-agree');
+  agreeErr.classList.toggle('show', !agree);
+  if (!agree) hasError = true;
 
-  firebase.auth().signInWithPopup(provider)
-    .then((result) => {
-      const user = result.user;
-      console.log("Signed in:", user.displayName, user.email);
-      // Successful sign-in — show the same success state as email signup.
-      form.classList.add("hide");
-      signinNote.style.display = "none";
-      document.querySelector(".social-grid").style.display = "none";
-      document.querySelector(".divider-word").style.display = "none";
-      successBox.classList.add("show");
-    })
-    .catch((error) => {
-      console.error("Sign-in error:", error);
-      alert("Sign-in with " + providerName + " failed: " + error.message);
-    });
-}
+  if (hasError) { showAlert('Fix the highlighted fields below, then try again.'); return; }
+  alertBox.classList.remove('show');
 
-document.querySelectorAll('.btn--social').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    signInWithProvider(btn.getAttribute('data-provider'));
-  });
-});
+  if (!ready) { showAlert(YRP.notConfiguredMessage()); return; }
 
-function handleSubmit(data) {
-  // TODO: replace this block with a real network request, e.g.:
-  // fetch('/api/signup', { method: 'POST', body: JSON.stringify(data) })
+  inFlight = true;
   submitBtn.disabled = true;
   submitBtn.textContent = 'Creating account…';
 
-  setTimeout(() => {
-    form.classList.add('hide');
-    signinNote.style.display = 'none';
-    successBox.classList.add('show');
-  }, 600);
+  const extra = {
+    firstName, lastName, dob, grade,
+    school: document.getElementById('school').value.trim(),
+    interest: document.getElementById('interest').value.trim()
+  };
+
+  YRP.auth.createUserWithEmailAndPassword(email, password)
+    .then((cred) => cred.user.updateProfile({ displayName: firstName + ' ' + lastName })
+      .then(() => YRP.recordSignIn(cred.user, extra)))
+    .then(() => showSuccess("Your account is ready. Taking you to your dashboard…"))
+    .catch((err) => {
+      console.error(err);
+      inFlight = false;
+      showAlert(YRP.friendlyError(err));
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Create account';
+    });
+});
+
+/* ---- Google / Apple / Microsoft ---------------------------------------- */
+document.querySelectorAll('.btn--social').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const name = btn.getAttribute('data-provider');
+    if (!ready) { showAlert(YRP.notConfiguredMessage()); return; }
+
+    const provider = YRP.providerFor(name);
+    if (!provider) return;
+
+    inFlight = true;
+    YRP.auth.signInWithPopup(provider)
+      .then((result) => YRP.recordSignIn(result.user, {}))
+      .then((res) => showSuccess(res.isNew
+        ? "Your account is ready. Add your grade and birthday on the dashboard whenever you like."
+        : "Welcome back. Taking you to your dashboard…"))
+      .catch((err) => { inFlight = false; console.error(err); showAlert(YRP.friendlyError(err)); });
+  });
+});
+
+
+/* =======================================================================
+   MODE TOGGLE
+   One page, two jobs. Creating an account and signing in are different
+   operations underneath, so they stay as separate forms -- the tabs just
+   decide which one is on screen.
+   ======================================================================= */
+const signinForm = document.getElementById('signin-form');
+const signinBtn = document.getElementById('signin-btn');
+
+function setMode(mode) {
+  const isSignin = mode === 'signin';
+  document.querySelectorAll('.mode-tabs button').forEach(b =>
+    b.classList.toggle('on', b.dataset.mode === mode));
+  form.classList.toggle('hidden', isSignin);
+  signinForm.classList.toggle('hidden', !isSignin);
+
+  document.getElementById('hero-eyebrow').textContent = isSignin ? 'Welcome back' : 'Join for free';
+  document.getElementById('hero-title').innerHTML = isSignin
+    ? 'Sign in to your <span class="grad-text">account.</span>'
+    : 'Create your <span class="grad-text">account.</span>';
+  document.getElementById('hero-sub').textContent = isSignin
+    ? 'Pick up your project and your progress through the guides, right where you left off.'
+    : 'Sign up to save your progress through the guides, track your project, and get updates when new resources go live.';
+  document.getElementById('divider-text').textContent = isSignin ? 'or use your email' : 'or sign up with email';
+  document.getElementById('switch-note').innerHTML = isSignin
+    ? 'New here? <a href="#signup" data-mode-link="signup">Create a free account</a>'
+    : 'Already have an account? <a href="#signin" data-mode-link="signin">Sign in</a>';
+
+  alertBox.classList.remove('show');
+  alertBox.classList.remove('form-alert--ok');
+  alertBox.classList.add('form-alert--error');
+  history.replaceState(null, '', isSignin ? '#signin' : location.pathname + location.search);
+}
+
+document.querySelectorAll('.mode-tabs button').forEach(b =>
+  b.addEventListener('click', () => setMode(b.dataset.mode)));
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('[data-mode-link]');
+  if (link) { e.preventDefault(); setMode(link.dataset.modeLink); }
+});
+
+function showOk(message) {
+  alertText.textContent = message;
+  alertBox.classList.remove('form-alert--error');
+  alertBox.classList.add('form-alert--ok', 'show');
+}
+
+/* ---- Sign in ----------------------------------------------------------- */
+signinForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('si-email').value.trim();
+  const password = document.getElementById('si-password').value;
+  if (!email || !password) { showAlert('Enter both your email and password.'); return; }
+  if (!ready) { showAlert(YRP.notConfiguredMessage()); return; }
+
+  inFlight = true;
+  signinBtn.disabled = true;
+  signinBtn.textContent = 'Signing in\u2026';
+  YRP.auth.signInWithEmailAndPassword(email, password)
+    .then((cred) => YRP.recordSignIn(cred.user, {}))
+    .then(() => { window.location.href = 'dashboard.html'; })
+    .catch((err) => {
+      inFlight = false;
+      showAlert(YRP.friendlyError(err));
+      signinBtn.disabled = false;
+      signinBtn.textContent = 'Sign in';
+    });
+});
+
+document.getElementById('reset-link').addEventListener('click', () => {
+  const email = document.getElementById('si-email').value.trim();
+  if (!email) { showAlert('Type your email address above first, then choose Forgot password.'); return; }
+  if (!ready) { showAlert(YRP.notConfiguredMessage()); return; }
+  YRP.auth.sendPasswordResetEmail(email)
+    .then(() => showOk('Reset link sent to ' + email + '. Check your inbox, and your spam folder.'))
+    .catch((err) => showAlert(YRP.friendlyError(err)));
+});
+
+/* ---- Which tab opens first --------------------------------------------- */
+if (new URLSearchParams(location.search).get('removed') === '1') {
+  setMode('signin');
+  showAlert('This account is no longer active. Contact the Youth Research Project team if that looks wrong.');
+} else if (location.hash === '#signin') {
+  setMode('signin');
+}
+
+/* If someone lands here already signed in, send them straight through. */
+if (ready) {
+  YRP.auth.onAuthStateChanged((user) => {
+    if (user && !inFlight && !successBox.classList.contains('show')) {
+      window.location.replace('dashboard.html');
+    }
+  });
 }
   </script>
 </body>
