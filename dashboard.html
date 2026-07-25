@@ -274,22 +274,24 @@ textarea { resize: vertical; min-height: 90px; }
     .side-nav .admin-link { color: var(--warn); }
     .side-nav .admin-link:hover { background: var(--warn-tint); color: var(--warn); }
 
-    .side-nav .step-toggle { justify-content: space-between; }
-    .side-nav .step-toggle .chev { margin-left: auto; transition: transform 0.18s ease; opacity: 0.55; }
-    .side-nav .step-toggle[aria-expanded="true"] .chev { transform: rotate(90deg); opacity: 0.9; }
-    .step-sublist {
+    /* Reused by any sidebar item that expands into a list of page links,
+       instead of switching the pane (currently: the 6 steps, subjects). */
+    .side-nav .dropdown-toggle { justify-content: space-between; }
+    .side-nav .dropdown-toggle .chev { margin-left: auto; transition: transform 0.18s ease; opacity: 0.55; }
+    .side-nav .dropdown-toggle[aria-expanded="true"] .chev { transform: rotate(90deg); opacity: 0.9; }
+    .side-sublist {
       list-style: none; margin: 0.15rem 0 0.3rem; padding: 0;
-      max-height: 0; overflow: hidden; transition: max-height 0.22s ease;
+      max-height: 0; overflow: hidden; transition: max-height 0.25s ease;
     }
-    .step-sublist.open { max-height: 20rem; }
-    .step-sublist a {
+    .side-sublist.open { max-height: 70rem; }
+    .side-sublist a {
       display: flex; align-items: baseline; gap: 0.55rem;
       padding: 0.48rem 0.9rem 0.48rem 2.55rem; font-size: 0.88rem;
       color: var(--body); text-decoration: none; border-radius: var(--radius-sm);
       transition: background-color 0.15s ease, color 0.15s ease;
     }
-    .step-sublist a:hover { background: var(--paper); color: var(--lavender-deep); }
-    .step-sublist a .n { font-family: var(--font-display); color: var(--lavender-deep); flex: none; }
+    .side-sublist a:hover { background: var(--paper); color: var(--lavender-deep); }
+    .side-sublist a .n { font-family: var(--font-display); color: var(--lavender-deep); flex: none; }
 
     /* ---- Panels -------------------------------------------------------- */
     .pane { display: none; animation: fadeUp 0.3s ease; }
@@ -849,12 +851,12 @@ window.YRP = (function () {
           <h4>Learn</h4>
           <nav class="side-nav" id="side-nav">
             <button data-pane="overview" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg> Overview</button>
-            <button type="button" class="step-toggle" id="steps-toggle" aria-expanded="false" aria-controls="steps-sublist">
+            <button type="button" class="dropdown-toggle" id="steps-toggle" aria-expanded="false" aria-controls="steps-sublist">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6h11M9.5 12h11M9.5 18h11"/><circle cx="4.6" cy="6" r="1.4"/><circle cx="4.6" cy="12" r="1.4"/><circle cx="4.6" cy="18" r="1.4"/></svg>
               The 6 steps of research
               <svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
             </button>
-            <ul class="step-sublist" id="steps-sublist">
+            <ul class="side-sublist" id="steps-sublist">
               <li><a href="step-1-find-your-question.html"><span class="n">1</span> Find your question</a></li>
               <li><a href="step-2-find-out-whats-known.html"><span class="n">2</span> Find out what's already known</a></li>
               <li><a href="step-3-design-your-method.html"><span class="n">3</span> Design your method</a></li>
@@ -863,7 +865,44 @@ window.YRP = (function () {
               <li><a href="step-6-share-your-findings.html"><span class="n">6</span> Share your findings</a></li>
             </ul>
             <button data-pane="citations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 5.2A1.7 1.7 0 0 1 6.2 3.5H19.5v14.2H6.2a1.7 1.7 0 0 0-1.7 1.7V5.2Z"/><path d="M4.5 19.4a1.7 1.7 0 0 1 1.7-1.7H19.5v2.8H6.2a1.7 1.7 0 0 1-1.7-1.1Z"/><path d="M8.5 8h7"/></svg> Ways to do citations</button>
-            <button data-pane="subjects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1 5.1-2.1Z"/></svg> Research by subject</button>
+            <button type="button" class="dropdown-toggle" id="subjects-toggle" aria-expanded="false" aria-controls="subjects-sublist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1 5.1-2.1Z"/></svg>
+              Research by subject
+              <svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+            </button>
+            <ul class="side-sublist" id="subjects-sublist">
+              <li><a href="subject-anthropology.html">Anthropology</a></li>
+              <li><a href="subject-architecture.html">Architecture</a></li>
+              <li><a href="subject-art.html">Art (studio & practice-based)</a></li>
+              <li><a href="subject-art-history.html">Art History</a></li>
+              <li><a href="subject-astronomy.html">Astronomy</a></li>
+              <li><a href="subject-biology.html">Biology & lab sciences</a></li>
+              <li><a href="subject-business.html">Business</a></li>
+              <li><a href="subject-chemistry.html">Chemistry</a></li>
+              <li><a href="subject-computer-science.html">Computer Science</a></li>
+              <li><a href="subject-criminology.html">Criminology</a></li>
+              <li><a href="subject-ecology.html">Ecology</a></li>
+              <li><a href="subject-economics.html">Economics & public policy</a></li>
+              <li><a href="subject-education.html">Education</a></li>
+              <li><a href="subject-engineering.html">Engineering</a></li>
+              <li><a href="subject-environmental-studies.html">Environmental Studies</a></li>
+              <li><a href="subject-film-studies.html">Film Studies</a></li>
+              <li><a href="subject-gender-studies.html">Gender Studies</a></li>
+              <li><a href="subject-history.html">History</a></li>
+              <li><a href="subject-international-relations.html">International Relations</a></li>
+              <li><a href="subject-linguistics.html">Linguistics</a></li>
+              <li><a href="subject-literature.html">Literature & English</a></li>
+              <li><a href="subject-mathematics.html">Mathematics</a></li>
+              <li><a href="subject-media-studies.html">Media Studies</a></li>
+              <li><a href="subject-music.html">Music</a></li>
+              <li><a href="subject-neuroscience.html">Neuroscience</a></li>
+              <li><a href="subject-philosophy.html">Philosophy</a></li>
+              <li><a href="subject-physics.html">Physics</a></li>
+              <li><a href="subject-political-science.html">Political Science</a></li>
+              <li><a href="subject-psychology.html">Psychology & social science</a></li>
+              <li><a href="subject-public-health.html">Public Health</a></li>
+              <li><a href="subject-sociology.html">Sociology</a></li>
+            </ul>
             <button data-pane="types"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.4 8.6 4.8-8.6 4.8-8.6-4.8L12 3.4Z"/><path d="m3.4 13 8.6 4.8L20.6 13"/></svg> Types of research</button>
           </nav>
         </div>
@@ -982,104 +1021,6 @@ window.YRP = (function () {
           </div>
         </div>
 
-        <!-- BY SUBJECT -->
-        <div class="pane" id="pane-subjects">
-          <h2>Research by subject</h2>
-          <p class="lede">The six steps hold everywhere, but what counts as evidence changes a lot between fields. Here's what a strong project looks like in each.</p>
-
-          <div class="tile-grid">
-            <div class="tile">
-              <h3>Music</h3>
-              <p>Evidence is scores, recordings, and performance practice — or listener data if you go empirical.</p>
-              <ul>
-                <li>Analytical: pick a small corpus (10–20 pieces) and code one feature — harmonic rhythm, form, text setting.</li>
-                <li>Historical: work from primary sources — manuscripts, letters, concert programs, early reviews.</li>
-                <li>Empirical: measure something listeners do — tempo preference, emotion ratings, memory for melody.</li>
-                <li>Cite the edition and recording you used, not just the composer.</li>
-              </ul>
-            </div>
-            <div class="tile">
-              <h3>History</h3>
-              <p>Primary sources are the whole game. Secondary sources tell you how others have read them.</p>
-              <ul>
-                <li>Find primary material you can actually reach: local archives, newspapers, census records, oral histories, digitized collections.</li>
-                <li>Ask who made the source, for whom, and what they left out.</li>
-                <li>Build an argument, not a timeline — a paper that only narrates isn't research.</li>
-                <li>Chicago footnotes are the norm.</li>
-              </ul>
-            </div>
-            <div class="tile">
-              <h3>Mathematics</h3>
-              <p>Evidence is proof. Computation guides intuition but doesn't settle anything.</p>
-              <ul>
-                <li>Start from a known theorem and change one condition — what breaks?</li>
-                <li>Compute small cases, conjecture a pattern, then prove it.</li>
-                <li>State definitions precisely before you use them.</li>
-                <li>Expository work counts too: a clear proof of a hard result, written for your peers.</li>
-              </ul>
-            </div>
-            <div class="tile">
-              <h3>Biology &amp; lab sciences</h3>
-              <p>Controls, replicates, and a variable you can actually isolate.</p>
-              <ul>
-                <li>Change one thing at a time; hold everything else fixed.</li>
-                <li>Run at least three replicates per condition — one run tells you nothing.</li>
-                <li>Include a negative and, where possible, a positive control.</li>
-                <li>Anything involving vertebrates, human subjects, or pathogens needs adult supervision and approval first.</li>
-              </ul>
-            </div>
-            <div class="tile">
-              <h3>Psychology &amp; social science</h3>
-              <p>People are the instrument and the subject, so design and ethics matter more here than anywhere.</p>
-              <ul>
-                <li>Use a validated scale where one exists rather than writing your own questions.</li>
-                <li>Decide your sample and analysis before collecting — no fishing afterward.</li>
-                <li>Get informed consent, and parental consent for participants under 18.</li>
-                <li>Keep responses anonymous and store them somewhere locked.</li>
-              </ul>
-            </div>
-            <div class="tile">
-              <h3>Literature &amp; English</h3>
-              <p>The text is the data. Close reading is the method.</p>
-              <ul>
-                <li>Anchor every claim to specific lines you quote and analyze.</li>
-                <li>Read two or three critics and position your reading against theirs.</li>
-                <li>A comparison needs a reason — what does putting these two texts together reveal?</li>
-                <li>MLA, with page numbers in every in-text citation.</li>
-              </ul>
-            </div>
-            <div class="tile">
-              <h3>Computer science &amp; engineering</h3>
-              <p>A build isn't a finding. The evaluation is what makes it research.</p>
-              <ul>
-                <li>Define a metric and a baseline before you start building.</li>
-                <li>Test on data or conditions you didn't tune on.</li>
-                <li>Report failures and runtime, not just the best case.</li>
-                <li>Publish your code and data so someone can rerun it.</li>
-              </ul>
-            </div>
-            <div class="tile">
-              <h3>Art, film &amp; design</h3>
-              <p>Either analyze existing work, or make work and study its effect.</p>
-              <ul>
-                <li>Describe the object carefully before interpreting it.</li>
-                <li>Situate it — who made it, when, for what audience, under what constraints.</li>
-                <li>Practice-based projects need a written component explaining the question and the choices.</li>
-                <li>Get image permissions and credit every reproduction.</li>
-              </ul>
-            </div>
-            <div class="tile">
-              <h3>Economics &amp; public policy</h3>
-              <p>Public datasets are enormous and free. The skill is asking a question they can answer.</p>
-              <ul>
-                <li>Start from a real dataset: census, BLS, World Bank, city open-data portals.</li>
-                <li>Say plainly what would have to be true for your result to mean what you claim.</li>
-                <li>Compare across time or across places to get leverage.</li>
-                <li>Show your data cleaning steps — most of the work lives there.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
 
         <!-- TYPES OF RESEARCH -->
         <div class="pane" id="pane-types">
@@ -1518,16 +1459,17 @@ document.addEventListener('click', (e) => {
   if (goto) { showPane(goto.dataset.goto); return; }
 });
 
-/* The 6 steps: a dropdown of real links, not a pane -- clicking it never
-   changes what's on screen, it just reveals the six step pages below it. */
-const stepsToggle = document.getElementById('steps-toggle');
-const stepsSublist = document.getElementById('steps-sublist');
-if (stepsToggle && stepsSublist) {
-  stepsToggle.addEventListener('click', () => {
-    const open = stepsSublist.classList.toggle('open');
-    stepsToggle.setAttribute('aria-expanded', open);
+/* Sidebar dropdowns (the 6 steps, subjects, ...): a list of real links,
+   not a pane -- clicking the header never changes what's on screen, it
+   just reveals the page links nested under it. */
+document.querySelectorAll('.dropdown-toggle').forEach((toggle) => {
+  const list = document.getElementById(toggle.getAttribute('aria-controls'));
+  if (!list) return;
+  toggle.addEventListener('click', () => {
+    const open = list.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
   });
-}
+});
 
 /* ---- Boot -------------------------------------------------------------- */
 YRP.guard().then((ctx) => {
