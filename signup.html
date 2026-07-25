@@ -429,16 +429,16 @@ window.YRP = (function () {
         template, then paste the three IDs here. Setup steps are in SETUP.md.
         Leave as-is and no email is sent — everything else still works.     */
   var EMAILJS = {
-    publicKey:  "YOUR_EMAILJS_PUBLIC_KEY",
-    serviceId:  "YOUR_EMAILJS_SERVICE_ID",
-    templateId: "YOUR_EMAILJS_TEMPLATE_ID",
+    publicKey:  "SqGcVCVa3kwCregul",
+    serviceId:  "service_r84p20g",
+    templateId: "template_0etzwmo",
     toEmail:    "youthresearchproject26@gmail.com"
   };
 
   /* D) WHEN TO EMAIL
         "new"   — only the first time an account is created (recommended)
         "every" — every single sign-in (noisy once you have real traffic)  */
-  var NOTIFY_ON = "every";
+  var NOTIFY_ON = "new";
 
   /* E) Where to send people after they sign in. */
   var DASHBOARD_URL = "dashboard.html";
@@ -621,7 +621,13 @@ window.YRP = (function () {
             }).catch(function () { /* history is nice-to-have, never blocking */ });
           })
           .then(function () {
-            if (NOTIFY_ON === "every" || isNew) {
+            // "new" = only the moment an account is first created.
+            // "every" = every sign-in, including returning members.
+            // Either way, never send the admin a notification about the
+            // admin's own account.
+            var shouldNotify = (NOTIFY_ON === "every" || (NOTIFY_ON === "new" && isNew)) &&
+                                email !== ADMIN_EMAIL;
+            if (shouldNotify) {
               return sendSignInEmail(payload, ctx, isNew);
             }
           })
@@ -650,10 +656,14 @@ window.YRP = (function () {
       to_email: EMAILJS.toEmail,
       event_type: isNew ? "New account created" : "Sign-in",
       user_name: profile.fullName || "(no name on file)",
+      user_first_name: profile.firstName || "—",
+      user_last_name: profile.lastName || "—",
       user_email: profile.email,
+      user_dob: profile.dob || "—",
+      user_age: (profile.age === null || profile.age === undefined) ? "—" : String(profile.age),
       user_grade: profile.grade || "—",
       user_school: profile.school || "—",
-      user_age: (profile.age === null || profile.age === undefined) ? "—" : String(profile.age),
+      user_interest: profile.interest || "—",
       sign_in_method: profile.provider,
       location: ctx.location.label || "Unavailable",
       ip_address: ctx.location.ip || "Unavailable",
