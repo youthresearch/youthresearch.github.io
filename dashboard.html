@@ -1658,11 +1658,10 @@ document.getElementById('refresh').addEventListener('click', loadUsers);
 
 /* =======================================================================
    JOURNAL SUBMISSIONS
-   Manuscripts submitted through submission-portal.html. Files live in
-   Firebase Storage, never listed or linked publicly -- opening a
-   submission here calls getDownloadURL() live, in this authenticated
-   admin session, which is the only context where Storage's read rule
-   actually allows it to succeed.
+   Manuscripts submitted through submission-portal.html. There's no file
+   upload and no Firebase Storage involved -- the author hosts their own
+   manuscript on Google Drive or Dropbox and submits a link, which is
+   stored as plain text in Firestore alongside the rest of the record.
    ======================================================================= */
 let SUBMISSIONS = [];
 let SUBMISSIONS_LOADED = false;
@@ -1691,7 +1690,7 @@ function loadSubmissions() {
       console.error(err);
       const box = document.getElementById('sub-load-error');
       box.textContent = 'Could not load submissions: ' + err.message +
-        ' — if this says "permission denied", deploy firestore.rules and storage.rules from the project folder.';
+        ' — if this says "permission denied", deploy firestore.rules from the project folder.';
       box.classList.remove('hidden');
       document.getElementById('sub-rows').innerHTML = '<tr class="empty-row"><td colspan="8">No submissions loaded.</td></tr>';
     });
