@@ -280,6 +280,94 @@ textarea { resize: vertical; min-height: 90px; }
     .step-pager .end { text-align: right; }
 
   </style>
+  <style>
+
+    /* ---- Step 1: getting-started + interactive content ----------------- */
+    .s1-lede { font-size: 1.1rem; max-width: 60ch; margin-bottom: 1.5rem; }
+
+    .s1-block { margin-top: 2.6rem; }
+    .s1-block > .eyebrow { margin-bottom: 0.6rem; }
+    .s1-block > h2 { font-size: clamp(1.5rem, 3.4vw, 2rem); margin-bottom: 0.4rem; }
+    .s1-block > .s1-intro { color: var(--body); margin-bottom: 1.2rem; max-width: 62ch; }
+
+    /* ring-dot bullet list */
+    ul.dot-list { list-style: none; padding-left: 0; margin: 0; }
+    ul.dot-list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.55rem; font-size: 0.97rem; }
+    ul.dot-list li:last-child { margin-bottom: 0; }
+    ul.dot-list li::before { content: ""; position: absolute; left: 3px; top: 0.62em;
+      width: 7px; height: 7px; border-radius: 50%; border: 1.6px solid var(--lavender-deep); }
+    ul.dot-list li strong { color: var(--ink); font-weight: 600; }
+
+    /* weak -> strong example pairs */
+    .eg-pair { display: grid; gap: 0.5rem; margin-top: 0.7rem; }
+    .eg { border-radius: 8px; padding: 0.55rem 0.8rem; font-size: 0.9rem; line-height: 1.5; }
+    .eg .tag { display: block; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 0.15rem; }
+    .eg.bad  { background: var(--danger-tint);  color: #7a2c40; }
+    .eg.bad .tag  { color: var(--danger); }
+    .eg.good { background: var(--success-tint); color: #2f6244; }
+    .eg.good .tag { color: var(--success); }
+
+    /* research-process loop */
+    .flow-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.1rem; }
+    .flow-chip { font-family: var(--font-body); display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 0.9rem; border-radius: 999px; border: 1.5px solid var(--line); background: var(--paper);
+      color: var(--ink); cursor: pointer; font-size: 0.88rem; font-weight: 500; transition: all 0.18s ease; }
+    .flow-chip:hover { border-color: var(--lavender); }
+    .flow-chip.active { background: var(--lavender-deep); border-color: var(--lavender-deep); color: #fff; }
+    .flow-chip .num { font-family: var(--font-display); font-size: 0.95rem; }
+    .flow-panel { min-height: 5rem; }
+    .flow-panel h3 { font-size: 1.25rem; margin: 0 0 0.35rem; }
+    .flow-panel p { margin: 0; font-size: 0.96rem; }
+    .flow-loop { display: flex; gap: 0.55rem; align-items: flex-start; font-size: 0.86rem;
+      color: var(--body); margin: 1.1rem 0 0; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .flow-loop svg { flex: none; margin-top: 1px; color: var(--lavender-deep); }
+
+    /* strong-question checker */
+    .checker-input { margin-bottom: 1.1rem; }
+    .checker-input label { margin-bottom: 0.4rem; }
+    .check-item { border-top: 1px solid var(--line); }
+    .check-item:first-of-type { border-top: none; }
+    .check-head { display: flex; align-items: center; gap: 0.7rem; padding: 0.8rem 0; cursor: pointer; }
+    .check-head input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--lavender); flex: none; cursor: pointer; }
+    .check-head .t { font-weight: 600; color: var(--ink); flex: 1; font-size: 0.98rem; }
+    .check-head .chev { color: var(--lavender-deep); transition: transform 0.2s ease; flex: none; }
+    .check-item.open .check-head .chev { transform: rotate(180deg); }
+    .check-body { display: none; padding: 0 0 1rem 2.7rem; font-size: 0.93rem; }
+    .check-item.open .check-body { display: block; }
+    .check-meter { display: flex; align-items: center; gap: 0.85rem; margin-top: 1.2rem;
+      padding-top: 1rem; border-top: 1px solid var(--line); }
+    .check-bar { flex: 1; height: 8px; border-radius: 999px; background: var(--cream-2); overflow: hidden; }
+    .check-bar span { display: block; height: 100%; width: 0; background: var(--lavender); border-radius: 999px; transition: width 0.35s ease; }
+    .check-num { font-family: var(--font-display); font-size: 1.05rem; color: var(--lavender-deep); flex: none; white-space: nowrap; }
+
+    /* five-stage accordion */
+    .stage { border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--paper);
+      margin-bottom: 0.7rem; overflow: hidden; box-shadow: var(--shadow-sm); }
+    .stage-head { display: flex; align-items: center; gap: 0.8rem; padding: 0.95rem 1.1rem; cursor: pointer; }
+    .stage-head .sn { font-family: var(--font-display); color: var(--lavender-deep); font-size: 1.1rem; flex: none; width: 1.5rem; }
+    .stage-head .st { font-weight: 600; color: var(--ink); flex: 1; font-size: 0.98rem; }
+    .stage-head .chev { color: var(--lavender-deep); transition: transform 0.2s ease; flex: none; }
+    .stage.open .stage-head .chev { transform: rotate(180deg); }
+    .stage-body { display: none; padding: 0 1.1rem 1.1rem 3.4rem; font-size: 0.93rem; }
+    .stage.open .stage-body { display: block; }
+    .stage-body ul.dot-list li { font-size: 0.92rem; }
+
+    /* trio + mini cards */
+    .s1-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .s1-cards.trio { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 560px) { .s1-cards, .s1-cards.trio { grid-template-columns: 1fr; } }
+    .mini { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm); padding: 1.1rem 1.2rem; }
+    .mini h3 { font-size: 1.16rem; margin: 0.35rem 0 0.4rem; }
+    .mini p { font-size: 0.92rem; margin: 0; }
+
+    /* keep-in-mind callout */
+    .keepin { background: var(--cream-2); border-radius: var(--radius-sm); padding: 1.1rem 1.3rem; }
+
+    .s1-note { font-size: 0.85rem; color: var(--body); margin: 0.9rem 0 0; }
+
+  </style>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
@@ -740,11 +828,219 @@ window.YRP = (function () {
 
       <span class="step-badge"><span class="dot">1</span> Step 1 of 6</span>
       <h1>Find your question</h1>
-      <p class="lede" style="max-width:60ch;">Sharpen a vague curiosity into something evidence can actually answer.</p>
+      <p class="s1-lede">Every research project is really just a long attempt to answer one sentence. This step is about turning a vague curiosity into that sentence &mdash; a question sharp enough that evidence can actually answer it.</p>
 
       <div class="card">
-        <p>Start from something you actually wonder about, then sharpen it until it can be answered with evidence. A good question is narrow, specific, and honest about what it's measuring. "Is social media bad?" can't be answered. "Do students who use their phones in the hour before bed report shorter sleep than students who don't?" can.</p>
-        <div class="step-do"><strong>Do this:</strong> write your question in one sentence. Underline the thing you'd measure and the group you'd measure it in. If either is missing, the question isn't ready.</div>
+        <span class="eyebrow">Start here</span>
+        <h2 style="font-size:1.35rem;margin-bottom:0.5rem;">What is a research question?</h2>
+        <p style="margin-bottom:0;">Your research question is the single sentence your whole project exists to answer. Everything you read, measure, and write should trace back to it. Get it right and your project has a spine; get it wrong and you'll wander for weeks. That's why it's Step 1 &mdash; and why it's worth taking real time here.</p>
+      </div>
+
+      <!-- The whole journey -->
+      <div class="s1-block">
+        <span class="eyebrow">The big picture</span>
+        <h2>The research process is a loop, not a line</h2>
+        <p class="s1-intro">Before zooming in on your question, here's the whole journey so you can see where you are. Researchers usually break it into eight stages &mdash; tap each one to see what it means.</p>
+        <div class="card">
+          <div class="flow-chips" id="flow-chips">
+            <button type="button" class="flow-chip" data-title="1. Identify the problem" data-desc="It all starts when you notice something confusing, unresolved, or barely studied in a topic you care about. It doesn't have to be dramatic &mdash; &lsquo;nobody agrees on why X happens&rsquo; or &lsquo;there's little research on Y in this setting&rsquo; both count. The key move: ask lots of questions, even ones that feel obvious. There are no stupid questions here; each one makes your idea sharper and more original."><span class="num">1</span>Problem</button>
+            <button type="button" class="flow-chip" data-title="2. Review the literature" data-desc="Before you can add anything new, find out what's already been said. Read the articles, books, and papers other researchers have written on your topic. Think of it like catching up on a conversation that's been going for years before you jump in &mdash; you don't want to &lsquo;discover&rsquo; something everyone already knows."><span class="num">2</span>Read</button>
+            <button type="button" class="flow-chip" data-title="3. Set questions, goals &amp; hypotheses" data-desc="Now narrow that big conversation down to your own specific question &mdash; what you want to find out &mdash; plus, if it fits, a hypothesis: your educated guess at the answer, which your research will test."><span class="num">3</span>Question</button>
+            <button type="button" class="flow-chip" data-title="4. Choose your methods" data-desc="This is your game plan for answering the question. Will you run an experiment? Interview people? Analyze existing data? Different questions call for different designs."><span class="num">4</span>Methods</button>
+            <button type="button" class="flow-chip" data-title="5. Design your sample" data-desc="If you're studying people, data points, or objects, you usually can't study all of them. Decide who or what you'll actually include &mdash; and how you'll pick them fairly. That's your sample."><span class="num">5</span>Sample</button>
+            <button type="button" class="flow-chip" data-title="6. Collect your data" data-desc="Now you actually gather the information: run the survey, do the experiment, pull the dataset."><span class="num">6</span>Collect</button>
+            <button type="button" class="flow-chip" data-title="7. Process &amp; analyze" data-desc="Raw data doesn't mean much on its own. Organize it, run your calculations or statistics, and look for the patterns and answers hiding inside it."><span class="num">7</span>Analyze</button>
+            <button type="button" class="flow-chip" data-title="8. Write it up" data-desc="Finally, write up what you did, what you found, and what it means &mdash; clearly and in a logical order, so others can follow your work and judge it for themselves."><span class="num">8</span>Write</button>
+          </div>
+          <div class="flow-panel" id="flow-panel"></div>
+          <p class="flow-loop">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg>
+            <span>Notice this is a loop, not a straight line. You might reach step&nbsp;3 and realize you need to go back to step&nbsp;2 and read more. That's completely normal &mdash; not a failure.</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- What makes a good question -->
+      <div class="s1-block">
+        <span class="eyebrow">The heart of it</span>
+        <h2>What makes a strong question?</h2>
+        <p class="s1-intro">A research question is one sentence &mdash; but not every sentence makes a good one. Write yours below, then check it against the seven marks of a strong question. A weak question isn't wrong; it's just not ready yet.</p>
+        <div class="card">
+          <div class="checker-input">
+            <label for="my-q">Your question (a rough draft is fine)</label>
+            <textarea id="my-q" placeholder="e.g. How does daily Instagram use relate to sleep in high-school students?"></textarea>
+          </div>
+
+          <div class="check-item">
+            <div class="check-head"><input type="checkbox"><span class="t">1. You actually care about it</span>
+              <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="check-body">You'll live with this question for weeks or months, so pick something you genuinely want to know &mdash; not just something that sounds impressive. If it bores you now, you'll be miserable by the end.</div>
+          </div>
+          <div class="check-item">
+            <div class="check-head"><input type="checkbox"><span class="t">2. It's specific</span>
+              <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="check-body">You know exactly what you're asking. Vague questions don't tell you what to research.
+              <div class="eg-pair">
+                <div class="eg bad"><span class="tag">Too vague</span>How does social media affect people?</div>
+                <div class="eg good"><span class="tag">Sharper</span>How does daily Instagram use affect self-esteem in teenage girls?</div>
+              </div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-head"><input type="checkbox"><span class="t">3. It's narrow</span>
+              <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="check-body">Start with a big, fuzzy idea and shrink it down through reading and thinking. Don't expect to know your narrow question on day one.
+              <div class="eg-pair">
+                <div class="eg bad"><span class="tag">Too broad</span>I'm interested in climate change and farming.</div>
+                <div class="eg good"><span class="tag">Narrowed</span>How has drought frequency affected wheat yields in Kansas since 2000?</div>
+              </div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-head"><input type="checkbox"><span class="t">4. It isn't a &ldquo;why&rdquo; question</span>
+              <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="check-body">&ldquo;Why&rdquo; questions spiral outward forever &mdash; there are countless causes and the question never really closes. Ask &ldquo;how does X relate to Y&rdquo; instead.
+              <div class="eg-pair">
+                <div class="eg bad"><span class="tag">Spirals</span>Why do people get anxious?</div>
+                <div class="eg good"><span class="tag">Has a finish line</span>How does screen time before bed relate to anxiety in high-school students?</div>
+              </div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-head"><input type="checkbox"><span class="t">5. It's short &mdash; one clean sentence</span>
+              <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="check-body">If your question needs three sentences and a pile of clauses to state, it's probably two or three questions smushed together. Split them, and keep the one you care about most.</div>
+          </div>
+          <div class="check-item">
+            <div class="check-head"><input type="checkbox"><span class="t">6. It's not a yes/no question</span>
+              <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="check-body">Yes/no questions get answered in one word and don't require real investigation.
+              <div class="eg-pair">
+                <div class="eg bad"><span class="tag">One-word answer</span>Does exercise help mental health?</div>
+                <div class="eg good"><span class="tag">Forces exploration</span>How does exercise frequency relate to reported anxiety in college students?</div>
+              </div>
+            </div>
+          </div>
+          <div class="check-item">
+            <div class="check-head"><input type="checkbox"><span class="t">7. Evidence can answer it &mdash; not opinion</span>
+              <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+            <div class="check-body">If it's a matter of taste, no amount of research settles it.
+              <div class="eg-pair">
+                <div class="eg bad"><span class="tag">Just opinion</span>Is jazz better than classical music?</div>
+                <div class="eg good"><span class="tag">Investigable</span>How has jazz influenced chord progressions in mainstream pop since 1990?</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="check-meter">
+            <div class="check-bar"><span id="check-bar-fill"></span></div>
+            <span class="check-num">Your question passes <strong id="check-num">0 of 7</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- How to get there -->
+      <div class="s1-block">
+        <span class="eyebrow">The real method</span>
+        <h2>How you'll actually get there: draft, get feedback, repeat</h2>
+        <p class="s1-intro">Here's the part beginners don't expect: you will not nail your question on the first try, and that's completely normal &mdash; it's true for experienced researchers too.</p>
+        <div class="card">
+          <ul class="dot-list">
+            <li><strong>Draft a rough one.</strong> Once you've read around your topic and have a feel for the questions people ask in your field, write your own &mdash; even a clunky first version.</li>
+            <li><strong>Show it to someone who knows the field.</strong> A teacher, professor, or mentor will probably say it's too broad, too vague, unanswerable, or already done. That's help, not criticism.</li>
+            <li><strong>Rewrite, and show it again.</strong> This loop can run five, ten, or more rounds before you land on something solid.</li>
+            <li><strong>Don't wait for &ldquo;perfect.&rdquo;</strong> There's no perfect first-draft question. The goal isn't to arrive fully formed &mdash; it's to keep improving it with input.</li>
+            <li><strong>Ask whenever you're stuck.</strong> Research isn't something you're meant to figure out alone. Talking it through with a mentor is a normal, expected part of the process &mdash; not a sign you're behind.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Five stages -->
+      <div class="s1-block">
+        <span class="eyebrow">A guided path</span>
+        <h2>Stuck on a blank page? Go broad to narrow</h2>
+        <p class="s1-intro">If you don't even have a topic yet, work through these five stages. Each one narrows your focus a little more &mdash; tap to open each.</p>
+
+        <div class="stage">
+          <div class="stage-head"><span class="sn">1</span><span class="st">List the themes that interest you</span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="stage-body">
+            <p style="margin:0 0 0.6rem;">Think broadly about your subject and jot down themes. Ask yourself:</p>
+            <ul class="dot-list">
+              <li>What themes interested you in school?</li>
+              <li>What are the current &ldquo;hot&rdquo; topics &mdash; the ones showing up in research papers or popular articles?</li>
+              <li>If you like a professional field (medicine, teaching, business, law), what issues are people debating?</li>
+              <li>Are any issues especially important where you live?</li>
+              <li>Anything you've been curious about since you were young?</li>
+            </ul>
+            <p style="margin:0.7rem 0 0;">Aim for at least one topic under each question.</p>
+          </div>
+        </div>
+        <div class="stage">
+          <div class="stage-head"><span class="sn">2</span><span class="st">Narrow to a few topics</span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="stage-body">Look for themes that showed up under more than one question, or rank your themes by how much they interest you. Get down to a short list of two or three favorites.</div>
+        </div>
+        <div class="stage">
+          <div class="stage-head"><span class="sn">3</span><span class="st">Turn topics into questions</span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="stage-body">For each of those two or three topics, brainstorm the key questions worth asking. Every project investigates a question, so list all the interesting or important ones you can think of.</div>
+        </div>
+        <div class="stage">
+          <div class="stage-head"><span class="sn">4</span><span class="st">Pick one and check it's viable</span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="stage-body">Choose the question that grabs you most, then pressure-test it: is this a question that needs answering, and can it actually be answered in a project your size? You may cycle through this a few times before one sticks.</div>
+        </div>
+        <div class="stage">
+          <div class="stage-head"><span class="sn">5</span><span class="st">Make your final choice</span>
+            <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+          <div class="stage-body">Once a question survives the viability check, ask the most important question of all: <em>does this genuinely interest and excite me?</em> The answer has to be &ldquo;yes&rdquo; &mdash; you'll be living with it for a long time.</div>
+        </div>
+      </div>
+
+      <!-- Three checks -->
+      <div class="s1-block">
+        <span class="eyebrow">Before you commit</span>
+        <h2>Three checks we use on every project</h2>
+        <p class="s1-intro">Before you lock in a topic, run it past the three questions YRP uses to weigh every project.</p>
+        <div class="s1-cards trio">
+          <div class="mini">
+            <span class="pill">Feasibility</span>
+            <h3>Can you pull it off?</h3>
+            <p>Is this doable in the time you have, with the tools and resources you can actually get? Ambitious is good; impossible-in-a-semester is not.</p>
+          </div>
+          <div class="mini">
+            <span class="pill">Fit</span>
+            <h3>Does it suit you?</h3>
+            <p>Does this line of research let you show your skills and thinking at their best, setting you up to succeed?</p>
+          </div>
+          <div class="mini">
+            <span class="pill">Appropriateness</span>
+            <h3>Is it safe to explore?</h3>
+            <p>Does the topic involve sensitive material that can't be examined safely, or that might make fellow scholars uncomfortable? If so, rethink the angle.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Keep in mind -->
+      <div class="s1-block">
+        <span class="eyebrow">Keep in mind</span>
+        <h2>A few things that trip up beginners</h2>
+        <div class="keepin">
+          <ul class="dot-list">
+            <li><strong>Don't go too big.</strong> Most first ideas are too ambitious &mdash; too much data, questions too general. Keep it tightly focused on one specific thing.</li>
+            <li><strong>Your research doesn't have to change the world.</strong> A small, honest, well-answered question beats a grand one you can't finish.</li>
+            <li><strong>Let the question steer.</strong> Keep your one question in front of you and keep asking, &ldquo;Is what I'm doing right now helping answer it?&rdquo; Having a question doesn't lock you into any one method &mdash; it just keeps you on track.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Action + tracking -->
+      <div class="card" style="margin-top:2.6rem;">
+        <span class="eyebrow">Your move</span>
+        <h2 style="font-size:1.35rem;margin-bottom:0.5rem;">Do this before Step 2</h2>
+        <p style="margin-bottom:0;">Write your question in one sentence. Underline the thing you'd <strong>measure</strong> and the <strong>group</strong> you'd measure it in &mdash; if either is missing, it's not ready. Then run it past the seven checks above and one real person. If it survives both, you're ready to move on.</p>
+        <div class="step-do"><strong>One-sentence test:</strong> &ldquo;How does <em>[measurable thing]</em> relate to <em>[specific group or setting]</em>?&rdquo; If your question fits that shape, you're in great starting position.</div>
 
         <div class="track-row">
           <input type="checkbox" id="step-done" disabled>
@@ -832,6 +1128,52 @@ window.YRP = (function () {
   }
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
+})();
+
+
+/* =======================================================================
+   INTERACTIVE CONTENT
+   The research-process loop, the strong-question checker, and the
+   five-stage accordion. All in-memory and self-contained.
+   ======================================================================= */
+(function () {
+  // --- research-process loop ---
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.flow-chip'));
+  var panel = document.getElementById('flow-panel');
+  function selectFlow(chip) {
+    chips.forEach(function (c) { c.classList.remove('active'); });
+    chip.classList.add('active');
+    panel.innerHTML = '<h3>' + chip.dataset.title + '</h3><p>' + chip.dataset.desc + '</p>';
+  }
+  chips.forEach(function (c) { c.addEventListener('click', function () { selectFlow(c); }); });
+  if (chips.length) selectFlow(chips[0]);
+
+  // --- strong-question checker ---
+  var items = Array.prototype.slice.call(document.querySelectorAll('.check-item'));
+  var barFill = document.getElementById('check-bar-fill');
+  var numEl = document.getElementById('check-num');
+  function updateMeter() {
+    var boxes = document.querySelectorAll('.check-item input[type="checkbox"]');
+    var total = boxes.length, done = 0;
+    Array.prototype.forEach.call(boxes, function (b) { if (b.checked) done++; });
+    if (barFill) barFill.style.width = (total ? (done / total * 100) : 0) + '%';
+    if (numEl) numEl.textContent = done + ' of ' + total;
+  }
+  items.forEach(function (it) {
+    var head = it.querySelector('.check-head');
+    var box = it.querySelector('input[type="checkbox"]');
+    head.addEventListener('click', function (e) {
+      if (e.target === box) return;        // let the checkbox handle its own clicks
+      it.classList.toggle('open');
+    });
+    box.addEventListener('change', updateMeter);
+  });
+  updateMeter();
+
+  // --- five-stage accordion ---
+  document.querySelectorAll('.stage-head').forEach(function (h) {
+    h.addEventListener('click', function () { h.parentElement.classList.toggle('open'); });
+  });
 })();
 
 
