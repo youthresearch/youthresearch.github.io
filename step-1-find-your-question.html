@@ -378,6 +378,18 @@ textarea { resize: vertical; min-height: 90px; }
     .s1-tip p { margin: 0; font-size: 0.96rem; color: var(--ink); }
     .s1-tip--read { background: var(--cream-2); }
 
+    /* eight always-visible stage boxes */
+    .s1-stages { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.2rem; }
+    @media (max-width: 620px) { .s1-stages { grid-template-columns: 1fr; } }
+    .s1-stagebox { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-sm); padding: 1.05rem 1.15rem; display: grid;
+      grid-template-columns: 34px 1fr; gap: 0.35rem 0.8rem; align-items: center; }
+    .s1-stagebox .sb-num { grid-column: 1; grid-row: 1; width: 34px; height: 34px; border-radius: 50%;
+      background: var(--lavender-tint); color: var(--lavender-deep); font-family: var(--font-display);
+      font-size: 1.05rem; display: grid; place-items: center; }
+    .s1-stagebox h3 { grid-column: 2; grid-row: 1; margin: 0; font-size: 1.05rem; }
+    .s1-stagebox p { grid-column: 2; grid-row: 2; margin: 0.25rem 0 0; font-size: 0.9rem; }
+
     .s1-note { font-size: 0.85rem; color: var(--body); margin: 0.9rem 0 0; }
 
   </style>
@@ -863,6 +875,50 @@ window.YRP = (function () {
             <span>Notice it's a loop, not a straight line. You might reach stage&nbsp;3 and realize you need to head back to stage&nbsp;2 and read more. That's completely normal &mdash; not a failure.</span>
           </p>
         </div>
+
+        <div class="s1-stages">
+          <div class="s1-stagebox">
+            <span class="sb-num">1</span>
+            <h3>Identify the problem</h3>
+            <p>It starts when you notice something confusing, unresolved, or barely studied in a topic you care about. It doesn't have to be dramatic &mdash; &ldquo;nobody agrees on why X happens&rdquo; or &ldquo;there's little research on Y here&rdquo; both count.</p>
+          </div>
+          <div class="s1-stagebox">
+            <span class="sb-num">2</span>
+            <h3>Review the literature</h3>
+            <p>Before you can add anything new, find out what's already been said. Read the articles, books, and papers others have written on your topic &mdash; like catching up on a years-long conversation before you jump in.</p>
+          </div>
+          <div class="s1-stagebox">
+            <span class="sb-num">3</span>
+            <h3>Set questions &amp; hypotheses</h3>
+            <p>Narrow that big conversation down to your own specific question &mdash; what you want to find out &mdash; plus, if it fits, a hypothesis: your educated guess at the answer, which your research will test.</p>
+          </div>
+          <div class="s1-stagebox">
+            <span class="sb-num">4</span>
+            <h3>Choose the design</h3>
+            <p>Your game plan for answering the question. Will you run an experiment? Interview people? Analyze existing data? Different questions call for different methods.</p>
+          </div>
+          <div class="s1-stagebox">
+            <span class="sb-num">5</span>
+            <h3>Decide the sample</h3>
+            <p>You usually can't study every person, data point, or object. Decide who or what you'll actually include &mdash; and how you'll pick them fairly. That's your sample.</p>
+          </div>
+          <div class="s1-stagebox">
+            <span class="sb-num">6</span>
+            <h3>Collect the data</h3>
+            <p>Now you actually gather the information: run the survey, do the experiment, or pull the dataset.</p>
+          </div>
+          <div class="s1-stagebox">
+            <span class="sb-num">7</span>
+            <h3>Process &amp; analyze</h3>
+            <p>Raw data doesn't mean much on its own. Organize it, run your calculations or statistics, and look for the patterns and answers hiding inside.</p>
+          </div>
+          <div class="s1-stagebox">
+            <span class="sb-num">8</span>
+            <h3>Write the report</h3>
+            <p>Write up what you did, what you found, and what it means &mdash; clearly and in a logical order, so others can follow your work and judge it for themselves.</p>
+          </div>
+        </div>
+
         <div class="s1-tip s1-tip--read">
           <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v13a1 1 0 0 1-1.45.9L11 18l-4.55 1.9A1 1 0 0 1 5 19V6"/><path d="M8.5 7.5h6M8.5 10.5h6"/></svg>
           <div class="tip-body">
