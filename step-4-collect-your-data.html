@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Step 4: Collect your data | Youth Research Project</title>
+  <title>Step 3: Design your method | Youth Research Project</title>
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,307 +12,202 @@
 
 /* =========================================================================
    Youth Research Project | shared theme
-   Warm cream · lavender accents · Ovo (display) + DM Sans (body)
-   Shared by every page on the site.
    ========================================================================= */
-
 :root {
-  --cream:    #f8f4ef;
-  --cream-2:  #f2ece4;
-  --paper:    #ffffff;
-  --ink:      #26222b;
-  --body:     #6d6570;
-
-  --lavender:      #8f74b3;
-  --lavender-deep: #6f579a;
-  --lavender-tint: #efe9f6;
-  --line:     #e7ded3;
-
-  --font-display: "Ovo", Georgia, "Times New Roman", serif;
-  --font-body:    "DM Sans", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-
-  --measure: 1120px;
-  --radius: 14px;
-  --radius-sm: 10px;
-  --gutter: clamp(1.25rem, 4vw, 2.5rem);
-  --shadow:    0 22px 50px -30px rgba(60, 45, 80, 0.28);
-  --shadow-sm: 0 12px 30px -22px rgba(60, 45, 80, 0.22);
-
-  --danger: #b3435f;
-  --danger-tint: #f8e9ec;
-  --success: #4f8a63;
-  --success-tint: #e9f3ec;
-  --warn: #9a6b1f;
-  --warn-tint: #f7efe0;
+  --cream:#f8f4ef; --cream-2:#f2ece4; --paper:#ffffff;
+  --ink:#26222b; --body:#6d6570;
+  --lavender:#8f74b3; --lavender-deep:#6f579a; --lavender-tint:#efe9f6; --line:#e7ded3;
+  --font-display:"Ovo",Georgia,"Times New Roman",serif;
+  --font-body:"DM Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --measure:1120px; --radius:14px; --radius-sm:10px; --gutter:clamp(1.25rem,4vw,2.5rem);
+  --shadow:0 22px 50px -30px rgba(60,45,80,.28); --shadow-sm:0 12px 30px -22px rgba(60,45,80,.22);
+  --danger:#b3435f; --danger-tint:#f8e9ec; --success:#4f8a63; --success-tint:#e9f3ec;
+  --warn:#9a6b1f; --warn-tint:#f7efe0;
 }
-
-*, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-body {
-  margin: 0;
-  font-family: var(--font-body);
-  color: var(--body);
-  background: var(--cream);
-  line-height: 1.62;
-  font-size: 1.04rem;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+body{margin:0;font-family:var(--font-body);color:var(--body);background:var(--cream);
+  line-height:1.62;font-size:1.04rem;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--ink);font-weight:400;line-height:1.14;letter-spacing:.002em;margin:0 0 .5em;}
+p{margin:0 0 1rem;}
+a{color:var(--lavender-deep);text-underline-offset:3px;}
+img,svg{display:block;max-width:100%;}
+:focus-visible{outline:2px solid var(--lavender);outline-offset:3px;border-radius:4px;}
+.grad-text{color:var(--lavender);}
+.wrap{width:100%;max-width:var(--measure);margin-inline:auto;padding-inline:var(--gutter);}
+.wrap--wide{max-width:1360px;}
+.eyebrow{display:inline-block;font-weight:500;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--lavender-deep);margin-bottom:1rem;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-family:var(--font-body);font-weight:500;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;padding:.9rem 1.7rem;border-radius:999px;border:1.5px solid transparent;cursor:pointer;text-decoration:none;transition:background-color .2s,color .2s,border-color .2s,transform .2s;}
+.btn:hover{transform:translateY(-2px);}
+.btn--primary{background:var(--ink);color:var(--cream);}
+.btn--primary:hover{background:var(--lavender);color:#fff;}
+.btn--ghost{background:transparent;color:var(--ink);border-color:var(--ink);}
+.btn--ghost:hover{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+.site-header{position:sticky;top:0;z-index:60;background:rgba(248,244,239,.9);backdrop-filter:saturate(150%) blur(14px);-webkit-backdrop-filter:saturate(150%) blur(14px);border-bottom:1px solid var(--line);}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;min-height:74px;gap:1rem;}
+.brand{display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;}
+.brand svg{height:38px;width:auto;}
+.brand .brand-name{font-family:var(--font-display);font-size:1.28rem;color:var(--ink);line-height:1;letter-spacing:.02em;}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:clamp(1.25rem,3vw,2rem);}
+.card+.card{margin-top:1.25rem;}
+.pill{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .65rem;border-radius:999px;background:var(--lavender-tint);color:var(--lavender-deep);}
+.pill--ok{background:var(--success-tint);color:var(--success);}
+.pill--off{background:var(--danger-tint);color:var(--danger);}
+.pill--mid{background:var(--warn-tint);color:var(--warn);}
+.veil{position:fixed;inset:0;z-index:200;background:var(--cream);display:grid;place-items:center;gap:1rem;text-align:center;}
+.veil.gone{display:none;}
+.spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--lavender);animation:spin .8s linear infinite;margin:0 auto .9rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;}}
+.site-header.scrolled{background:rgba(248,244,239,.95);box-shadow:0 6px 24px -20px rgba(60,45,80,.3);}
+.nav{display:flex;align-items:center;gap:1.7rem;}
+.nav a:not(.btn){color:var(--ink);text-decoration:none;font-weight:500;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;position:relative;transition:color .25s;}
+.nav a:not(.btn)::after{content:"";position:absolute;left:0;bottom:-5px;height:1.5px;width:0;background:var(--lavender);transition:width .22s;}
+.nav a:not(.btn):hover::after{width:100%;}
+.nav-actions{display:inline-flex;align-items:center;gap:.6rem;}
+.nav-toggle{display:none;background:transparent;border:1.5px solid var(--line);border-radius:10px;padding:.45rem .6rem;cursor:pointer;color:var(--ink);font-size:1.1rem;}
+@media (max-width:900px){
+  .nav-toggle{display:inline-flex;}
+  .nav{position:absolute;top:74px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--cream);border-top:1px solid var(--line);box-shadow:var(--shadow-sm);padding:.5rem var(--gutter) 1.5rem;display:none;z-index:70;}
+  .nav.open{display:flex;animation:fadeUp .25s;}
+  .nav a:not(.btn){padding:.95rem 0;border-bottom:1px solid var(--line);}
+  .nav-actions{flex-direction:column;align-items:stretch;margin-top:1rem;gap:.6rem;}
+  .nav .btn{justify-content:center;padding:.85rem 1.2rem;font-size:.78rem;}
 }
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  color: var(--ink);
-  font-weight: 400;
-  line-height: 1.14;
-  letter-spacing: 0.002em;
-  margin: 0 0 0.5em;
-}
-p { margin: 0 0 1rem; }
-a { color: var(--lavender-deep); text-underline-offset: 3px; }
-img, svg { display: block; max-width: 100%; }
-:focus-visible { outline: 2px solid var(--lavender); outline-offset: 3px; border-radius: 4px; }
+.user-chip{display:inline-flex;align-items:center;gap:.6rem;padding:.3rem .75rem .3rem .3rem;border:1px solid var(--line);border-radius:999px;background:var(--paper);}
+.user-chip .avatar{width:30px;height:30px;border-radius:50%;flex:none;background:var(--lavender-tint);color:var(--lavender-deep);display:grid;place-items:center;font-weight:600;font-size:.76rem;}
+.user-chip .who{line-height:1.15;}
+.user-chip .who strong{display:block;color:var(--ink);font-weight:500;font-size:.86rem;}
+.user-chip .who span{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--body);}
+.site-footer{background:var(--cream-2);color:var(--body);border-top:1px solid var(--line);padding-block:clamp(3rem,6vw,4.5rem);margin-top:clamp(3rem,6vw,4.5rem);}
+.site-footer .foot-grid{display:grid;gap:2.5rem;grid-template-columns:1fr;}
+@media (min-width:720px){.site-footer .foot-grid{grid-template-columns:1.6fr 1fr 1fr 1fr;}}
+.site-footer .brand-foot{display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;margin-bottom:1rem;}
+.site-footer .brand-foot .name{font-family:var(--font-display);font-size:1.25rem;color:var(--ink);letter-spacing:.02em;}
+.site-footer h4{font-family:var(--font-body);color:var(--ink);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:1rem;}
+.site-footer ul{list-style:none;margin:0;padding:0;}
+.site-footer li{margin-bottom:.6rem;}
+.site-footer a{color:var(--body);text-decoration:none;}
+.site-footer a:hover{color:var(--lavender-deep);}
+.foot-note{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.82rem;letter-spacing:.05em;margin-bottom:0;}
+.social-row li{margin-bottom:.7rem;}
+.social-row a{display:inline-flex;align-items:center;gap:.6rem;}
+.social-row svg{width:20px;height:20px;flex:none;}
+.social-row a.soon{opacity:.55;cursor:default;}
+.social-row a.soon span::after{content:" (soon)";font-size:.78em;}
 
-.grad-text { color: var(--lavender); -webkit-text-fill-color: var(--lavender); background: none; }
-.wrap { width: 100%; max-width: var(--measure); margin-inline: auto; padding-inline: var(--gutter); }
-.wrap--wide { max-width: 1360px; }
-.section { padding-block: clamp(2rem, 5vw, 3.5rem); position: relative; }
-
-.eyebrow {
-  display: inline-block;
-  font-weight: 500;
-  font-size: 0.74rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--lavender-deep);
-  margin-bottom: 1rem;
-}
-
-/* ---- Buttons ---------------------------------------------------------- */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  font-family: var(--font-body); font-weight: 500; font-size: 0.82rem;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  padding: 0.9rem 1.7rem; border-radius: 999px; border: 1.5px solid transparent;
-  cursor: pointer; text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-}
-.btn:hover { transform: translateY(-2px); }
-.btn:disabled { opacity: 0.6; cursor: default; transform: none; }
-.btn--primary { background: var(--ink); color: var(--cream); }
-.btn--primary:hover { background: var(--lavender); color: #fff; }
-.btn--ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
-.btn--ghost:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
-.btn--danger { background: transparent; color: var(--danger); border-color: var(--danger); }
-.btn--danger:hover { background: var(--danger); color: #fff; }
-.btn--sm { padding: 0.5rem 1rem; font-size: 0.68rem; letter-spacing: 0.1em; }
-.btn--block { width: 100%; }
-
-/* ---- Header ----------------------------------------------------------- */
-.site-header {
-  position: sticky; top: 0; z-index: 60;
-  background: rgba(248, 244, 239, 0.9);
-  backdrop-filter: saturate(150%) blur(14px);
-  -webkit-backdrop-filter: saturate(150%) blur(14px);
-  border-bottom: 1px solid var(--line);
-}
-.site-header .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 74px; gap: 1rem; }
-.brand { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; }
-.brand svg { height: 38px; width: auto; }
-.brand .brand-name { font-family: var(--font-display); font-size: 1.28rem; color: var(--ink); line-height: 1; letter-spacing: 0.02em; }
-.header-user { display: inline-flex; align-items: center; gap: 0.85rem; }
-.avatar {
-  width: 38px; height: 38px; border-radius: 50%; flex: none;
-  background: var(--lavender-tint); color: var(--lavender-deep);
-  display: grid; place-items: center; font-weight: 600; font-size: 0.9rem;
-  border: 1px solid var(--line);
-}
-.header-user .who { line-height: 1.2; text-align: right; }
-.header-user .who strong { display: block; color: var(--ink); font-weight: 500; font-size: 0.95rem; }
-.header-user .who span { font-size: 0.78rem; }
-@media (max-width: 620px) { .header-user .who { display: none; } }
-
-/* ---- Cards / panels --------------------------------------------------- */
-.card {
-  background: var(--paper); border: 1px solid var(--line);
-  border-radius: var(--radius); box-shadow: var(--shadow-sm);
-  padding: clamp(1.25rem, 3vw, 2rem);
-}
-.card + .card { margin-top: 1.25rem; }
-
-.pill {
-  display: inline-block; font-size: 0.68rem; font-weight: 600;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 0.22rem 0.65rem; border-radius: 999px;
-  background: var(--lavender-tint); color: var(--lavender-deep);
-}
-.pill--admin { background: var(--warn-tint); color: var(--warn); }
-.pill--ok { background: var(--success-tint); color: var(--success); }
-.pill--off { background: var(--danger-tint); color: var(--danger); }
-
-.notice {
-  border-radius: var(--radius-sm); padding: 0.9rem 1.1rem;
-  font-size: 0.92rem; margin-bottom: 1.2rem; border: 1px solid transparent;
-}
-.notice--warn { background: var(--warn-tint); color: var(--warn); border-color: #e7d3ab; }
-.notice--error { background: var(--danger-tint); color: #7a2c40; border-color: #eccdd4; }
-.notice--ok { background: var(--success-tint); color: #2f6244; border-color: #cbe3d3; }
-.notice.hidden, .hidden { display: none !important; }
-
-/* ---- Forms ------------------------------------------------------------ */
-label { display: block; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.5rem; }
-input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="search"], select, textarea {
-  width: 100%; font-family: var(--font-body); font-size: 1rem; color: var(--ink);
-  background: var(--cream); border: 1.5px solid var(--line); border-radius: var(--radius-sm);
-  padding: 0.8rem 1rem; transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--lavender); background: var(--paper); }
-textarea { resize: vertical; min-height: 90px; }
-
-/* ---- Loading veil ----------------------------------------------------- */
-.veil {
-  position: fixed; inset: 0; z-index: 200; background: var(--cream);
-  display: grid; place-items: center; gap: 1rem; text-align: center;
-}
-.veil.gone { display: none; }
-.spinner {
-  width: 34px; height: 34px; border-radius: 50%;
-  border: 3px solid var(--line); border-top-color: var(--lavender);
-  animation: spin 0.8s linear infinite; margin: 0 auto 0.9rem;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ---- Footer ----------------------------------------------------------- */
-.site-footer { background: var(--cream-2); border-top: 1px solid var(--line); padding-block: 2rem; margin-top: 3rem; }
-.site-footer .foot-note { font-size: 0.82rem; color: var(--body); letter-spacing: 0.05em; margin: 0; }
-
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
-
-/* ---- Site header + nav (matches the rest of the site) ------------------ */
-.site-header.scrolled { background: rgba(248, 244, 239, 0.95); box-shadow: 0 6px 24px -20px rgba(60,45,80,0.3); }
-.nav { display: flex; align-items: center; gap: 1.7rem; }
-.nav a:not(.btn) {
-  color: var(--ink); text-decoration: none; font-weight: 500; font-size: 0.82rem;
-  letter-spacing: 0.12em; text-transform: uppercase; position: relative; transition: color 0.25s ease;
-}
-.nav a:not(.btn).current { color: var(--lavender-deep); }
-.nav a:not(.btn)::after { content: ""; position: absolute; left: 0; bottom: -5px; height: 1.5px; width: 0; background: var(--lavender); transition: width 0.22s ease; }
-.nav a:not(.btn):hover::after, .nav a:not(.btn).current::after { width: 100%; }
-.nav .btn { padding: 0.6rem 1.2rem; font-size: 0.72rem; }
-.nav-actions { display: inline-flex; align-items: center; gap: 0.6rem; }
-.nav-toggle { display: none; background: transparent; border: 1.5px solid var(--line); border-radius: 10px; padding: 0.45rem 0.6rem; cursor: pointer; color: var(--ink); font-size: 1.1rem; }
-@media (max-width: 900px) {
-  .nav-toggle { display: inline-flex; }
-  .nav { position: absolute; top: 74px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0;
-    background: var(--cream); border-top: 1px solid var(--line); box-shadow: var(--shadow-sm);
-    padding: 0.5rem var(--gutter) 1.5rem; display: none; z-index: 70; }
-  .nav.open { display: flex; animation: fadeUp 0.25s ease; }
-  .nav a:not(.btn) { padding: 0.95rem 0; border-bottom: 1px solid var(--line); }
-  .nav-actions { flex-direction: column; align-items: stretch; margin-top: 1rem; gap: 0.6rem; }
-  .nav .btn { justify-content: center; padding: 0.85rem 1.2rem; font-size: 0.78rem; }
-  .nav .user-chip { justify-content: flex-start; }
-}
-
-/* Signed-in identity chip, styled like the rest of the nav */
-.user-chip { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.3rem 0.75rem 0.3rem 0.3rem;
-  border: 1px solid var(--line); border-radius: 999px; background: var(--paper); }
-.user-chip .avatar { width: 30px; height: 30px; border-radius: 50%; flex: none; background: var(--lavender-tint);
-  color: var(--lavender-deep); display: grid; place-items: center; font-weight: 600; font-size: 0.76rem; border: none; }
-.user-chip .who { line-height: 1.15; }
-.user-chip .who strong { display: block; color: var(--ink); font-weight: 500; font-size: 0.86rem; letter-spacing: 0; text-transform: none; }
-.user-chip .who span { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--body); }
-
-/* ---- Page hero -------------------------------------------------------- */
-.page-hero { background: var(--cream-2); border-bottom: 1px solid var(--line); text-align: center;
-  padding-block: clamp(2.4rem, 5vw, 3.4rem) clamp(1.6rem, 3vw, 2.2rem); }
-.page-hero .wrap { max-width: 660px; }
-.page-hero h1 { font-size: clamp(2rem, 4.4vw, 3rem); margin-bottom: 0.6rem; }
-.page-hero p { font-size: 1.06rem; max-width: 56ch; margin-inline: auto; margin-bottom: 0; }
-
-/* ---- Footer ----------------------------------------------------------- */
-.site-footer { background: var(--cream-2); color: var(--body); border-top: 1px solid var(--line);
-  padding-block: clamp(3rem, 6vw, 4.5rem); margin-top: clamp(3rem, 6vw, 4.5rem); }
-.site-footer .foot-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
-@media (min-width: 720px) { .site-footer .foot-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
-.site-footer .brand-foot { display: inline-flex; align-items: center; gap: 0.7rem; text-decoration: none; margin-bottom: 1rem; }
-.site-footer .brand-foot .name { font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; color: var(--ink); letter-spacing: 0.02em; }
-.site-footer h4 { font-family: var(--font-body); color: var(--ink); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; margin-bottom: 1rem; }
-.site-footer ul { list-style: none; margin: 0; padding: 0; }
-.site-footer li { margin-bottom: 0.6rem; }
-.site-footer a { color: var(--body); text-decoration: none; }
-.site-footer a:hover { color: var(--lavender-deep); }
-.foot-note { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--body); letter-spacing: 0.05em; margin-bottom: 0; }
-.social-row li { margin-bottom: 0.7rem; }
-.social-row a { display: inline-flex; align-items: center; gap: 0.6rem; }
-.social-row svg { width: 20px; height: 20px; flex: none; }
-.social-row a.soon { opacity: 0.55; cursor: default; }
-.social-row a.soon span::after { content: " (soon)"; font-size: 0.78em; letter-spacing: 0.04em; }
-
-@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
-
-  
   </style>
   <style>
+    /* ---- Single-step page (shared with other steps) ---- */
+    .step-wrap{max-width:760px;margin-inline:auto;padding-block:clamp(1.5rem,4vw,2.5rem);}
+    .step-crumb{font-size:.82rem;margin-bottom:1.4rem;}
+    .step-crumb a{color:var(--body);}
+    .step-crumb a:hover{color:var(--lavender-deep);}
+    .step-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--lavender-deep);margin-bottom:.9rem;}
+    .step-badge .dot{width:26px;height:26px;border-radius:50%;background:var(--lavender-tint);display:grid;place-items:center;font-family:var(--font-display);font-size:.85rem;color:var(--lavender-deep);}
+    .step-wrap h1{font-size:clamp(2rem,4.4vw,2.7rem);margin-bottom:.9rem;}
+    .step-do{font-size:.96rem;background:var(--cream-2);border-left:2px solid var(--lavender);border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin:1.2rem 0 0;}
+    .step-do strong{color:var(--ink);font-weight:600;}
+    .track-row{display:flex;align-items:center;gap:.7rem;margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--line);}
+    .track-row input{width:19px;height:19px;accent-color:var(--lavender);flex:none;}
+    .track-row label{margin:0;font-weight:500;font-size:.98rem;color:var(--ink);}
+    .track-note{font-size:.86rem;margin:.6rem 0 0;}
+    .step-pager{display:flex;justify-content:space-between;gap:1rem;margin-top:1.75rem;}
+    .step-pager a,.step-pager span{flex:1;}
+    .step-pager .btn{width:100%;}
+    .step-pager .end{text-align:right;}
+  </style>
+  <style>
+    /* ---- Step content: blocks, cards, callouts, checker, accordion ---- */
+    .lede{font-size:1.08rem;max-width:60ch;}
+    .s2-block{margin-top:2.4rem;}
+    .s2-block>h2{font-size:clamp(1.5rem,3.4vw,2rem);margin-bottom:.4rem;}
+    .s2-block>.s2-intro{color:var(--body);margin-bottom:1.2rem;max-width:64ch;}
 
-    /* ---- Single-step page --------------------------------------------- */
-    .step-wrap { max-width: 760px; margin-inline: auto; padding-block: clamp(1.5rem, 4vw, 2.5rem); }
-    .step-crumb { font-size: 0.82rem; margin-bottom: 1.4rem; }
-    .step-crumb a { color: var(--body); }
-    .step-crumb a:hover { color: var(--lavender-deep); }
-    .step-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--lavender-deep); margin-bottom: 0.9rem;
-    }
-    .step-badge .dot { width: 26px; height: 26px; border-radius: 50%; background: var(--lavender-tint);
-      display: grid; place-items: center; font-family: var(--font-display); font-size: 0.85rem;
-      letter-spacing: 0; color: var(--lavender-deep); }
-    .step-wrap h1 { font-size: clamp(2rem, 4.4vw, 2.7rem); margin-bottom: 0.9rem; }
-    .step-do { font-size: 0.96rem; background: var(--cream-2); border-left: 2px solid var(--lavender);
-      border-radius: 0 8px 8px 0; padding: 0.9rem 1.1rem; margin: 1.2rem 0 0; }
-    .step-do strong { color: var(--ink); font-weight: 600; }
-    .track-row { display: flex; align-items: center; gap: 0.7rem; margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
-    .track-row input { width: 19px; height: 19px; accent-color: var(--lavender); flex: none; }
-    .track-row label { margin: 0; font-weight: 500; text-transform: none; letter-spacing: 0; font-size: 0.98rem; color: var(--ink); }
-    .track-note { font-size: 0.86rem; margin: 0.6rem 0 0; }
-    .step-pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.75rem; }
-    .step-pager a, .step-pager span { flex: 1; }
-    .step-pager .btn { width: 100%; }
-    .step-pager .end { text-align: right; }
+    ul.dot-list{list-style:none;padding-left:0;margin:0;}
+    ul.dot-list li{position:relative;padding-left:1.5rem;margin-bottom:.55rem;font-size:.96rem;}
+    ul.dot-list li::before{content:"";position:absolute;left:3px;top:.6em;width:7px;height:7px;border-radius:50%;border:1.6px solid var(--lavender-deep);}
+    ul.dot-list li strong{color:var(--ink);font-weight:600;}
 
+    .s2-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    @media (max-width:560px){.s2-cards{grid-template-columns:1fr;}}
+    .mini{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);padding:1.1rem 1.2rem;}
+    .mini h3{font-size:1.14rem;margin:.5rem 0 .4rem;}
+    .mini p{font-size:.92rem;margin:0 0 .5rem;}
+    .mini p:last-child{margin-bottom:0;}
+    .mini .tipline{font-size:.86rem;color:var(--lavender-deep);border-left:2px solid var(--lavender);padding-left:.7rem;margin:.5rem 0 0;}
+
+    /* callouts */
+    .s2-tip{display:flex;gap:.9rem;background:var(--lavender-tint);border-radius:var(--radius-sm);padding:1.05rem 1.25rem;margin-top:1.2rem;}
+    .s2-tip .ic{flex:none;width:26px;height:26px;color:var(--lavender-deep);margin-top:2px;}
+    .s2-tip h4{font-family:var(--font-body);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--lavender-deep);margin:0 0 .35rem;}
+    .s2-tip p{margin:0;font-size:.96rem;color:var(--ink);}
+    .s2-tip--read{background:var(--cream-2);}
+
+    /* accordion (how to read a paper) */
+    .acc-item{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);margin-bottom:.7rem;overflow:hidden;}
+    .acc-head{display:flex;align-items:center;gap:.9rem;width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:1rem 1.15rem;font-family:var(--font-body);}
+    .acc-num{flex:none;width:32px;height:32px;border-radius:50%;background:var(--lavender-tint);color:var(--lavender-deep);font-family:var(--font-display);font-size:1rem;display:grid;place-items:center;}
+    .acc-title{flex:1;font-weight:600;color:var(--ink);font-size:1rem;}
+    .acc-chev{flex:none;color:var(--lavender-deep);transition:transform .2s;}
+    .acc-item.open .acc-chev{transform:rotate(180deg);}
+    .acc-body{display:none;padding:0 1.15rem 1.1rem 4.05rem;}
+    .acc-item.open .acc-body{display:block;animation:fadeUp .2s;}
+    .acc-body p{margin:0;font-size:.94rem;}
+
+    /* source-trust checker */
+    .checker{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:clamp(1.25rem,3vw,1.75rem);}
+    .check-item{border-top:1px solid var(--line);}
+    .check-item:first-of-type{border-top:none;}
+    .check-head{display:flex;align-items:center;gap:.8rem;width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:.85rem 0;font-family:var(--font-body);}
+    .cbox{flex:none;width:22px;height:22px;border:2px solid var(--lavender-deep);border-radius:6px;background:var(--paper);cursor:pointer;position:relative;appearance:none;-webkit-appearance:none;}
+    .cbox:checked{background:var(--lavender-deep);}
+    .cbox:checked::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}
+    .check-title{flex:1;font-weight:600;color:var(--ink);font-size:.98rem;}
+    .check-chev{flex:none;color:var(--lavender-deep);transition:transform .2s;}
+    .check-item.open .check-chev{transform:rotate(180deg);}
+    .check-body{display:none;padding:0 0 1rem 2.8rem;}
+    .check-item.open .check-body{display:block;animation:fadeUp .2s;}
+    .eg-pair{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+    @media (max-width:520px){.eg-pair{grid-template-columns:1fr;}}
+    .eg{border-radius:8px;padding:.6rem .8rem;font-size:.85rem;line-height:1.4;}
+    .eg .lab{display:block;font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem;}
+    .eg--good{background:var(--success-tint);color:#2f6244;}
+    .eg--good .lab{color:var(--success);}
+    .eg--bad{background:var(--danger-tint);color:#7a2c40;}
+    .eg--bad .lab{color:var(--danger);}
+    .check-meter{margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line);}
+    .check-bar{height:9px;border-radius:999px;background:var(--cream-2);overflow:hidden;}
+    .check-bar span{display:block;height:100%;width:0;background:var(--lavender);border-radius:999px;transition:width .3s;}
+    .check-num{display:block;margin-top:.6rem;font-size:.9rem;color:var(--body);}
+    .check-num strong{color:var(--lavender-deep);font-weight:600;}
+
+    /* stage boxes (settled / debated / missing) */
+    .s2-stages{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-top:.4rem;}
+    @media (max-width:620px){.s2-stages{grid-template-columns:1fr;}}
+
+    /* keep-in-mind */
+    .keepin{background:var(--cream-2);border-radius:var(--radius-sm);padding:1.1rem 1.3rem;}
+
+    /* checkable do-list */
+    .subj-tasks{list-style:none;margin:0;padding:0;}
+    .subj-tasks li{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:.75rem;}
+    .subj-tasks input[type=checkbox]{appearance:none;-webkit-appearance:none;flex:none;width:20px;height:20px;margin:2px 0 0;border:2px solid var(--lavender-deep);border-radius:6px;background:var(--paper);cursor:pointer;position:relative;}
+    .subj-tasks input[type=checkbox]:checked{background:var(--lavender-deep);}
+    .subj-tasks input[type=checkbox]:checked::after{content:"";position:absolute;left:5px;top:1px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg);}
+    .subj-tasks label{display:inline;margin:0;cursor:pointer;font-weight:400;font-size:.96rem;color:var(--body);}
+    .subj-tasks label strong{color:var(--ink);font-weight:600;}
+    .subj-tasks input:checked + label{text-decoration:line-through;text-decoration-color:var(--lavender-tint);}
+    .s2-note{font-size:.85rem;color:var(--body);margin:.9rem 0 0;}
   </style>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
   <script>
-
-/* ===== assets/yrp-auth.js, inlined so this page works on its own =====
-   The CONFIG block below is the only thing you edit. It is identical in
-   signup.html and dashboard.html -- change it in both. */
-/* =========================================================================
-   Youth Research Project — shared auth + profile module
-   -------------------------------------------------------------------------
-   Everything you need to configure lives in the CONFIG block below.
-   Every page (signup, signin, dashboard, admin) loads this one file, so
-   you only fill your keys in once.
-
-   Requires, in this order, before this file:
-     firebase-app-compat.js
-     firebase-auth-compat.js
-     firebase-firestore-compat.js
-     (optional) @emailjs/browser  — for the sign-in notification email
-   ========================================================================= */
-
+/* ===== Youth Research Project — shared auth + profile module (inlined) ===== */
 window.YRP = (function () {
   "use strict";
-
-  /* =======================================================================
-     1. CONFIG — fill these in
-     =======================================================================
-     A) FIREBASE  (Console > Project settings > General > Your apps > Web)
-        These are public identifiers. They are safe to commit to GitHub.
-        Your data is protected by the Firestore rules in firestore.rules,
-        not by hiding these values.
-     ---------------------------------------------------------------------- */
   var firebaseConfig = {
     apiKey: "AIzaSyAtPmyueju_3oMy3O1s62cC0TZCGGNqhco",
     authDomain: "youth-research-project-e9a28.firebaseapp.com",
@@ -322,399 +217,109 @@ window.YRP = (function () {
     appId: "1:1064912974299:web:38ca97ee28a42b219f37fe",
     measurementId: "G-60SRGH5Z5Q"
   };
-
-  /* B) ADMIN
-        The first admin account. Anyone signing in with this address gets the
-        Admin panel. Additional admins are granted from inside the panel.
-        This must match the address you sign in with, lowercase.            */
   var ADMIN_EMAIL = "youthresearchproject26@gmail.com";
-
-  /* C) SIGN-IN NOTIFICATION EMAIL (EmailJS — free tier, no server needed)
-        Sign up at https://emailjs.com, connect the Gmail account, create a
-        template, then paste the three IDs here. Setup steps are in SETUP.md.
-        Leave as-is and no email is sent — everything else still works.     */
-  var EMAILJS = {
-    publicKey:  "SqGcVCVa3kwCregul",
-    serviceId:  "service_r84p20g",
-    templateId: "template_0etzwmo",
-    toEmail:    "youthresearchproject26@gmail.com"
-  };
-
-  /* D) WHEN TO EMAIL
-        "new"   — only the first time an account is created (recommended)
-        "every" — every single sign-in (noisy once you have real traffic)  */
+  var EMAILJS = { publicKey:"SqGcVCVa3kwCregul", serviceId:"service_r84p20g", templateId:"template_0etzwmo", toEmail:"youthresearchproject26@gmail.com" };
   var NOTIFY_ON = "new";
-
-  /* E) Where to send people after they sign in. */
   var DASHBOARD_URL = "dashboard.html";
   var SIGNIN_URL = "signup.html#signin";
   var SIGNIN_REMOVED_URL = "signup.html?removed=1#signin";
 
-  /* ===================================================================== */
-
-  var app = null, auth = null, db = null;
+  var app=null, auth=null, db=null;
   var configured = firebaseConfig.apiKey !== "YOUR_API_KEY";
   var librariesMissing = false;
 
-  function init() {
-    if (!configured) return false;
-    // The Firebase libraries load from Google's CDN. If they didn't arrive --
-    // no connection, an ad blocker, a school firewall, or a preview sandbox
-    // that blocks outside scripts -- say so instead of throwing.
-    if (typeof firebase === "undefined") {
-      librariesMissing = true;
-      console.error("[YRP] Firebase libraries did not load from gstatic.com.");
-      return false;
-    }
-    if (!app) {
-      app = firebase.initializeApp(firebaseConfig);
-      auth = firebase.auth();
-      db = firebase.firestore();
-      try { auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL); } catch (e) {}
-      if (window.emailjs && EMAILJS.publicKey !== "YOUR_EMAILJS_PUBLIC_KEY") {
-        try { emailjs.init({ publicKey: EMAILJS.publicKey }); } catch (e) {}
-      }
+  function init(){
+    if(!configured) return false;
+    if(typeof firebase==="undefined"){ librariesMissing=true; console.error("[YRP] Firebase libraries did not load."); return false; }
+    if(!app){
+      app=firebase.initializeApp(firebaseConfig); auth=firebase.auth(); db=firebase.firestore();
+      try{ auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL); }catch(e){}
+      if(window.emailjs && EMAILJS.publicKey!=="YOUR_EMAILJS_PUBLIC_KEY"){ try{ emailjs.init({publicKey:EMAILJS.publicKey}); }catch(e){} }
     }
     return true;
   }
-
-  function notConfiguredMessage() {
-    if (librariesMissing) {
-      return "Couldn't reach Google's Firebase servers, so sign-in is unavailable " +
-             "right now. Check your internet connection, and if you're using an ad " +
-             "blocker or a school network, try again on a different connection.";
-    }
-    return "Accounts aren't connected yet. Add your Firebase project keys in " +
-           "the CONFIG block at the top of this page's script (see SETUP.md) to turn sign-in on.";
+  function notConfiguredMessage(){
+    if(librariesMissing){ return "Couldn't reach Google's Firebase servers, so sign-in is unavailable right now. Check your internet connection, and if you're using an ad blocker or a school network, try again on a different connection."; }
+    return "Accounts aren't connected yet. Add your Firebase project keys in the CONFIG block (see SETUP.md) to turn sign-in on.";
   }
-
-  /* ---------------------------------------------------------------------
-     Device + location context
-     Device comes from the browser. Approximate city/region comes from a
-     free IP lookup (ipapi.co) — it resolves the network the person is on,
-     not their exact address, and it fails quietly if the service is down.
-     --------------------------------------------------------------------- */
-  function parseDevice() {
-    var ua = navigator.userAgent || "";
-    var os = "Unknown OS", browser = "Unknown browser", type = "Desktop";
-
-    if (/Windows NT 10/.test(ua)) os = "Windows 10/11";
-    else if (/Windows/.test(ua)) os = "Windows";
-    else if (/iPhone/.test(ua)) { os = "iOS"; type = "Phone"; }
-    else if (/iPad/.test(ua)) { os = "iPadOS"; type = "Tablet"; }
-    else if (/Android/.test(ua)) { os = "Android"; type = /Mobile/.test(ua) ? "Phone" : "Tablet"; }
-    else if (/CrOS/.test(ua)) { os = "ChromeOS"; type = "Chromebook"; }
-    else if (/Mac OS X/.test(ua)) os = "macOS";
-    else if (/Linux/.test(ua)) os = "Linux";
-
-    if (/Edg\//.test(ua)) browser = "Edge";
-    else if (/OPR\//.test(ua)) browser = "Opera";
-    else if (/Chrome\//.test(ua) && !/Edg\//.test(ua)) browser = "Chrome";
-    else if (/Firefox\//.test(ua)) browser = "Firefox";
-    else if (/Safari\//.test(ua)) browser = "Safari";
-
-    if (type === "Desktop" && /Mobi/.test(ua)) type = "Phone";
-
-    return {
-      type: type,
-      os: os,
-      browser: browser,
-      label: browser + " on " + os + " (" + type + ")",
-      screen: (window.screen ? window.screen.width + "×" + window.screen.height : ""),
-      language: navigator.language || "",
-      userAgent: ua.slice(0, 400)
-    };
+  function parseDevice(){
+    var ua=navigator.userAgent||"", os="Unknown OS", browser="Unknown browser", type="Desktop";
+    if(/Windows NT 10/.test(ua))os="Windows 10/11"; else if(/Windows/.test(ua))os="Windows";
+    else if(/iPhone/.test(ua)){os="iOS";type="Phone";} else if(/iPad/.test(ua)){os="iPadOS";type="Tablet";}
+    else if(/Android/.test(ua)){os="Android";type=/Mobile/.test(ua)?"Phone":"Tablet";}
+    else if(/CrOS/.test(ua)){os="ChromeOS";type="Chromebook";} else if(/Mac OS X/.test(ua))os="macOS"; else if(/Linux/.test(ua))os="Linux";
+    if(/Edg\//.test(ua))browser="Edge"; else if(/OPR\//.test(ua))browser="Opera";
+    else if(/Chrome\//.test(ua)&&!/Edg\//.test(ua))browser="Chrome"; else if(/Firefox\//.test(ua))browser="Firefox"; else if(/Safari\//.test(ua))browser="Safari";
+    if(type==="Desktop"&&/Mobi/.test(ua))type="Phone";
+    return {type:type,os:os,browser:browser,label:browser+" on "+os+" ("+type+")",screen:(window.screen?window.screen.width+"×"+window.screen.height:""),language:navigator.language||"",userAgent:ua.slice(0,400)};
   }
-
-  function lookupLocation() {
-    return fetch("https://ipapi.co/json/")
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (d) {
-        if (!d || d.error) return null;
-        return {
-          ip: d.ip || "",
-          city: d.city || "",
-          region: d.region || "",
-          country: d.country_name || "",
-          countryCode: d.country_code || "",
-          timezone: d.timezone || "",
-          label: [d.city, d.region, d.country_name].filter(Boolean).join(", ")
-        };
-      })
-      .catch(function () { return null; });
+  function lookupLocation(){
+    return fetch("https://ipapi.co/json/").then(function(r){return r.ok?r.json():null;}).then(function(d){
+      if(!d||d.error) return null;
+      return {ip:d.ip||"",city:d.city||"",region:d.region||"",country:d.country_name||"",countryCode:d.country_code||"",timezone:d.timezone||"",label:[d.city,d.region,d.country_name].filter(Boolean).join(", ")};
+    }).catch(function(){return null;});
   }
-
-  function collectContext() {
-    return lookupLocation().then(function (loc) {
-      return {
-        device: parseDevice(),
-        location: loc || { label: "Unavailable", ip: "", city: "", region: "", country: "", timezone: "" },
-        at: new Date().toISOString()
-      };
-    });
+  function collectContext(){ return lookupLocation().then(function(loc){ return {device:parseDevice(),location:loc||{label:"Unavailable",ip:"",city:"",region:"",country:"",timezone:""},at:new Date().toISOString()}; }); }
+  function ageFromDob(dob){ if(!dob)return null; var b=new Date(dob); if(isNaN(b))return null; var t=new Date(),a=t.getFullYear()-b.getFullYear(),m=t.getMonth()-b.getMonth(); if(m<0||(m===0&&t.getDate()<b.getDate()))a--; return (a>=0&&a<120)?a:null; }
+  function splitName(dn){ if(!dn)return {first:"",last:""}; var b=dn.trim().split(/\s+/); return {first:b.shift()||"",last:b.join(" ")}; }
+  function recordSignIn(user,extra){
+    extra=extra||{}; var ref=db.collection("users").doc(user.uid); var stamp=firebase.firestore.FieldValue.serverTimestamp();
+    return collectContext().then(function(ctx){ return ref.get().then(function(snap){
+      var isNew=!snap.exists, prev=snap.exists?snap.data():{}, email=(user.email||extra.email||"").toLowerCase();
+      var names=splitName(user.displayName);
+      var first=extra.firstName||prev.firstName||names.first||"", last=extra.lastName||prev.lastName||names.last||"", dob=extra.dob||prev.dob||"";
+      var payload={uid:user.uid,email:email,firstName:first,lastName:last,fullName:(first+" "+last).trim()||user.displayName||email,dob:dob,age:ageFromDob(dob),grade:extra.grade||prev.grade||"",school:extra.school!==undefined?extra.school:(prev.school||""),interest:extra.interest!==undefined?extra.interest:(prev.interest||""),provider:(user.providerData[0]&&user.providerData[0].providerId)||"password",photoURL:user.photoURL||prev.photoURL||"",emailVerified:!!user.emailVerified,lastLoginAt:stamp,lastLogin:ctx,loginCount:firebase.firestore.FieldValue.increment(1),disabled:prev.disabled===true};
+      if(isNew){ payload.createdAt=stamp; payload.signupContext=ctx; payload.role=(email===ADMIN_EMAIL)?"admin":"member"; }
+      else if(prev.role!=="admin"&&email===ADMIN_EMAIL){ payload.role="admin"; }
+      payload.profileComplete=!!(payload.firstName&&payload.lastName&&payload.dob&&payload.grade);
+      return ref.set(payload,{merge:true}).then(function(){ return ref.collection("logins").add({at:stamp,device:ctx.device,location:ctx.location,provider:payload.provider}).catch(function(){}); })
+        .then(function(){ var notify=(NOTIFY_ON==="every"||(NOTIFY_ON==="new"&&isNew))&&email!==ADMIN_EMAIL; if(notify) return sendSignInEmail(payload,ctx,isNew); })
+        .then(function(){ return {isNew:isNew,profile:payload}; });
+    }); });
   }
-
-  /* ---------------------------------------------------------------------
-     Profile write
-     Creates users/{uid} the first time, updates it on every sign-in, and
-     appends a row to users/{uid}/logins so the admin panel has a history.
-     --------------------------------------------------------------------- */
-  function ageFromDob(dob) {
-    if (!dob) return null;
-    var b = new Date(dob);
-    if (isNaN(b)) return null;
-    var t = new Date(), a = t.getFullYear() - b.getFullYear();
-    var m = t.getMonth() - b.getMonth();
-    if (m < 0 || (m === 0 && t.getDate() < b.getDate())) a--;
-    return (a >= 0 && a < 120) ? a : null;
+  function sendSignInEmail(profile,ctx,isNew){
+    if(!window.emailjs||EMAILJS.serviceId==="YOUR_EMAILJS_SERVICE_ID"){ console.info("[YRP] Sign-in email skipped."); return Promise.resolve(); }
+    var params={to_email:EMAILJS.toEmail,event_type:isNew?"New account created":"Sign-in",user_name:profile.fullName||"(no name)",user_first_name:profile.firstName||"—",user_last_name:profile.lastName||"—",user_email:profile.email,user_dob:profile.dob||"—",user_age:(profile.age==null)?"—":String(profile.age),user_grade:profile.grade||"—",user_school:profile.school||"—",user_interest:profile.interest||"—",sign_in_method:profile.provider,location:ctx.location.label||"Unavailable",ip_address:ctx.location.ip||"Unavailable",device:ctx.device.label,signed_in_at:new Date().toLocaleString()};
+    return emailjs.send(EMAILJS.serviceId,EMAILJS.templateId,params).catch(function(err){ console.warn("[YRP] Sign-in email failed:",err); });
   }
-
-  function recordSignIn(user, extra) {
-    extra = extra || {};
-    var ref = db.collection("users").doc(user.uid);
-    var stamp = firebase.firestore.FieldValue.serverTimestamp();
-
-    return collectContext().then(function (ctx) {
-      return ref.get().then(function (snap) {
-        var isNew = !snap.exists;
-        var prev = snap.exists ? snap.data() : {};
-        var email = (user.email || extra.email || "").toLowerCase();
-
-        var names = splitName(user.displayName);
-        var first = extra.firstName || prev.firstName || names.first || "";
-        var last  = extra.lastName  || prev.lastName  || names.last  || "";
-        var dob   = extra.dob || prev.dob || "";
-
-        var payload = {
-          uid: user.uid,
-          email: email,
-          firstName: first,
-          lastName: last,
-          fullName: (first + " " + last).trim() || user.displayName || email,
-          dob: dob,
-          age: ageFromDob(dob),
-          grade: extra.grade || prev.grade || "",
-          school: extra.school !== undefined ? extra.school : (prev.school || ""),
-          interest: extra.interest !== undefined ? extra.interest : (prev.interest || ""),
-          provider: (user.providerData[0] && user.providerData[0].providerId) || "password",
-          photoURL: user.photoURL || prev.photoURL || "",
-          emailVerified: !!user.emailVerified,
-          lastLoginAt: stamp,
-          lastLogin: ctx,
-          loginCount: firebase.firestore.FieldValue.increment(1),
-          disabled: prev.disabled === true
-        };
-
-        if (isNew) {
-          payload.createdAt = stamp;
-          payload.signupContext = ctx;
-          // First admin is seeded by email; everyone else starts as a member.
-          payload.role = (email === ADMIN_EMAIL) ? "admin" : "member";
-        } else if (prev.role !== "admin" && email === ADMIN_EMAIL) {
-          payload.role = "admin";
-        }
-
-        payload.profileComplete = !!(payload.firstName && payload.lastName && payload.dob && payload.grade);
-
-        return ref.set(payload, { merge: true })
-          .then(function () {
-            return ref.collection("logins").add({
-              at: stamp,
-              device: ctx.device,
-              location: ctx.location,
-              provider: payload.provider
-            }).catch(function () { /* history is nice-to-have, never blocking */ });
-          })
-          .then(function () {
-            // "new" = only the moment an account is first created.
-            // "every" = every sign-in, including returning members.
-            // Either way, never send the admin a notification about the
-            // admin's own account.
-            var shouldNotify = (NOTIFY_ON === "every" || (NOTIFY_ON === "new" && isNew)) &&
-                                email !== ADMIN_EMAIL;
-            if (shouldNotify) {
-              return sendSignInEmail(payload, ctx, isNew);
-            }
-          })
-          .then(function () { return { isNew: isNew, profile: payload }; });
-      });
-    });
-  }
-
-  function splitName(displayName) {
-    if (!displayName) return { first: "", last: "" };
-    var bits = displayName.trim().split(/\s+/);
-    return { first: bits.shift() || "", last: bits.join(" ") };
-  }
-
-  /* ---------------------------------------------------------------------
-     Sign-in notification email
-     Browsers can't send mail on their own, so this hands the message to
-     EmailJS, which delivers it to the inbox above. Never blocks sign-in.
-     --------------------------------------------------------------------- */
-  function sendSignInEmail(profile, ctx, isNew) {
-    if (!window.emailjs || EMAILJS.serviceId === "YOUR_EMAILJS_SERVICE_ID") {
-      console.info("[YRP] Sign-in email skipped — EmailJS not configured yet.");
-      return Promise.resolve();
-    }
-    var params = {
-      to_email: EMAILJS.toEmail,
-      event_type: isNew ? "New account created" : "Sign-in",
-      user_name: profile.fullName || "(no name on file)",
-      user_first_name: profile.firstName || "—",
-      user_last_name: profile.lastName || "—",
-      user_email: profile.email,
-      user_dob: profile.dob || "—",
-      user_age: (profile.age === null || profile.age === undefined) ? "—" : String(profile.age),
-      user_grade: profile.grade || "—",
-      user_school: profile.school || "—",
-      user_interest: profile.interest || "—",
-      sign_in_method: profile.provider,
-      location: ctx.location.label || "Unavailable",
-      ip_address: ctx.location.ip || "Unavailable",
-      device: ctx.device.label,
-      signed_in_at: new Date().toLocaleString()
-    };
-    return emailjs.send(EMAILJS.serviceId, EMAILJS.templateId, params)
-      .catch(function (err) { console.warn("[YRP] Sign-in email failed:", err); });
-  }
-
-  /* ---------------------------------------------------------------------
-     Page guards
-     guard({ admin: true }) sends non-admins back to the dashboard.
-     The real protection is in firestore.rules — this only controls what
-     the page bothers to render.
-     --------------------------------------------------------------------- */
-  function guard(opts) {
-    opts = opts || {};
-    return new Promise(function (resolve) {
-      if (!init()) {
-        // Bouncing to the sign-in page would just fail there too, and the
-        // person would never learn why. Say what happened, here.
-        var veil = document.getElementById("veil");
-        if (veil && librariesMissing) {
-          veil.innerHTML =
-            '<div style="max-width:34rem;padding:0 1.5rem;">' +
-            '<h2 style="font-family:var(--font-display);color:var(--ink);">Can\'t reach the server</h2>' +
-            '<p>' + notConfiguredMessage() + '</p>' +
-            '<p style="font-size:0.88rem;">Nothing is wrong with your account &mdash; ' +
-            'this page just couldn\'t load the sign-in libraries it needs.</p>' +
-            '<a class="btn btn--ghost" href="index.html">Back to the website</a></div>';
-          return;
-        }
-        window.location.replace(SIGNIN_URL);
-        return;
+  function guard(opts){
+    opts=opts||{};
+    return new Promise(function(resolve){
+      if(!init()){
+        var veil=document.getElementById("veil");
+        if(veil&&librariesMissing){ veil.innerHTML='<div style="max-width:34rem;padding:0 1.5rem;"><h2 style="font-family:var(--font-display);color:var(--ink);">Can\'t reach the server</h2><p>'+notConfiguredMessage()+'</p><p style="font-size:.88rem;">Nothing is wrong with your account &mdash; this page just couldn\'t load the sign-in libraries it needs.</p><a class="btn btn--ghost" href="index.html">Back to the website</a></div>'; return; }
+        window.location.replace(SIGNIN_URL); return;
       }
-      auth.onAuthStateChanged(function (user) {
-        if (!user) { window.location.replace(SIGNIN_URL); return; }
-        db.collection("users").doc(user.uid).get().then(function (snap) {
-          var profile = snap.exists ? snap.data() : {};
-          if (profile.disabled === true) {
-            auth.signOut().then(function () {
-              window.location.replace(SIGNIN_REMOVED_URL);
-            });
-            return;
-          }
-          var isAdmin = profile.role === "admin" ||
-                        (user.email || "").toLowerCase() === ADMIN_EMAIL;
-          if (opts.admin && !isAdmin) {
-            window.location.replace(DASHBOARD_URL);
-            return;
-          }
-          resolve({ user: user, profile: profile, isAdmin: isAdmin });
-        }).catch(function (err) {
-          console.error("[YRP] Could not load profile:", err);
-          resolve({ user: user, profile: {}, isAdmin: (user.email || "").toLowerCase() === ADMIN_EMAIL });
-        });
+      auth.onAuthStateChanged(function(user){
+        if(!user){ window.location.replace(SIGNIN_URL); return; }
+        db.collection("users").doc(user.uid).get().then(function(snap){
+          var profile=snap.exists?snap.data():{};
+          if(profile.disabled===true){ auth.signOut().then(function(){ window.location.replace(SIGNIN_REMOVED_URL); }); return; }
+          var isAdmin=profile.role==="admin"||(user.email||"").toLowerCase()===ADMIN_EMAIL;
+          if(opts.admin&&!isAdmin){ window.location.replace(DASHBOARD_URL); return; }
+          resolve({user:user,profile:profile,isAdmin:isAdmin});
+        }).catch(function(err){ console.error("[YRP] Could not load profile:",err); resolve({user:user,profile:{},isAdmin:(user.email||"").toLowerCase()===ADMIN_EMAIL}); });
       });
     });
   }
-
-  function signOut() {
-    if (!auth) return Promise.resolve();
-    return auth.signOut().then(function () { window.location.href = SIGNIN_URL; });
-  }
-
-  function providerFor(name) {
-    if (name === "Google") return new firebase.auth.GoogleAuthProvider();
-    if (name === "Apple") return new firebase.auth.OAuthProvider("apple.com");
-    if (name === "Microsoft") return new firebase.auth.OAuthProvider("microsoft.com");
-    return null;
-  }
-
-  function friendlyError(err) {
-    var map = {
-      "auth/email-already-in-use": "That email already has an account. Sign in instead.",
-      "auth/invalid-email": "That email address doesn't look right.",
-      "auth/weak-password": "Pick a password with at least 8 characters.",
-      "auth/wrong-password": "That password doesn't match this account.",
-      "auth/user-not-found": "No account uses that email yet.",
-      "auth/invalid-credential": "That email and password don't match an account.",
-      "auth/too-many-requests": "Too many tries. Wait a minute and try again.",
-      "auth/popup-closed-by-user": "The sign-in window closed before finishing.",
-      "auth/popup-blocked": "Your browser blocked the sign-in window. Allow pop-ups and try again.",
-      "auth/unauthorized-domain": "This domain isn't authorized in Firebase yet. Add it under Authentication > Settings > Authorized domains."
-    };
-    return map[err && err.code] || (err && err.message) || "Something went wrong. Try again.";
-  }
-
-  function initials(profile) {
-    var n = (profile.fullName || profile.email || "?").trim();
-    var parts = n.split(/\s+/);
-    if (parts.length > 1) return (parts[0][0] + parts[1][0]).toUpperCase();
-    return n.slice(0, 2).toUpperCase();
-  }
-
-  function fmtDate(ts) {
-    if (!ts) return "—";
-    var d = ts.toDate ? ts.toDate() : new Date(ts);
-    if (isNaN(d)) return "—";
-    return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }) +
-           ", " + d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
-  }
-
-  return {
-    init: init,
-    get auth() { return auth; },
-    get db() { return db; },
-    configured: function () { return configured; },
-    notConfiguredMessage: notConfiguredMessage,
-    ADMIN_EMAIL: ADMIN_EMAIL,
-    DASHBOARD_URL: DASHBOARD_URL,
-    SIGNIN_URL: SIGNIN_URL,
-    collectContext: collectContext,
-    parseDevice: parseDevice,
-    recordSignIn: recordSignIn,
-    sendSignInEmail: sendSignInEmail,
-    ageFromDob: ageFromDob,
-    guard: guard,
-    signOut: signOut,
-    providerFor: providerFor,
-    friendlyError: friendlyError,
-    initials: initials,
-    fmtDate: fmtDate
-  };
+  function signOut(){ if(!auth)return Promise.resolve(); return auth.signOut().then(function(){ window.location.href=SIGNIN_URL; }); }
+  function friendlyError(err){ var m={"auth/email-already-in-use":"That email already has an account. Sign in instead.","auth/invalid-email":"That email address doesn't look right.","auth/weak-password":"Pick a password with at least 8 characters.","auth/wrong-password":"That password doesn't match this account.","auth/user-not-found":"No account uses that email yet.","auth/invalid-credential":"That email and password don't match an account.","auth/too-many-requests":"Too many tries. Wait a minute and try again."}; return m[err&&err.code]||(err&&err.message)||"Something went wrong. Try again."; }
+  function initials(profile){ var n=(profile.fullName||profile.email||"?").trim(),p=n.split(/\s+/); if(p.length>1)return (p[0][0]+p[1][0]).toUpperCase(); return n.slice(0,2).toUpperCase(); }
+  function fmtDate(ts){ if(!ts)return "—"; var d=ts.toDate?ts.toDate():new Date(ts); if(isNaN(d))return "—"; return d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}); }
+  return { init:init, get auth(){return auth;}, get db(){return db;}, configured:function(){return configured;}, notConfiguredMessage:notConfiguredMessage, ADMIN_EMAIL:ADMIN_EMAIL, DASHBOARD_URL:DASHBOARD_URL, SIGNIN_URL:SIGNIN_URL, collectContext:collectContext, parseDevice:parseDevice, recordSignIn:recordSignIn, sendSignInEmail:sendSignInEmail, ageFromDob:ageFromDob, guard:guard, signOut:signOut, friendlyError:friendlyError, initials:initials, fmtDate:fmtDate };
 })();
-
-  
   </script>
 </head>
 <body>
 
   <div class="veil" id="veil">
-    <div>
-      <div class="spinner"></div>
-      <p>Opening your dashboard…</p>
-    </div>
+    <div><div class="spinner"></div><p>Opening your dashboard&hellip;</p></div>
   </div>
 
   <header class="site-header" id="top">
     <div class="wrap wrap--wide">
       <a class="brand" href="index.html" aria-label="Youth Research Project home">
-        <svg width="42" height="42" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect width="48" height="48" rx="14" fill="#8f74b3"/>
-          <circle cx="21" cy="21" r="8.5" fill="none" stroke="#fff" stroke-width="3"/><path d="M27.5 27.5 34 34" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><path d="M16.8 23.2 19.7 19.8 22.2 21.8 25.5 17" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <svg width="42" height="42" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#8f74b3"/><circle cx="21" cy="21" r="8.5" fill="none" stroke="#fff" stroke-width="3"/><path d="M27.5 27.5 34 34" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><path d="M16.8 23.2 19.7 19.8 22.2 21.8 25.5 17" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span class="brand-name">Youth Research <span class="grad-text">Project</span></span>
       </a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">&#9776;</button>
@@ -724,10 +329,7 @@ window.YRP = (function () {
         <a href="leadership.html">Leadership</a>
         <a href="leadership.html#join">Get Involved</a>
         <span class="nav-actions">
-          <span class="user-chip">
-            <span class="avatar" id="hdr-avatar">&ndash;</span>
-            <span class="who"><strong id="hdr-name">&mdash;</strong><span id="hdr-role"></span></span>
-          </span>
+          <span class="user-chip"><span class="avatar" id="hdr-avatar">&ndash;</span><span class="who"><strong id="hdr-name">&mdash;</strong><span id="hdr-role"></span></span></span>
           <button class="btn btn--ghost" id="signout-btn">Sign out</button>
         </span>
       </nav>
@@ -738,14 +340,191 @@ window.YRP = (function () {
     <div class="step-wrap">
       <p class="step-crumb"><a href="dashboard.html#steps">&larr; Back to the 6 steps</a></p>
 
-      <span class="step-badge"><span class="dot">4</span> Step 4 of 6</span>
-      <h1>Collect your data</h1>
-      <p class="lede" style="max-width:60ch;">Run the plan as written, and keep a careful record as you go.</p>
+      <span class="step-badge"><span class="dot">3</span> Step 3 of 6</span>
+      <h1>Design your method</h1>
+      <p class="lede">You have a sharp question and you know what's already out there. Now for the plan: <strong>how</strong> will you actually answer it? Your method is your recipe &mdash; what you'll gather, from whom or what, and exactly how you'll do it.</p>
 
+      <!-- What it is -->
       <div class="card">
-        <p>Run the plan and change nothing halfway through. Keep a dated log of what you did and anything that went sideways — a skipped session, a broken link, a survey someone abandoned. Store raw data separately from anything you edit, so you can always go back to the original.</p>
-        <div class="step-do"><strong>Do this:</strong> name files with a date and version, back them up somewhere that isn't your laptop, and strip names out of anything you'll share.</div>
+        <p style="margin-bottom:0;">Your <strong>method</strong> (or research design) is the game plan for answering your question. It spells out what information you'll collect, who or what you'll collect it from, and the exact steps you'll follow. A good method is <strong>specific</strong> and <strong>repeatable</strong>: someone else should be able to read it and run the same study. This is the step that turns an idea into something you can actually do.</p>
+      </div>
 
+      <!-- Let the question pick -->
+      <div class="s2-block">
+        <span class="eyebrow">The golden rule</span>
+        <h2>Let your question pick the method</h2>
+        <p class="s2-intro">Don't start with &ldquo;I want to do an experiment&rdquo; and force a question onto it. Work the other way: your question already hints at the method that fits it best.</p>
+        <div class="card">
+          <ul class="dot-list">
+            <li><strong>Cause and effect?</strong> (&ldquo;Does X change Y?&rdquo;) &rarr; an experiment.</li>
+            <li><strong>A link or pattern?</strong> (&ldquo;Is X related to Y?&rdquo;) &rarr; an observational or correlational study.</li>
+            <li><strong>Attitudes or behavior?</strong> (&ldquo;What do people think or do?&rdquo;) &rarr; a survey.</li>
+            <li><strong>Depth and &ldquo;why&rdquo;?</strong> (&ldquo;How do people experience X?&rdquo;) &rarr; interviews.</li>
+            <li><strong>Already-collected data exists?</strong> &rarr; analyze an existing dataset.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Method families -->
+      <div class="s2-block">
+        <span class="eyebrow">Pick your approach</span>
+        <h2>Five ways to run a study</h2>
+        <p class="s2-intro">These are the main method families. Tap each to see what it's good for &mdash; and what to watch out for.</p>
+        <div class="acc" id="acc">
+          <div class="acc-item">
+            <button class="acc-head" type="button"><span class="acc-num">A</span><span class="acc-title">Experiment</span><svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-body"><p>You deliberately change one thing and measure what happens, keeping everything else the same. It's the only method that can really show <em>cause and effect</em>. <br><strong>Fits:</strong> &ldquo;Do plants grow taller under red or blue light?&rdquo; <br><strong>Watch out:</strong> you have to control the other variables, or you won't know what caused the result.</p></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head" type="button"><span class="acc-num">B</span><span class="acc-title">Observational / correlational study</span><svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-body"><p>You measure things as they naturally are &mdash; without changing anything &mdash; and look for relationships. Best when an experiment isn't possible or ethical. <br><strong>Fits:</strong> &ldquo;Is screen time before bed linked to shorter sleep?&rdquo; <br><strong>Watch out:</strong> a link isn't proof of cause &mdash; correlation is not causation.</p></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head" type="button"><span class="acc-num">C</span><span class="acc-title">Survey / questionnaire</span><svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-body"><p>You ask a group the same set of questions to capture their attitudes, habits, or opinions &mdash; usually turned into numbers. <br><strong>Fits:</strong> &ldquo;How do students at my school feel about later start times?&rdquo; <br><strong>Watch out:</strong> question wording, honesty, and who you ask can all skew the results.</p></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head" type="button"><span class="acc-num">D</span><span class="acc-title">Interviews / qualitative</span><svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-body"><p>Fewer people, far more depth. Open conversations that get at the <em>why</em> and <em>how</em> behind what people do. <br><strong>Fits:</strong> &ldquo;How do first-generation students experience applying to college?&rdquo; <br><strong>Watch out:</strong> it's time-intensive and harder to generalize to everyone.</p></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head" type="button"><span class="acc-num">E</span><span class="acc-title">Secondary data analysis</span><svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="acc-body"><p>Use data someone else already collected &mdash; public datasets, government records, sports stats. No fieldwork required. <br><strong>Fits:</strong> &ldquo;Has average city temperature risen over 30 years?&rdquo; <br><strong>Watch out:</strong> you're limited to whatever the dataset already contains.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Building blocks -->
+      <div class="s2-block">
+        <span class="eyebrow">The parts of a plan</span>
+        <h2>The building blocks of any study</h2>
+        <p class="s2-intro">Whatever method you pick, three pieces make it real. Nail these and your method is basically written.</p>
+        <div class="s2-cards">
+          <div class="mini">
+            <h3>Your variables</h3>
+            <p>The thing you <strong>change or compare</strong> (independent), the thing you <strong>measure</strong> (dependent), and everything you <strong>keep the same</strong> (controls).</p>
+            <p class="tipline">Light color = what you change · plant height = what you measure · water &amp; soil = kept equal.</p>
+          </div>
+          <div class="mini">
+            <h3>Your sample</h3>
+            <p>Who or what you'll actually study &mdash; and how you'll choose them <strong>fairly</strong>, so they represent the group you care about.</p>
+            <p class="tipline">30 students picked at random beats &ldquo;my 5 friends who agreed.&rdquo;</p>
+          </div>
+          <div class="mini">
+            <h3>Your procedure</h3>
+            <p>The exact, numbered steps you'll follow &mdash; detailed enough that a stranger could repeat your study and get comparable results.</p>
+            <p class="tipline">If a classmate couldn't run it from your notes, add more detail.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Method checker -->
+      <div class="s2-block">
+        <span class="eyebrow">Your turn</span>
+        <h2>Is your method solid?</h2>
+        <p class="s2-intro">Run your plan through these six checks &mdash; tick each one it passes and watch the meter. The more it passes, the more you can trust your results.</p>
+        <div class="checker" id="checker">
+          <div class="check-item">
+            <button class="check-head" type="button"><input type="checkbox" class="cbox" aria-label="Passes: answers the question"><span class="check-title">It actually answers your question</span><svg class="check-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="check-body"><div class="eg-pair"><div class="eg eg--good"><span class="lab">Solid</span>The data you'll collect directly answers what you asked.</div><div class="eg eg--bad"><span class="lab">Shaky</span>You ask about sleep but only measure screen time.</div></div></div>
+          </div>
+          <div class="check-item">
+            <button class="check-head" type="button"><input type="checkbox" class="cbox" aria-label="Passes: defined what to measure"><span class="check-title">You've defined exactly what you'll measure &mdash; and how</span><svg class="check-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="check-body"><div class="eg-pair"><div class="eg eg--good"><span class="lab">Solid</span>&ldquo;Sleep = hours per night, from a 1-week log.&rdquo;</div><div class="eg eg--bad"><span class="lab">Shaky</span>&ldquo;I'll measure how tired people are&rdquo; &mdash; how?</div></div></div>
+          </div>
+          <div class="check-item">
+            <button class="check-head" type="button"><input type="checkbox" class="cbox" aria-label="Passes: fair comparison"><span class="check-title">You compare fairly &mdash; one main thing at a time</span><svg class="check-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="check-body"><div class="eg-pair"><div class="eg eg--good"><span class="lab">Solid</span>Only the light color changes; water, soil, and pot stay identical.</div><div class="eg eg--bad"><span class="lab">Shaky</span>You change light <em>and</em> water, so you can't tell which mattered.</div></div></div>
+          </div>
+          <div class="check-item">
+            <button class="check-head" type="button"><input type="checkbox" class="cbox" aria-label="Passes: realistic"><span class="check-title">It's realistic for your time and access</span><svg class="check-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="check-body"><div class="eg-pair"><div class="eg eg--good"><span class="lab">Solid</span>50 survey responses from your school in two weeks.</div><div class="eg eg--bad"><span class="lab">Shaky</span>&ldquo;Interview 500 people across the country.&rdquo;</div></div></div>
+          </div>
+          <div class="check-item">
+            <button class="check-head" type="button"><input type="checkbox" class="cbox" aria-label="Passes: repeatable"><span class="check-title">Someone else could repeat it from your steps</span><svg class="check-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="check-body"><div class="eg-pair"><div class="eg eg--good"><span class="lab">Solid</span>A numbered procedure with amounts, times, and tools.</div><div class="eg eg--bad"><span class="lab">Shaky</span>&ldquo;I grew some plants and checked on them sometimes.&rdquo;</div></div></div>
+          </div>
+          <div class="check-item">
+            <button class="check-head" type="button"><input type="checkbox" class="cbox" aria-label="Passes: recording plan"><span class="check-title">You know how you'll record the data</span><svg class="check-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <div class="check-body"><div class="eg-pair"><div class="eg eg--good"><span class="lab">Solid</span>A prepared spreadsheet or table, ready before you start.</div><div class="eg eg--bad"><span class="lab">Shaky</span>Scribbling numbers on scrap paper and hoping.</div></div></div>
+          </div>
+          <div class="check-meter">
+            <div class="check-bar"><span id="check-bar-fill"></span></div>
+            <span class="check-num">Your method passes <strong id="check-num">0 of 6</strong> checks</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quant vs qual -->
+      <div class="s2-block">
+        <span class="eyebrow">Two flavors of data</span>
+        <h2>Numbers or words?</h2>
+        <p class="s2-intro">Most methods lean one of two ways. Knowing which you're collecting tells you how you'll analyze it later, in Step&nbsp;5.</p>
+        <div class="s2-cards">
+          <div class="mini">
+            <span class="pill">Quantitative</span>
+            <h3>Numbers</h3>
+            <p>Counts and measurements. Answers &ldquo;how much,&rdquo; &ldquo;how many,&rdquo; or &ldquo;is there a difference?&rdquo; Analyzed with math and statistics.</p>
+            <p class="tipline">Test scores, heights, survey ratings, response times.</p>
+          </div>
+          <div class="mini">
+            <span class="pill">Qualitative</span>
+            <h3>Words</h3>
+            <p>Descriptions and themes. Answers &ldquo;why,&rdquo; &ldquo;how,&rdquo; or &ldquo;what's it like?&rdquo; Analyzed by finding patterns in what people say.</p>
+            <p class="tipline">Interview answers, open-ended responses, observations.</p>
+          </div>
+        </div>
+        <p class="s2-note">Plenty of strong projects use both &mdash; numbers to show <em>what</em> happened, words to explain <em>why</em>.</p>
+      </div>
+
+      <!-- Ethics -->
+      <div class="s2-block">
+        <span class="eyebrow">Non-negotiable</span>
+        <h2>If your study involves people</h2>
+        <p class="s2-intro">Working with people (or animals) comes with real responsibility. Sort this out <em>before</em> you collect anything.</p>
+        <div class="s2-tip s2-tip--read">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+          <div class="tip-body">
+            <h4>Ethics first</h4>
+            <p>Ask for <strong>consent</strong> (people should know what they're agreeing to and be free to say no), keep responses <strong>anonymous or private</strong>, never pressure anyone, and avoid anything that could cause harm or distress. Studying minors, sensitive topics, or animals raises the bar further. <strong>Always run your plan past a teacher or mentor first</strong> &mdash; some studies need formal approval before you can begin.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pitfalls -->
+      <div class="s2-block">
+        <span class="eyebrow">Watch out for</span>
+        <h2>Traps beginners fall into</h2>
+        <div class="keepin">
+          <ul class="dot-list">
+            <li><strong>Changing too many things at once</strong> &mdash; then you can't tell what caused the result.</li>
+            <li><strong>A biased or tiny sample</strong> &mdash; five friends can't represent your whole school.</li>
+            <li><strong>Leading survey questions</strong> that nudge people toward the answer you want.</li>
+            <li><strong>No comparison or control group</strong> &mdash; you need something to compare against.</li>
+            <li><strong>Not writing the procedure down</strong> &mdash; if it's not recorded, it can't be trusted or repeated.</li>
+            <li><strong>Planning way too big</strong> for the time, access, or materials you actually have.</li>
+          </ul>
+        </div>
+        <div class="s2-tip">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2h6c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/></svg>
+          <div class="tip-body">
+            <h4>Pro tip &middot; pilot it first</h4>
+            <p>Before the real thing, do a tiny test run &mdash; try your survey on three friends, or run one trial of your experiment. You'll catch confusing questions, broken steps, and missing materials <em>before</em> they ruin your actual data. Ten minutes of piloting saves days of redoing.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action + done -->
+      <div class="card" style="margin-top:2.6rem;">
+        <div class="step-do"><strong>Do this now:</strong> write your method as a short recipe &mdash; what you'll change or compare, what you'll measure, who or what your sample is, and a numbered procedure. If a classmate could run your study from that description, you're ready for Step&nbsp;4.</div>
+        <ul class="subj-tasks" style="margin-top:1.3rem;">
+          <li><input type="checkbox" id="t1"><label for="t1">Pick the <strong>method family</strong> that fits your question.</label></li>
+          <li><input type="checkbox" id="t2"><label for="t2">Name what you'll <strong>change/compare</strong> and what you'll <strong>measure</strong>.</label></li>
+          <li><input type="checkbox" id="t3"><label for="t3">Decide your <strong>sample</strong> and how you'll choose it fairly.</label></li>
+          <li><input type="checkbox" id="t4"><label for="t4">Write your <strong>procedure</strong> as numbered steps.</label></li>
+          <li><input type="checkbox" id="t5"><label for="t5">Run it through the <strong>six checks</strong> and sort out the <strong>ethics</strong>.</label></li>
+          <li><input type="checkbox" id="t6"><label for="t6"><strong>Pilot</strong> it on a few people or one trial run.</label></li>
+        </ul>
         <div class="track-row">
           <input type="checkbox" id="step-done" disabled>
           <label for="step-done">Mark this step done</label>
@@ -754,8 +533,8 @@ window.YRP = (function () {
       </div>
 
       <div class="step-pager">
-        <a class="btn btn--ghost" href="step-3-design-your-method.html">&larr; Step 3</a>
-        <div class="end"><a class="btn btn--primary" href="step-5-analyze-and-interpret.html">Step 5 &rarr;</a></div>
+        <a class="btn btn--ghost" href="step-2-find-out-whats-known.html">&larr; Step 2</a>
+        <div class="end"><a class="btn btn--primary" href="step-4-collect-your-data.html">Step 4 &rarr;</a></div>
       </div>
     </div>
   </main>
@@ -765,42 +544,24 @@ window.YRP = (function () {
       <div class="foot-grid">
         <div>
           <a class="brand-foot" href="index.html">
-            <svg width="38" height="38" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect width="48" height="48" rx="14" fill="#8f74b3"/>
-          <circle cx="21" cy="21" r="8.5" fill="none" stroke="#fff" stroke-width="3"/><path d="M27.5 27.5 34 34" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><path d="M16.8 23.2 19.7 19.8 22.2 21.8 25.5 17" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+            <svg width="38" height="38" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#8f74b3"/><circle cx="21" cy="21" r="8.5" fill="none" stroke="#fff" stroke-width="3"/><path d="M27.5 27.5 34 34" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><path d="M16.8 23.2 19.7 19.8 22.2 21.8 25.5 17" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span class="name">Youth Research Project</span>
           </a>
           <p style="max-width:34ch;">A free nonprofit resource helping high-school students start doing real research.</p>
         </div>
         <div>
           <h4>Explore</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="journal.html">YRP Journal</a></li>
-            <li><a href="leadership.html">Leadership</a></li>
-            <li><a href="index.html#mission">Get Involved</a></li>
-            <li><a href="index.html#faq">FAQ</a></li>
-          </ul>
+          <ul><li><a href="index.html">Home</a></li><li><a href="journal.html">YRP Journal</a></li><li><a href="leadership.html">Leadership</a></li><li><a href="index.html#mission">Get Involved</a></li><li><a href="index.html#faq">FAQ</a></li></ul>
         </div>
         <div>
           <h4>Get started</h4>
-          <ul>
-            <li><a href="start-here.html">Start Here</a></li>
-            <li><a href="signup.html">Sign Up</a></li>
-            <li><a href="dashboard.html">My dashboard</a></li>
-            <li><a href="privacy.html">Privacy &amp; terms</a></li>
-          </ul>
+          <ul><li><a href="start-here.html">Start Here</a></li><li><a href="signup.html">Sign Up</a></li><li><a href="dashboard.html">My dashboard</a></li><li><a href="privacy.html">Privacy &amp; terms</a></li></ul>
         </div>
         <div>
           <h4>Follow</h4>
           <ul class="social-row">
-            <li><a href="https://www.instagram.com/youthresearchproject" target="_blank" rel="noopener" aria-label="Youth Research Project on Instagram">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-              <span>Instagram</span></a></li>
-            <li><a href="#" aria-label="LinkedIn, coming soon" title="Coming soon" class="soon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 10.5V17M7.5 7.4v.1M11.5 17v-3.6a2.4 2.4 0 0 1 4.8 0V17"/></svg>
-              <span>LinkedIn</span></a></li>
+            <li><a href="https://www.instagram.com/youthresearchproject" target="_blank" rel="noopener" aria-label="Youth Research Project on Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a></li>
+            <li><a href="#" class="soon" title="Coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 10.5V17M7.5 7.4v.1M11.5 17v-3.6a2.4 2.4 0 0 1 4.8 0V17"/></svg><span>LinkedIn</span></a></li>
           </ul>
         </div>
       </div>
@@ -809,70 +570,66 @@ window.YRP = (function () {
   </footer>
 
   <script>
-(function () {
-  var header = document.querySelector('.site-header');
-  if (header) {
-    var onScroll = function () { header.classList.toggle('scrolled', window.scrollY > 8); };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
-  var toggle = document.querySelector('.nav-toggle');
-  var nav = document.getElementById('site-nav');
-  if (toggle && nav) {
-    toggle.addEventListener('click', function () {
-      var open = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open);
-    });
-    nav.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        nav.classList.remove('open');
-        toggle.setAttribute('aria-expanded', false);
-      });
-    });
-  }
-  var y = document.getElementById('year');
-  if (y) y.textContent = new Date().getFullYear();
+(function(){
+  var header=document.querySelector('.site-header');
+  if(header){ var onScroll=function(){ header.classList.toggle('scrolled',window.scrollY>8); }; onScroll(); window.addEventListener('scroll',onScroll,{passive:true}); }
+  var toggle=document.querySelector('.nav-toggle'), nav=document.getElementById('site-nav');
+  if(toggle&&nav){ toggle.addEventListener('click',function(){ var open=nav.classList.toggle('open'); toggle.setAttribute('aria-expanded',open); });
+    nav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ nav.classList.remove('open'); toggle.setAttribute('aria-expanded',false); }); }); }
+  var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
 })();
 
+/* ---- Interactive: accordion + source checker ---- */
+(function(){
+  // "how to read a paper" accordion
+  document.querySelectorAll('.acc-head').forEach(function(btn){
+    btn.addEventListener('click',function(){ btn.parentElement.classList.toggle('open'); });
+  });
 
-/* =======================================================================
-   THIS STEP
-   Loading, sign-in check, and marking this step done. The step's index
-   below matches the position used in the dashboard's overall progress
-   count (0-based, so Step 1 = index 0).
-   ======================================================================= */
-var STEP_INDEX = 3;
+  // source-trust checker: expand on header click, count ticks on meter
+  var items=document.querySelectorAll('#checker .check-item');
+  var boxes=document.querySelectorAll('#checker .cbox');
+  var fill=document.getElementById('check-bar-fill');
+  var num=document.getElementById('check-num');
+  var total=boxes.length;
+  items.forEach(function(item){
+    var head=item.querySelector('.check-head');
+    var box=item.querySelector('.cbox');
+    head.addEventListener('click',function(e){ if(e.target===box) return; item.classList.toggle('open'); });
+    box.addEventListener('click',function(e){ e.stopPropagation(); });
+    box.addEventListener('change',update);
+  });
+  function update(){
+    var n=0; boxes.forEach(function(b){ if(b.checked) n++; });
+    if(fill) fill.style.width=(n/total*100)+'%';
+    if(num) num.textContent=n+' of '+total;
+  }
+  update();
+})();
 
-YRP.guard().then(function (ctx) {
-  document.getElementById('hdr-name').textContent = ctx.profile.fullName || ctx.user.email;
-  document.getElementById('hdr-role').textContent = ctx.isAdmin ? 'Administrator' : 'Member';
-  document.getElementById('hdr-avatar').textContent = YRP.initials(ctx.profile);
-  document.getElementById('signout-btn').addEventListener('click', function () { YRP.signOut(); });
+/* ---- This step: sign-in + done tracking ---- */
+var STEP_INDEX = 2;
+YRP.guard().then(function(ctx){
+  document.getElementById('hdr-name').textContent=ctx.profile.fullName||ctx.user.email;
+  document.getElementById('hdr-role').textContent=ctx.isAdmin?'Administrator':'Member';
+  document.getElementById('hdr-avatar').textContent=YRP.initials(ctx.profile);
+  document.getElementById('signout-btn').addEventListener('click',function(){ YRP.signOut(); });
 
-  var progress = Array.isArray(ctx.profile.progress) ? ctx.profile.progress : [];
-  var box = document.getElementById('step-done');
-  box.checked = progress.indexOf(STEP_INDEX) !== -1;
-  box.disabled = false;
-
-  var ref = YRP.db.collection('users').doc(ctx.user.uid);
-  box.addEventListener('change', function () {
-    var note = document.getElementById('track-note');
-    var op = box.checked
-      ? firebase.firestore.FieldValue.arrayUnion(STEP_INDEX)
-      : firebase.firestore.FieldValue.arrayRemove(STEP_INDEX);
-    ref.update({ progress: op })
-      .then(function () { note.textContent = 'Saved.'; note.style.color = 'var(--success)'; })
-      .catch(function (err) {
-        console.error(err);
-        box.checked = !box.checked;
-        note.textContent = "Couldn't save — check your connection and try again.";
-        note.style.color = 'var(--danger)';
-      });
+  var progress=Array.isArray(ctx.profile.progress)?ctx.profile.progress:[];
+  var box=document.getElementById('step-done');
+  box.checked=progress.indexOf(STEP_INDEX)!==-1;
+  box.disabled=false;
+  var ref=YRP.db.collection('users').doc(ctx.user.uid);
+  box.addEventListener('change',function(){
+    var note=document.getElementById('track-note');
+    var op=box.checked?firebase.firestore.FieldValue.arrayUnion(STEP_INDEX):firebase.firestore.FieldValue.arrayRemove(STEP_INDEX);
+    ref.update({progress:op})
+      .then(function(){ note.textContent='Saved.'; note.style.color='var(--success)'; })
+      .catch(function(err){ console.error(err); box.checked=!box.checked; note.textContent="Couldn't save — check your connection and try again."; note.style.color='var(--danger)'; });
   });
 
   document.getElementById('veil').classList.add('gone');
 });
-
   </script>
 </body>
 </html>
