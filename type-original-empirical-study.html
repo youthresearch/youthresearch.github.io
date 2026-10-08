@@ -859,6 +859,7 @@ window.YRP = (function () {
           <li><a href="#results">Results</a></li>
           <li><a href="#discussion">Discussion</a></li>
           <li><a href="#limitations">Limitations</a></li>
+          <li><a href="#conclusion">Conclusion</a></li>
           <li><a href="#references">References</a></li>
           <li><a href="#checklist">Checklist</a></li>
         </ol>
@@ -874,7 +875,7 @@ window.YRP = (function () {
           <div class="card tpl-body">
             <h3>What it looks like</h3>
             <ul>
-              <li><strong>Shape:</strong> abstract &rarr; introduction &rarr; methods &rarr; results &rarr; discussion &rarr; limitations &rarr; references</li>
+              <li><strong>Shape:</strong> abstract &rarr; introduction &rarr; methods &rarr; results &rarr; discussion &rarr; limitations &rarr; conclusion &rarr; references</li>
               <li><strong>Length:</strong> 10&ndash;20 pages</li>
               <li><strong>Common mistake:</strong> a sample too small to say anything. Decide how many you need before you start, and if you can't get it, say so honestly in your limitations.</li>
             </ul>
@@ -1066,13 +1067,24 @@ window.YRP = (function () {
             <h3>Funnel structure</h3>
             <div class="outline">
               <p class="lvl1">1. The big picture</p>
-              <ul><li>Introduce the topic and why it matters &mdash; to science, to people, or to policy</li></ul>
+              <ul>
+                <li>Introduce the topic and why it matters &mdash; to science, to people, or to policy</li>
+                <li>Name the real-world issue or problem your research speaks to</li>
+              </ul>
               <p class="lvl1">2. What we already know</p>
               <ul><li>Summarize and compare the key studies, organized by theme, not paper by paper</li></ul>
               <p class="lvl1">3. The gap</p>
-              <ul><li>What previous research hasn't tested, has disagreed on, or has studied in a different population</li></ul>
+              <ul>
+                <li>What previous research hasn't tested, has disagreed on, or has studied in a different population</li>
+                <li>What makes your study different &mdash; or how it builds on what came before</li>
+              </ul>
               <p class="lvl1">4. This study</p>
-              <ul><li>Your research question, your hypothesis, and a sentence on how you tested it</li></ul>
+              <ul>
+                <li>Your research question, your hypothesis, and a sentence on how you tested it</li>
+                <li>Any limits on scope &mdash; what you deliberately did <em>not</em> study</li>
+              </ul>
+              <p class="lvl1">5. Roadmap</p>
+              <ul><li>One or two sentences on how the rest of the paper is organized</li></ul>
             </div>
 
             <div class="chain">
@@ -1087,6 +1099,23 @@ window.YRP = (function () {
             </div>
 
             <div class="box box--example">
+              <span class="box-label">Example &mdash; scope and roadmap</span>
+              <p>This study focuses on music with lyrics and does not examine instrumental music or other types of memory. The next section defines key terms and reviews relevant theory, followed by the methods, results, and a discussion of what the findings mean for students.</p>
+            </div>
+
+            <h3>Theoretical framework</h3>
+            <p>Before your methods, give the reader the concepts they need. In a longer paper this can be its own section; in a short one it sits at the end of the introduction.</p>
+            <ul>
+              <li><strong>Definitions</strong> &mdash; define each key term exactly as you use it, citing a source</li>
+              <li><strong>Key theories</strong> &mdash; name the theory or model that explains your topic, and say which parts of it your study tests</li>
+              <li><strong>Previous research</strong> &mdash; keep only the studies and theories relevant to your question</li>
+            </ul>
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p><em>Working memory</em> refers to the system that temporarily holds and manipulates information. According to Baddeley's working memory model, spoken or written words are processed by a &ldquo;phonological loop.&rdquo; If song lyrics compete for the same resource, they should interfere with memorizing words &mdash; the prediction this study tests.</p>
+            </div>
+
+            <div class="box box--example">
               <span class="box-label">Citation format</span>
               <p style="margin-bottom:0;">Use APA 7 for references and in-text citations, and cite every piece of information you take from a source.</p>
             </div>
@@ -1096,9 +1125,16 @@ window.YRP = (function () {
         <!-- ============================ METHODS ======================= -->
         <section class="tpl-section" id="methods">
           <h2><span class="num">04</span> Methods</h2>
-          <p class="sub">Describe exactly what you did, in the past tense, so a stranger could repeat your study without asking you anything. Use these four subheadings.</p>
+          <p class="sub">Describe exactly what you did, in the past tense, so a stranger could repeat your study without asking you anything. These subheadings cover what most readers need.</p>
 
           <div class="card tpl-body">
+            <h3>Approach and rationale</h3>
+            <p>Open with the approach you used &mdash; the design, model, or theory guiding your analysis &mdash; and explain why it's the best fit for your research question. If you analyze material against specific criteria or a model, name them here.</p>
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>A between-subjects experiment was chosen because it allows a direct comparison of recall under two conditions while preventing practice effects from studying the same list twice.</p>
+            </div>
+
             <h3>Participants</h3>
             <p>Who took part, how many, how you recruited them, and any relevant details such as age range.</p>
             <div class="box box--example">
@@ -1107,7 +1143,14 @@ window.YRP = (function () {
             </div>
 
             <h3>Materials</h3>
-            <p>Every tool, instrument, survey, or piece of equipment you used. Name established scales and cite them.</p>
+            <p>Every tool, instrument, survey, or piece of equipment you used. Name established scales and cite them. If your data is material rather than people &mdash; articles, social media posts, water samples &mdash; say what type it is, how much you have, and why that amount suits your question.</p>
+
+            <h3>Selection criteria</h3>
+            <p>Explain how you chose what to include and what to leave out, and how you collected it.</p>
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>Students were eligible if they were 14&ndash;17 and fluent in English. Students with a diagnosed hearing impairment were excluded because the music condition required hearing the audio clearly.</p>
+            </div>
 
             <h3>Procedure</h3>
             <p>Step by step, what happened to each participant or sample, in order. Include how you assigned groups.</p>
@@ -1164,6 +1207,11 @@ window.YRP = (function () {
                 <li>Saying a result &ldquo;proves&rdquo; your hypothesis &mdash; data supports or doesn't support it</li>
               </ul>
             </div>
+
+            <div class="box box--tip">
+              <span class="box-label">Pro tip</span>
+              <p>Some papers, especially qualitative ones, combine results and discussion into one &ldquo;Findings&rdquo; section. If you do, present each finding and then say briefly what it means for your research question before moving to the next.</p>
+            </div>
           </div>
         </section>
 
@@ -1178,7 +1226,8 @@ window.YRP = (function () {
               <li><strong>Was your hypothesis supported?</strong> Restate the main finding in plain words.</li>
               <li><strong>How does it compare to previous research?</strong> Where do you agree or disagree with the studies in your introduction, and why might that be?</li>
               <li><strong>What explains it?</strong> Offer reasons for your results, grounded in theory or prior work.</li>
-              <li><strong>Why does it matter?</strong> Practical implications &mdash; who should care, and what might change.</li>
+              <li><strong>What does it mean for the theory?</strong> Do your results support, challenge, or extend the theory from your theoretical framework?</li>
+              <li><strong>Why does it matter?</strong> Practical implications &mdash; who should care, and what solutions or recommendations follow.</li>
               <li><strong>What comes next?</strong> Specific questions future research should test.</li>
             </ol>
 
@@ -1187,9 +1236,9 @@ window.YRP = (function () {
               <p>Consistent with Smith et al. (2019), music with lyrics was associated with lower recall. One explanation is that lyrics compete with the words being memorized for the same verbal processing resources. Future studies could compare instrumental music with music containing lyrics to test this explanation directly.</p>
             </div>
 
-            <div class="box box--tip">
-              <span class="box-label">Pro tip</span>
-              <p>Finish with a short concluding paragraph that restates your question, your main finding, and its significance in two or three sentences. Don't introduce anything new.</p>
+            <div class="box box--example">
+              <span class="box-label">Example &mdash; recommendation</span>
+              <p>These results suggest that students memorizing vocabulary should study in silence or with instrumental music, and that schools offering study halls could designate quiet zones for this kind of work.</p>
             </div>
           </div>
         </section>
@@ -1222,9 +1271,39 @@ window.YRP = (function () {
           </div>
         </section>
 
+        <!-- ============================ CONCLUSION ==================== -->
+        <section class="tpl-section" id="conclusion">
+          <h2><span class="num">08</span> Conclusion</h2>
+          <p class="sub">Bring the paper full circle. Remind the reader what you set out to do, then show that you did it.</p>
+
+          <div class="card tpl-body">
+            <h4>Four steps</h4>
+            <ol>
+              <li><strong>Restate your aim and research question.</strong> Remind the reader what you set out to answer before you answer it.</li>
+              <li><strong>Answer it.</strong> Summarize your main findings and how they respond to the question.</li>
+              <li><strong>State your contribution.</strong> What your study adds to the field, including any solutions or recommendations.</li>
+              <li><strong>Point forward.</strong> How future research could build on where you left off.</li>
+            </ol>
+
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>This study asked whether background music with lyrics affects high school students' short-term word recall. Students who studied in silence recalled significantly more words than those who studied with music, supporting the idea that lyrics compete for verbal working memory. These findings extend previous adult research to adolescents and offer a simple, practical recommendation for students. Future research could test instrumental music, longer study sessions, and students from a wider range of schools.</p>
+            </div>
+
+            <div class="box box--avoid">
+              <span class="box-label">Avoid</span>
+              <ul style="padding-left:1.15rem;margin:0;">
+                <li>Introducing new results, sources, or arguments</li>
+                <li>Repeating the introduction or abstract word for word</li>
+                <li>Overstating what a single study can show</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
         <!-- ============================ REFERENCES ==================== -->
         <section class="tpl-section" id="references">
-          <h2><span class="num">08</span> References</h2>
+          <h2><span class="num">09</span> References</h2>
           <p class="sub">Always APA 7.</p>
           <div class="card tpl-body">
             <ul>
@@ -1241,12 +1320,12 @@ window.YRP = (function () {
 
         <!-- ============================ CHECKLIST ===================== -->
         <section class="tpl-section" id="checklist">
-          <h2><span class="num">09</span> Checklist</h2>
+          <h2><span class="num">10</span> Checklist</h2>
           <p class="sub">Run through this before you collect data, and again before you submit. Your ticks are saved in this browser.</p>
           <div class="card">
             <div class="checklist-bar">
               <div class="checklist-track"><div class="checklist-fill" id="cl-fill"></div></div>
-              <span id="cl-count">0 of 12</span>
+              <span id="cl-count">0 of 14</span>
             </div>
 
             <p class="checklist-group">Before you collect</p>
@@ -1261,10 +1340,12 @@ window.YRP = (function () {
             <p class="checklist-group">The paper</p>
             <ul class="checklist">
               <li><label><input type="checkbox" data-cl="6"><span>Does my introduction move from broad to narrow and end with my question and hypothesis?</span></label></li>
+              <li><label><input type="checkbox" data-cl="13"><span>Have I defined my key terms and named the theory or framework my study builds on?</span></label></li>
               <li><label><input type="checkbox" data-cl="7"><span>Could a stranger repeat my study from my methods section alone?</span></label></li>
               <li><label><input type="checkbox" data-cl="8"><span>Do my results report the numbers without interpreting them, including results I didn't expect?</span></label></li>
               <li><label><input type="checkbox" data-cl="9"><span>Does my discussion compare my findings to previous research and avoid claiming cause without an experiment?</span></label></li>
               <li><label><input type="checkbox" data-cl="10"><span>Have I named my limitations honestly and suggested how future research could address them?</span></label></li>
+              <li><label><input type="checkbox" data-cl="14"><span>Does my conclusion restate my aim and question, answer them, and say what my study contributes?</span></label></li>
             </ul>
 
             <p class="checklist-group">The document</p>
