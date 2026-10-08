@@ -320,6 +320,22 @@ textarea { resize: vertical; min-height: 90px; }
     .save-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
     .save-row .status { font-size: 0.88rem; color: var(--success); }
 
+    /* ---- My project: paper sections -------------------------------------- */
+    .sec-intro { margin: 0.4rem 0 1.1rem; }
+    .sec-intro h3 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+    .sec-intro p { font-size: 0.92rem; margin: 0; }
+    .sec-empty { font-size: 0.92rem; background: var(--cream-2); border-radius: var(--radius-sm);
+      padding: 0.9rem 1.1rem; margin-bottom: 1.2rem; }
+    .sec-box { margin-bottom: 1.3rem; }
+    .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .sec-head label { margin-bottom: 0.2rem; }
+    .sec-head a { font-size: 0.8rem; white-space: nowrap; }
+    .sec-hint { font-size: 0.85rem; margin: 0 0 0.45rem; }
+    .sec-box textarea { min-height: 150px; }
+    .sec-wc { font-size: 0.8rem; text-align: right; margin: 0.3rem 0 0; color: var(--body); }
+    .total-wc { font-size: 0.9rem; color: var(--ink); font-weight: 500; }
+    .total-wc span { color: var(--body); font-weight: 400; }
+
     /* ===== Admin: member directory ===== */
     .toolbar { display: flex; gap: 0.7rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.1rem; }
     .toolbar input[type="search"], .toolbar select { width: auto; min-width: 190px; padding: 0.6rem 0.85rem; font-size: 0.94rem; }
@@ -993,12 +1009,18 @@ window.YRP = (function () {
               <label for="p-question">Research question, in one sentence</label>
               <textarea id="p-question" placeholder="Do 9th graders who use a phone in the hour before bed report shorter sleep than those who don't?"></textarea>
             </div>
+            <div class="sec-intro">
+              <h3>Your paper, section by section</h3>
+              <p>The boxes below match the sections your type of research needs. Draft each one here &mdash; word counts update as you type.</p>
+            </div>
+            <div id="p-sections"></div>
             <div style="margin-bottom:1.2rem;">
               <label for="p-notes">Notes, sources, next steps</label>
               <textarea id="p-notes" style="min-height:160px;" placeholder="Paste links, jot findings, list what to do next."></textarea>
             </div>
             <div class="save-row">
               <button class="btn btn--primary btn--sm" id="save-project">Save project</button>
+              <span class="total-wc" id="total-wc">0 words <span>total</span></span>
               <span class="status hidden" id="project-status">Saved</span>
             </div>
           </div>
@@ -1458,6 +1480,8 @@ function render(ctx) {
   const proj = p.project || {};
   setVal('p-title', proj.title); setVal('p-type', proj.type); setVal('p-subject', proj.subject);
   setVal('p-mentor', proj.mentor); setVal('p-question', proj.question); setVal('p-notes', proj.notes);
+  SECTION_TEXT = Object.assign({}, proj.sections || {});
+  renderSections();
 
   // Account fields
   setVal('a-first', p.firstName); setVal('a-last', p.lastName); setVal('a-dob', p.dob);
@@ -1478,12 +1502,110 @@ function flash(id, msg) {
   setTimeout(() => el.classList.add('hidden'), 2600);
 }
 
+/* ---- My project: paper sections ----------------------------------------
+   Each type of research gets the sections its guide describes. Text is
+   stored per section key, so switching types keeps anything already written
+   in a section both types share (e.g. the introduction). References and
+   appendices are left out of the total, as most word limits do. */
+const SECTION_INFO = {
+  abstract:     { label: 'Abstract', hint: 'One paragraph, 150–250 words. Write it last.' },
+  introduction: { label: 'Introduction', hint: 'The background, the gap, and your research question.' },
+  review:       { label: 'Literature review', hint: 'Compare and critique previous research, organized by theme.' },
+  background:   { label: 'Case background', hint: 'The facts of your case: setting, people, history, and key events.' },
+  methods:      { label: 'Methods', hint: 'Exactly what you did, so someone else could repeat it.' },
+  expected:     { label: 'Expected results', hint: 'What you predict will happen, based on previous research.' },
+  results:      { label: 'Results', hint: 'What you found, reported without interpretation.' },
+  findings:     { label: 'Findings', hint: 'Your themes or findings, each backed by specific evidence.' },
+  discussion:   { label: 'Discussion', hint: 'What your findings mean and how they connect to previous research.' },
+  limitations:  { label: 'Limitations', hint: 'Your study\'s weaknesses and how they might affect your results.' },
+  conclusion:   { label: 'Conclusion', hint: 'Restate your question, answer it, and say what your study adds.' },
+  references:   { label: 'References', hint: 'Every source you cited, in APA 7.', uncounted: true },
+  appendix:     { label: 'Appendix', hint: 'Supporting material.', uncounted: true }
+};
+// [section key, guide anchor, optional overrides]
+const PAPER_SECTIONS = {
+  'Literature review': { page: 'type-literature-review.html', sections: [
+    ['abstract','abstract'], ['introduction','introduction'], ['review','review'],
+    ['discussion','discussion'], ['conclusion','conclusion'], ['references','references'] ] },
+  'Research proposal': { page: 'type-research-proposal.html', sections: [
+    ['abstract','abstract'], ['introduction','introduction'], ['review','review'],
+    ['methods','methods', { label: 'Research design and methods', hint: 'Your approach and the exact steps you will take to answer your question.' }],
+    ['expected','expected'], ['conclusion','conclusion'], ['references','references'] ] },
+  'Original empirical study': { page: 'type-original-empirical-study.html', sections: [
+    ['abstract','abstract'], ['introduction','introduction'], ['methods','methods'], ['results','results'],
+    ['discussion','discussion'], ['limitations','limitations'], ['conclusion','conclusion'], ['references','references'] ] },
+  'Case study': { page: 'type-case-study.html', sections: [
+    ['abstract','abstract'], ['introduction','introduction'], ['review','review'], ['background','background'],
+    ['methods','methods'], ['findings','findings'], ['discussion','discussion'], ['limitations','limitations'],
+    ['conclusion','conclusion'], ['references','references'] ] },
+  'Survey study': { page: 'type-survey-study.html', sections: [
+    ['abstract','abstract'], ['introduction','introduction'], ['methods','methods'], ['results','results'],
+    ['discussion','discussion'], ['limitations','limitations'], ['conclusion','conclusion'], ['references','references'],
+    ['appendix','references', { label: 'Appendix: your survey', hint: 'Every question exactly as respondents saw it, with answer options and your consent statement.' }] ] },
+  'Qualitative / interview study': { page: 'type-qualitative-interview-study.html', sections: [
+    ['abstract','abstract'], ['introduction','introduction'], ['methods','methods'], ['findings','findings'],
+    ['discussion','discussion'], ['limitations','limitations'], ['conclusion','conclusion'], ['references','references'],
+    ['appendix','references', { label: 'Appendix: your interview guide', hint: 'Every core question and planned probe, in order, plus a blank consent form.' }] ] }
+};
+let SECTION_TEXT = {};
+
+function countWords(s) { const m = (s || '').trim().match(/\S+/g); return m ? m.length : 0; }
+function wordLabel(n) { return n.toLocaleString() + (n === 1 ? ' word' : ' words'); }
+
+function captureSections() {
+  document.querySelectorAll('#p-sections textarea[data-sec]').forEach((ta) => {
+    SECTION_TEXT[ta.dataset.sec] = ta.value;
+  });
+}
+
+function updateTotal() {
+  let total = 0;
+  document.querySelectorAll('#p-sections textarea[data-sec]').forEach((ta) => {
+    if (ta.dataset.counted === '1') total += countWords(ta.value);
+  });
+  const hasUncounted = !!document.querySelector('#p-sections textarea[data-counted="0"]');
+  document.getElementById('total-wc').innerHTML = esc(wordLabel(total)) +
+    ' <span>total' + (hasUncounted ? ', excluding references and appendix' : '') + '</span>';
+}
+
+function renderSections() {
+  const box = document.getElementById('p-sections');
+  const plan = PAPER_SECTIONS[val('p-type')];
+  if (!plan) {
+    box.innerHTML = '<p class="sec-empty">Choose a <strong>type of research</strong> above, and the sections your paper needs will appear here.</p>';
+    updateTotal();
+    return;
+  }
+  box.innerHTML = plan.sections.map(([key, anchor, over]) => {
+    const info = Object.assign({}, SECTION_INFO[key], over || {});
+    const id = 'sec-' + key;
+    return '<div class="sec-box">' +
+      '<div class="sec-head"><label for="' + id + '">' + esc(info.label) + '</label>' +
+      '<a href="' + plan.page + '#' + anchor + '" target="_blank" rel="noopener">How to write this &rarr;</a></div>' +
+      '<p class="sec-hint">' + esc(info.hint) + '</p>' +
+      '<textarea id="' + id + '" data-sec="' + key + '" data-counted="' + (info.uncounted ? '0' : '1') + '"></textarea>' +
+      '<p class="sec-wc" id="' + id + '-wc">0 words</p>' +
+      '</div>';
+  }).join('');
+  box.querySelectorAll('textarea[data-sec]').forEach((ta) => {
+    ta.value = SECTION_TEXT[ta.dataset.sec] || '';
+    const wc = document.getElementById(ta.id + '-wc');
+    const refresh = () => { wc.textContent = wordLabel(countWords(ta.value)); updateTotal(); };
+    ta.addEventListener('input', () => { SECTION_TEXT[ta.dataset.sec] = ta.value; refresh(); });
+    refresh();
+  });
+  updateTotal();
+}
+
+document.getElementById('p-type').addEventListener('change', () => { captureSections(); renderSections(); });
+
 /* ---- Saving ------------------------------------------------------------ */
 document.getElementById('save-project').addEventListener('click', () => {
   userRef.update({
     project: {
       title: val('p-title'), type: val('p-type'), subject: val('p-subject'),
       mentor: val('p-mentor'), question: val('p-question'), notes: val('p-notes'),
+      sections: (captureSections(), SECTION_TEXT),
       updatedAt: new Date().toISOString()
     }
   })
