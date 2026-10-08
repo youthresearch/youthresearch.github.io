@@ -275,7 +275,7 @@ textarea { resize: vertical; min-height: 90px; }
     .side-nav .admin-link:hover { background: var(--warn-tint); color: var(--warn); }
 
     /* Reused by any sidebar item that expands into a list of page links,
-       instead of switching the pane (currently: subjects, types of research). */
+       instead of switching the pane (currently: types of research). */
     .side-nav .dropdown-toggle { justify-content: space-between; }
     .side-nav .dropdown-toggle .chev { margin-left: auto; transition: transform 0.18s ease; opacity: 0.55; }
     .side-nav .dropdown-toggle[aria-expanded="true"] .chev { transform: rotate(90deg); opacity: 0.9; }
@@ -856,44 +856,7 @@ window.YRP = (function () {
             <button data-pane="overview" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg> Overview</button>
             <a href="steps.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6h11M9.5 12h11M9.5 18h11"/><circle cx="4.6" cy="6" r="1.4"/><circle cx="4.6" cy="12" r="1.4"/><circle cx="4.6" cy="18" r="1.4"/></svg> The 6 steps of research</a>
             <button data-pane="citations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 5.2A1.7 1.7 0 0 1 6.2 3.5H19.5v14.2H6.2a1.7 1.7 0 0 0-1.7 1.7V5.2Z"/><path d="M4.5 19.4a1.7 1.7 0 0 1 1.7-1.7H19.5v2.8H6.2a1.7 1.7 0 0 1-1.7-1.1Z"/><path d="M8.5 8h7"/></svg> Ways to do citations</button>
-            <button type="button" class="dropdown-toggle" id="subjects-toggle" aria-expanded="false" aria-controls="subjects-sublist">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1 5.1-2.1Z"/></svg>
-              Research by subject
-              <svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-            </button>
-            <ul class="side-sublist" id="subjects-sublist">
-              <li><a href="subject-anthropology.html">Anthropology</a></li>
-              <li><a href="subject-architecture.html">Architecture</a></li>
-              <li><a href="subject-art.html">Art (studio & practice-based)</a></li>
-              <li><a href="subject-art-history.html">Art History</a></li>
-              <li><a href="subject-astronomy.html">Astronomy</a></li>
-              <li><a href="subject-biology.html">Biology & lab sciences</a></li>
-              <li><a href="subject-business.html">Business</a></li>
-              <li><a href="subject-chemistry.html">Chemistry</a></li>
-              <li><a href="subject-computer-science.html">Computer Science</a></li>
-              <li><a href="subject-criminology.html">Criminology</a></li>
-              <li><a href="subject-ecology.html">Ecology</a></li>
-              <li><a href="subject-economics.html">Economics & public policy</a></li>
-              <li><a href="subject-education.html">Education</a></li>
-              <li><a href="subject-engineering.html">Engineering</a></li>
-              <li><a href="subject-environmental-studies.html">Environmental Studies</a></li>
-              <li><a href="subject-film-studies.html">Film Studies</a></li>
-              <li><a href="subject-gender-studies.html">Gender Studies</a></li>
-              <li><a href="subject-history.html">History</a></li>
-              <li><a href="subject-international-relations.html">International Relations</a></li>
-              <li><a href="subject-linguistics.html">Linguistics</a></li>
-              <li><a href="subject-literature.html">Literature & English</a></li>
-              <li><a href="subject-mathematics.html">Mathematics</a></li>
-              <li><a href="subject-media-studies.html">Media Studies</a></li>
-              <li><a href="subject-music.html">Music</a></li>
-              <li><a href="subject-neuroscience.html">Neuroscience</a></li>
-              <li><a href="subject-philosophy.html">Philosophy</a></li>
-              <li><a href="subject-physics.html">Physics</a></li>
-              <li><a href="subject-political-science.html">Political Science</a></li>
-              <li><a href="subject-psychology.html">Psychology & social science</a></li>
-              <li><a href="subject-public-health.html">Public Health</a></li>
-              <li><a href="subject-sociology.html">Sociology</a></li>
-            </ul>
+            <a href="subjects.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1 5.1-2.1Z"/></svg> Research by subject</a>
             <button type="button" class="dropdown-toggle" id="types-toggle" aria-expanded="false" aria-controls="types-sublist">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.4 8.6 4.8-8.6 4.8-8.6-4.8L12 3.4Z"/><path d="m3.4 13 8.6 4.8L20.6 13"/></svg>
               Types of research
@@ -1464,7 +1427,7 @@ document.addEventListener('click', (e) => {
   if (goto) { showPane(goto.dataset.goto); return; }
 });
 
-/* Sidebar dropdowns (subjects, types of research, ...): a list of real links,
+/* Sidebar dropdowns (types of research, ...): a list of real links,
    not a pane -- clicking the header never changes what's on screen, it
    just reveals the page links nested under it. */
 document.querySelectorAll('.dropdown-toggle').forEach((toggle) => {
