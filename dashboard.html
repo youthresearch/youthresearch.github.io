@@ -274,28 +274,6 @@ textarea { resize: vertical; min-height: 90px; }
     .side-nav .admin-link { color: var(--warn); }
     .side-nav .admin-link:hover { background: var(--warn-tint); color: var(--warn); }
 
-    /* Reused by any sidebar item that expands into a list of page links,
-       instead of switching the pane (currently: types of research). */
-    .side-nav .dropdown-toggle { justify-content: space-between; }
-    .side-nav .dropdown-toggle .chev { margin-left: auto; transition: transform 0.18s ease; opacity: 0.55; }
-    .side-nav .dropdown-toggle[aria-expanded="true"] .chev { transform: rotate(90deg); opacity: 0.9; }
-    .side-sublist {
-      list-style: none; margin: 0.15rem 0 0.3rem; padding: 0;
-      max-height: 0; overflow: hidden; transition: max-height 0.25s ease;
-    }
-    /* Capped and scrollable, not just "tall enough" -- a long list (like the
-       31 subjects) needs its own scrollbar or the tail end is unreachable,
-       not just visually cut off. */
-    .side-sublist.open { max-height: 21rem; overflow-y: auto; }
-    .side-sublist a {
-      display: flex; align-items: baseline; gap: 0.55rem;
-      padding: 0.48rem 0.9rem 0.48rem 2.55rem; font-size: 0.88rem;
-      color: var(--body); text-decoration: none; border-radius: var(--radius-sm);
-      transition: background-color 0.15s ease, color 0.15s ease;
-    }
-    .side-sublist a:hover { background: var(--paper); color: var(--lavender-deep); }
-    .side-sublist a .n { font-family: var(--font-display); color: var(--lavender-deep); flex: none; }
-
     /* ---- Panels -------------------------------------------------------- */
     .pane { display: none; animation: fadeUp 0.3s ease; }
     .pane.on { display: block; }
@@ -857,19 +835,7 @@ window.YRP = (function () {
             <a href="steps.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6h11M9.5 12h11M9.5 18h11"/><circle cx="4.6" cy="6" r="1.4"/><circle cx="4.6" cy="12" r="1.4"/><circle cx="4.6" cy="18" r="1.4"/></svg> The 6 steps of research</a>
             <button data-pane="citations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 5.2A1.7 1.7 0 0 1 6.2 3.5H19.5v14.2H6.2a1.7 1.7 0 0 0-1.7 1.7V5.2Z"/><path d="M4.5 19.4a1.7 1.7 0 0 1 1.7-1.7H19.5v2.8H6.2a1.7 1.7 0 0 1-1.7-1.1Z"/><path d="M8.5 8h7"/></svg> Ways to do citations</button>
             <a href="subjects.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1 5.1-2.1Z"/></svg> Research by subject</a>
-            <button type="button" class="dropdown-toggle" id="types-toggle" aria-expanded="false" aria-controls="types-sublist">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.4 8.6 4.8-8.6 4.8-8.6-4.8L12 3.4Z"/><path d="m3.4 13 8.6 4.8L20.6 13"/></svg>
-              Types of research
-              <svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-            </button>
-            <ul class="side-sublist" id="types-sublist">
-              <li><a href="type-literature-review.html">Literature review</a></li>
-              <li><a href="type-research-proposal.html">Research proposal</a></li>
-              <li><a href="type-original-empirical-study.html">Original empirical study</a></li>
-              <li><a href="type-case-study.html">Case study</a></li>
-              <li><a href="type-survey-study.html">Survey study</a></li>
-              <li><a href="type-qualitative-interview-study.html">Qualitative / interview study</a></li>
-            </ul>
+            <a href="types.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.4 8.6 4.8-8.6 4.8-8.6-4.8L12 3.4Z"/><path d="m3.4 13 8.6 4.8L20.6 13"/></svg> Types of research</a>
           </nav>
         </div>
 
@@ -1425,18 +1391,6 @@ document.addEventListener('click', (e) => {
   if (nav) { showPane(nav.dataset.pane); return; }
   const goto = e.target.closest('[data-goto]');
   if (goto) { showPane(goto.dataset.goto); return; }
-});
-
-/* Sidebar dropdowns (types of research, ...): a list of real links,
-   not a pane -- clicking the header never changes what's on screen, it
-   just reveals the page links nested under it. */
-document.querySelectorAll('.dropdown-toggle').forEach((toggle) => {
-  const list = document.getElementById(toggle.getAttribute('aria-controls'));
-  if (!list) return;
-  toggle.addEventListener('click', () => {
-    const open = list.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open);
-  });
 });
 
 /* ---- Boot -------------------------------------------------------------- */
