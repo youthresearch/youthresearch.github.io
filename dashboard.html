@@ -282,6 +282,52 @@ textarea { resize: vertical; min-height: 90px; }
     .pane .lede { font-size: 1.04rem; max-width: 62ch; margin-bottom: 1.75rem; }
 
     .stat-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin-bottom: 1.5rem; }
+
+    /* ---- Overview ------------------------------------------------------- */
+    .ov-nudge { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem 1.2rem; flex-wrap: wrap;
+      font-size: 0.9rem; padding: 0.75rem 1rem; margin-bottom: 1.2rem; border-radius: var(--radius-sm);
+      background: var(--lavender-tint); color: var(--ink); }
+    .ov-link { font: inherit; font-size: 0.86rem; font-weight: 600; color: var(--lavender-deep); background: none; border: 0;
+      padding: 0; cursor: pointer; text-decoration: none; }
+    .ov-link:hover { text-decoration: underline; }
+    .ov-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.4rem 1.5rem; margin-bottom: 1.1rem; }
+    .ov-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.9rem; }
+    .ov-head h3 { font-size: 1.25rem; margin: 0; }
+    .ov-count { font-size: 0.86rem; color: var(--body); }
+    .ov-count span { font-weight: 600; color: var(--lavender-deep); }
+    .ov-bar { height: 6px; border-radius: 999px; background: var(--cream-2); overflow: hidden; margin-bottom: 1rem; }
+    .ov-bar span { display: block; height: 100%; width: 0; background: var(--lavender); border-radius: inherit; transition: width 0.5s ease; }
+    .ov-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; grid-template-columns: repeat(6, 1fr); }
+    .ov-steps a { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; text-align: center; text-decoration: none;
+      font-size: 0.76rem; line-height: 1.3; color: var(--body); padding: 0.3rem 0.15rem; border-radius: var(--radius-sm); }
+    .ov-steps a:hover { color: var(--lavender-deep); background: var(--cream); }
+    .ov-steps .dot { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+      font-family: var(--font-display); font-size: 0.95rem; border: 1.5px solid var(--line); color: var(--body); background: var(--paper); }
+    .ov-steps .done .dot { background: var(--lavender); border-color: var(--lavender); color: #fff; }
+    .ov-steps .next .dot { border-color: var(--lavender); color: var(--lavender-deep); }
+    .ov-steps .next a { color: var(--ink); font-weight: 500; }
+    @media (max-width: 640px) { .ov-steps { grid-template-columns: repeat(3, 1fr); } }
+    .ov-next { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem 1.2rem; flex-wrap: wrap;
+      margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .ov-next p { margin: 0; font-size: 0.94rem; color: var(--ink); }
+    .ov-muted { font-size: 0.92rem; margin: 0; }
+    .ov-proj-title { font-family: var(--font-display); font-size: 1.15rem; color: var(--ink); margin: 0 0 0.35rem; }
+    .ov-proj-q { font-size: 0.92rem; margin: 0 0 0.8rem; }
+    .ov-proj-meta { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; font-size: 0.84rem; }
+    .ov-proj-meta strong { color: var(--ink); font-weight: 600; }
+    .ov-quick { display: grid; gap: 0.6rem; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin: 1.4rem 0; }
+    .ov-q { font: inherit; display: flex; align-items: center; gap: 0.65rem; padding: 0.85rem 1rem; cursor: pointer; text-align: left;
+      border: 1px solid var(--line); border-radius: var(--radius-sm); background: transparent; color: var(--ink);
+      font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: border-color 0.18s ease, background-color 0.18s ease; }
+    .ov-q:hover { border-color: var(--lavender); background: var(--paper); color: var(--lavender-deep); }
+    .ov-q svg { width: 18px; height: 18px; flex: none; color: var(--lavender-deep); }
+    .ov-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 1.4rem; font-size: 0.84rem; color: var(--body);
+      padding-top: 1rem; border-top: 1px solid var(--line); }
+    .ov-meta strong { color: var(--ink); font-weight: 600; }
+    .ov-signin { flex-basis: 100%; }
+    .ov-signin summary { cursor: pointer; color: var(--lavender-deep); font-weight: 500; width: max-content; }
+    .ov-signin .kv { margin-top: 0.8rem; }
+    .ov-signin p { font-size: 0.82rem; margin: 0.7rem 0 0; }
     .stat { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.25rem; }
     .stat .k { font-family: var(--font-display); font-size: 1.9rem; color: var(--ink); line-height: 1.1; }
     .stat .l { font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--body); }
@@ -935,29 +981,53 @@ window.YRP = (function () {
         <!-- OVERVIEW -->
         <div class="pane on" id="pane-overview">
           <h2>Hi <span class="grad-text" id="greet-name">there</span>.</h2>
-          <p class="lede">Everything you need to run a real research project, in the order you'll need it. Pick up wherever you left off.</p>
+          <p class="lede">Pick up wherever you left off.</p>
 
-          <div class="notice notice--warn hidden" id="profile-nudge">
-            Add your grade and date of birth so we can tailor guides to your level.
-            <button class="btn btn--ghost btn--sm" data-goto="account" style="margin-left:0.6rem;">Finish profile</button>
+          <div class="ov-nudge hidden" id="profile-nudge">
+            <span>Add your grade and date of birth so we can tailor guides to your level.</span>
+            <button class="ov-link" data-goto="account">Finish profile &rarr;</button>
           </div>
 
-          <div class="stat-grid">
-            <div class="stat"><div class="k" id="stat-progress">0/6</div><div class="l">Steps done</div></div>
-            <div class="stat"><div class="k" id="stat-joined">—</div><div class="l">Member since</div></div>
-            <div class="stat"><div class="k" id="stat-logins">—</div><div class="l">Sign-ins</div></div>
+          <!-- Progress through the 6 steps -->
+          <section class="ov-card">
+            <div class="ov-head">
+              <h3>Your progress</h3>
+              <span class="ov-count"><span id="stat-progress">0/6</span> steps done</span>
+            </div>
+            <div class="ov-bar" aria-hidden="true"><span id="ov-bar-fill"></span></div>
+            <ol class="ov-steps" id="ov-steps"></ol>
+            <div class="ov-next">
+              <p id="ov-next-text">Start with step 1: find your question.</p>
+              <a class="btn btn--primary btn--sm" id="ov-next-btn" href="step-1-find-your-question.html">Start step 1</a>
+            </div>
+          </section>
+
+          <!-- Project snapshot -->
+          <section class="ov-card">
+            <div class="ov-head">
+              <h3>Your project</h3>
+              <button class="ov-link" data-goto="project" id="ov-proj-link">Open my project &rarr;</button>
+            </div>
+            <div id="ov-proj"><p class="ov-muted">You haven't started a project yet. Add a working title, choose a type of research, and start drafting section by section.</p></div>
+          </section>
+
+          <!-- Quick links -->
+          <div class="ov-quick">
+            <a class="ov-q" href="steps.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6h11M9.5 12h11M9.5 18h11"/><circle cx="4.6" cy="6" r="1.4"/><circle cx="4.6" cy="12" r="1.4"/><circle cx="4.6" cy="18" r="1.4"/></svg><span>The 6 steps</span></a>
+            <a class="ov-q" href="subjects.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="m15.6 8.4-2.1 5.1-5.1 2.1 2.1-5.1 5.1-2.1Z"/></svg><span>Research by subject</span></a>
+            <a class="ov-q" href="types.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.4 8.6 4.8-8.6 4.8-8.6-4.8L12 3.4Z"/><path d="m3.4 13 8.6 4.8L20.6 13"/></svg><span>Types of research</span></a>
+            <button class="ov-q" data-goto="library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7.5h16v12H4z"/><path d="M3 4.5h18v3H3zM10 11.5h4"/></svg><span>Templates &amp; tools</span></button>
           </div>
 
-          <div class="card">
-            <h3>Start here</h3>
-            <p>If you've never done research before, read <strong>The 6 steps of research</strong> end to end once — it's about a ten-minute read — then come back and work through it one step at a time. Most first projects stall at step 2, so give the literature review more time than feels necessary.</p>
-            <a class="btn btn--primary btn--sm" href="steps.html">Open the 6 steps</a>
-          </div>
-
-          <div class="card">
-            <h3>Your last sign-in</h3>
-            <dl class="kv" id="last-login-kv"><dt>Loading</dt><dd>—</dd></dl>
-            <p style="font-size:0.86rem; margin:1rem 0 0;">We keep this so you can spot a sign-in that wasn't you. If something here looks wrong, change your password from Profile &amp; settings.</p>
+          <!-- Quiet account details -->
+          <div class="ov-meta">
+            <span>Member since <strong id="stat-joined">&mdash;</strong></span>
+            <span><strong id="stat-logins">&mdash;</strong> <span id="stat-logins-l">sign-ins</span></span>
+            <details class="ov-signin">
+              <summary>Last sign-in details</summary>
+              <dl class="kv" id="last-login-kv"><dt>Loading</dt><dd>&mdash;</dd></dl>
+              <p>We keep this so you can spot a sign-in that wasn't you. If something looks wrong, change your password in <button class="ov-link" data-goto="account">Profile &amp; settings</button>.</p>
+            </details>
           </div>
         </div>
 
@@ -1679,11 +1749,13 @@ function render(ctx) {
     ? (p.createdAt.toDate ? p.createdAt.toDate() : new Date(p.createdAt)).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })
     : '—';
   document.getElementById('stat-logins').textContent = p.loginCount || 1;
+  document.getElementById('stat-logins-l').textContent = (p.loginCount || 1) === 1 ? 'sign-in' : 'sign-ins';
 
   // Steps are tracked from their own pages now (each has its own checkbox
   // and writes straight to Firestore), so this just reads the saved count.
   const progress = Array.isArray(p.progress) ? p.progress : [];
   document.getElementById('stat-progress').textContent = progress.length + '/6';
+  renderOverviewSteps(progress);
 
   // Last sign-in card
   const ll = p.lastLogin || {};
@@ -1701,6 +1773,7 @@ function render(ctx) {
   setVal('p-mentor', proj.mentor); setVal('p-question', proj.question); setVal('p-notes', proj.notes);
   SECTION_TEXT = Object.assign({}, proj.sections || {});
   renderSections();
+  renderOverviewProject();
 
   // Account fields
   setVal('a-first', p.firstName); setVal('a-last', p.lastName); setVal('a-dob', p.dob);
@@ -1881,6 +1954,55 @@ document.getElementById('p-type').addEventListener('change', () => { captureSect
   }));
 })();
 
+/* ---- Overview: steps tracker and project snapshot ---------------------- */
+const STEPS = [
+  ['step-1-find-your-question.html', 'Find your question'],
+  ['step-2-find-out-whats-known.html', "Find out what's known"],
+  ['step-3-design-your-method.html', 'Design your method'],
+  ['step-4-collect-your-data.html', 'Collect your data'],
+  ['step-5-analyze-and-interpret.html', 'Analyze and interpret'],
+  ['step-6-share-your-findings.html', 'Share your findings']
+];
+function renderOverviewSteps(progress) {
+  const done = new Set(progress);
+  const next = STEPS.findIndex((_, i) => !done.has(i));
+  document.getElementById('ov-steps').innerHTML = STEPS.map(([href, name], i) =>
+    '<li class="' + (done.has(i) ? 'done' : (i === next ? 'next' : '')) + '"><a href="' + href + '">' +
+    '<span class="dot">' + (done.has(i) ? '&#10003;' : (i + 1)) + '</span>' + esc(name) + '</a></li>').join('');
+  document.getElementById('ov-bar-fill').style.width = (done.size / 6 * 100) + '%';
+  const txt = document.getElementById('ov-next-text'), btn = document.getElementById('ov-next-btn');
+  if (next === -1) {
+    txt.textContent = 'All six steps done. Ready to share your work?';
+    btn.textContent = 'Submit to the journal'; btn.href = 'journal.html';
+  } else {
+    txt.innerHTML = 'Up next: <strong>Step ' + (next + 1) + ' &middot; ' + esc(STEPS[next][1]) + '</strong>';
+    btn.textContent = (done.size ? 'Continue to step ' : 'Start step ') + (next + 1); btn.href = STEPS[next][0];
+  }
+}
+function renderOverviewProject() {
+  const title = val('p-title'), type = val('p-type'), question = val('p-question');
+  const box = document.getElementById('ov-proj');
+  if (!title && !type && !question) return;
+  const plan = PAPER_SECTIONS[type];
+  let words = 0, started = 0, total = 0;
+  if (plan) plan.sections.forEach(([key, , over]) => {
+    const info = Object.assign({}, SECTION_INFO[key], over || {});
+    if (info.uncounted) return;
+    total++;
+    const n = countWords(SECTION_TEXT[key]);
+    words += n; if (n) started++;
+  });
+  box.innerHTML =
+    '<p class="ov-proj-title">' + esc(title || 'Untitled project') + '</p>' +
+    (question ? '<p class="ov-proj-q">' + esc(question) + '</p>' : '') +
+    '<div class="ov-proj-meta">' +
+      '<span>Type: <strong>' + esc(type || 'Not decided yet') + '</strong></span>' +
+      (plan ? '<span><strong>' + started + ' of ' + total + '</strong> sections started</span>' +
+              '<span><strong>' + words.toLocaleString() + '</strong> words so far</span>' : '') +
+    '</div>';
+  document.getElementById('ov-proj-link').innerHTML = 'Keep writing &rarr;';
+}
+
 /* ---- Saving ------------------------------------------------------------ */
 document.getElementById('save-project').addEventListener('click', () => {
   userRef.update({
@@ -1891,7 +2013,7 @@ document.getElementById('save-project').addEventListener('click', () => {
       updatedAt: new Date().toISOString()
     }
   })
-  .then(() => flash('project-status', 'Saved'))
+  .then(() => { flash('project-status', 'Saved'); renderOverviewProject(); })
   .catch(err => { console.error(err); flash('project-status', 'Could not save — check your connection.'); });
 });
 
