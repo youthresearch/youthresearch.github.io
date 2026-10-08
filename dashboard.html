@@ -295,6 +295,59 @@ textarea { resize: vertical; min-height: 90px; }
     .tile li { margin-bottom: 0.3rem; }
     .tile p:last-child, .tile ul:last-child { margin-bottom: 0; }
 
+    /* ---- Templates & tools ---------------------------------------------- */
+    .lib-bar { display: flex; flex-wrap: wrap; gap: 0.9rem 1.2rem; align-items: flex-end; margin: 0.4rem 0 1.4rem; }
+    .lib-search { flex: 1 1 240px; max-width: 340px; }
+    .lib-search label { margin-bottom: 0.35rem; }
+    .lib-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .lib-chip { font: inherit; font-size: 0.82rem; font-weight: 500; cursor: pointer;
+      padding: 0.42rem 0.9rem; border-radius: 999px; border: 1px solid var(--line);
+      background: var(--paper); color: var(--body); transition: all 0.18s ease; }
+    .lib-chip:hover { border-color: var(--lavender); color: var(--lavender-deep); }
+    .lib-chip[aria-pressed="true"] { background: var(--lavender-deep); border-color: var(--lavender-deep); color: #fff; }
+    .lib-chip .ct { opacity: 0.7; margin-left: 0.3rem; font-size: 0.75rem; }
+
+    .lib-h { display: flex; align-items: baseline; gap: 0.6rem; font-size: 1.25rem; margin: 1.6rem 0 0.85rem; }
+    .lib-h:first-of-type { margin-top: 0.4rem; }
+    .lib-h small { font-family: var(--font-body); font-size: 0.8rem; color: var(--body); }
+
+    .tool-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+    .tool { display: flex; flex-direction: column; gap: 0.55rem; background: var(--paper); border: 1px solid var(--line);
+      border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); padding: 1.15rem 1.2rem;
+      transition: border-color 0.2s ease, transform 0.2s ease; }
+    .tool:hover { border-color: var(--lavender); transform: translateY(-2px); }
+    .tool-top { display: flex; align-items: center; gap: 0.75rem; }
+    .tool-mark { flex: none; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+      background: var(--lavender-tint); color: var(--lavender-deep); font-family: var(--font-display); font-size: 1.05rem; }
+    .tool-mark svg { width: 21px; height: 21px; }
+    .tool h3 { font-size: 1.08rem; margin: 0; line-height: 1.25; }
+    .tool .cat { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lavender-deep); font-weight: 600; }
+    .tool p { font-size: 0.9rem; margin: 0; line-height: 1.5; }
+    .tool-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .tool-tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; padding: 0.15rem 0.55rem; border-radius: 999px;
+      background: var(--cream-2); color: var(--body); }
+    .tool-tag.rec { background: var(--success-tint); color: var(--success); }
+    .tool-go { margin-top: auto; padding-top: 0.3rem; font-size: 0.84rem; font-weight: 600; color: var(--lavender-deep); text-decoration: none; }
+    .tool-go:hover { text-decoration: underline; }
+    .tool-go.plain { color: var(--body); font-weight: 500; }
+
+    .tpl-list { display: grid; gap: 0.75rem; }
+    .tpl-item { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); }
+    .tpl-item summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.15rem; }
+    .tpl-item summary::-webkit-details-marker { display: none; }
+    .tpl-item summary .tool-mark { width: 38px; height: 38px; }
+    .tpl-item summary .t { flex: 1; min-width: 0; }
+    .tpl-item summary h3 { font-size: 1.05rem; margin: 0; }
+    .tpl-item summary p { font-size: 0.86rem; margin: 0.15rem 0 0; }
+    .tpl-item summary .chev { flex: none; transition: transform 0.2s ease; color: var(--lavender); }
+    .tpl-item[open] summary .chev { transform: rotate(90deg); }
+    .tpl-body { padding: 0 1.15rem 1.1rem; }
+    .tpl-text { white-space: pre-wrap; font-family: var(--font-body); font-size: 0.88rem; line-height: 1.6; color: var(--ink);
+      background: var(--cream-2); border-radius: var(--radius-sm); padding: 0.95rem 1.05rem; margin: 0 0 0.75rem; }
+    .tpl-actions { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .tpl-actions .note { font-size: 0.82rem; }
+    .lib-empty { display: none; font-size: 0.92rem; background: var(--cream-2); border-radius: var(--radius-sm); padding: 0.9rem 1.1rem; }
+
     .cite-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin-bottom: 1.2rem; }
     .cite-table th, .cite-table td { text-align: left; padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
     .cite-table th { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--body); font-weight: 600; }
@@ -1029,43 +1082,256 @@ window.YRP = (function () {
         <!-- TEMPLATES -->
         <div class="pane" id="pane-library">
           <h2>Templates &amp; tools</h2>
-          <p class="lede">The documents and services that do the most work for the least setup.</p>
-          <div class="tile-grid">
-            <div class="tile"><h3>Finding sources</h3><ul>
-              <li><a href="https://scholar.google.com" target="_blank" rel="noopener">Google Scholar</a> — start here for anything</li>
-              <li><a href="https://pubmed.ncbi.nlm.nih.gov" target="_blank" rel="noopener">PubMed</a> — medicine and biology</li>
-              <li><a href="https://arxiv.org" target="_blank" rel="noopener">arXiv</a> — physics, math, CS preprints</li>
-              <li><a href="https://eric.ed.gov" target="_blank" rel="noopener">ERIC</a> — education research</li>
-              <li><a href="https://doaj.org" target="_blank" rel="noopener">DOAJ</a> — open access journals</li>
-            </ul></div>
-            <div class="tile"><h3>Getting past paywalls, legally</h3><ul>
-              <li>Your school or public library card — most give database access from home</li>
-              <li><a href="https://openalex.org" target="_blank" rel="noopener">OpenAlex</a> and <a href="https://core.ac.uk" target="_blank" rel="noopener">CORE</a> for free full text</li>
-              <li>Email the author. Researchers send PDFs to students who ask politely.</li>
-            </ul></div>
-            <div class="tile"><h3>Managing citations</h3><ul>
-              <li><a href="https://www.zotero.org" target="_blank" rel="noopener">Zotero</a> — free, and the one we recommend</li>
-              <li>Zotero Connector browser extension</li>
-              <li>Google Docs citation tool, for short papers</li>
-            </ul></div>
-            <div class="tile"><h3>Data &amp; analysis</h3><ul>
-              <li>Google Sheets or Excel — enough for most first projects</li>
-              <li><a href="https://jamovi.org" target="_blank" rel="noopener">jamovi</a> — free stats with a real interface</li>
-              <li><a href="https://colab.research.google.com" target="_blank" rel="noopener">Google Colab</a> — Python in the browser, nothing to install</li>
-              <li>Google Forms for surveys</li>
-            </ul></div>
-            <div class="tile"><h3>Writing structure</h3><ul>
-              <li>Abstract, 200 words: question, method, finding, significance</li>
-              <li>IMRaD: Introduction, Methods, Results, and Discussion</li>
-              <li>Write methods first — it's the easiest section and it unblocks the rest</li>
-            </ul></div>
-            <div class="tile"><h3>Where to publish</h3><ul>
-              <li>The YRP Journal — <a href="journal.html">see submissions</a></li>
-              <li>School symposium or science fair</li>
-              <li>Regional and state competitions</li>
-              <li>A talk to the class that gave you the question</li>
-            </ul></div>
+          <p class="lede">Free tools for every stage of your project, plus templates you can copy and fill in.</p>
+
+          <div class="lib-bar">
+            <div class="lib-search">
+              <label for="lib-filter">Search</label>
+              <input type="search" id="lib-filter" placeholder="e.g. citations, survey, PubMed" autocomplete="off">
+            </div>
+            <div class="lib-chips" role="group" aria-label="Filter by category">
+              <button type="button" class="lib-chip" data-filter="all" aria-pressed="true">All</button><button type="button" class="lib-chip" data-filter="sources" aria-pressed="false">Find sources<span class="ct">5</span></button><button type="button" class="lib-chip" data-filter="access" aria-pressed="false">Free full text<span class="ct">4</span></button><button type="button" class="lib-chip" data-filter="citations" aria-pressed="false">Citations<span class="ct">3</span></button><button type="button" class="lib-chip" data-filter="data" aria-pressed="false">Data &amp; analysis<span class="ct">4</span></button><button type="button" class="lib-chip" data-filter="share" aria-pressed="false">Share your work<span class="ct">4</span></button><button type="button" class="lib-chip" data-filter="templates" aria-pressed="false">Templates<span class="ct">5</span></button>
+            </div>
           </div>
+
+          <h3 class="lib-h" id="lib-tools-h">Tools <small>20 free tools and places to start</small></h3>
+          <div class="tool-grid">
+            <article class="tool" data-cat="sources" data-name="google scholar">
+              <div class="tool-top"><span class="tool-mark">GS</span><div><span class="cat">Find sources</span><h3>Google Scholar</h3></div></div>
+              <p>Search almost every academic field at once. Start here for anything.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span><span class="tool-tag rec">Recommended</span></div>
+              <a class="tool-go" href="https://scholar.google.com" target="_blank" rel="noopener">Open Google Scholar &nearr;</a>
+            </article>
+            <article class="tool" data-cat="sources" data-name="pubmed">
+              <div class="tool-top"><span class="tool-mark">P</span><div><span class="cat">Find sources</span><h3>PubMed</h3></div></div>
+              <p>The main search engine for medicine, health, and biology research.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="https://pubmed.ncbi.nlm.nih.gov" target="_blank" rel="noopener">Open PubMed &nearr;</a>
+            </article>
+            <article class="tool" data-cat="sources" data-name="arxiv">
+              <div class="tool-top"><span class="tool-mark">A</span><div><span class="cat">Find sources</span><h3>arXiv</h3></div></div>
+              <p>Free preprints in physics, math, computer science, and more.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="https://arxiv.org" target="_blank" rel="noopener">Open arXiv &nearr;</a>
+            </article>
+            <article class="tool" data-cat="sources" data-name="eric">
+              <div class="tool-top"><span class="tool-mark">E</span><div><span class="cat">Find sources</span><h3>ERIC</h3></div></div>
+              <p>Research on teaching, learning, and schools.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="https://eric.ed.gov" target="_blank" rel="noopener">Open ERIC &nearr;</a>
+            </article>
+            <article class="tool" data-cat="sources" data-name="doaj">
+              <div class="tool-top"><span class="tool-mark">D</span><div><span class="cat">Find sources</span><h3>DOAJ</h3></div></div>
+              <p>A directory of open-access journals you can read in full for free.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="https://doaj.org" target="_blank" rel="noopener">Open DOAJ &nearr;</a>
+            </article>
+            <article class="tool" data-cat="access" data-name="your library card">
+              <div class="tool-top"><span class="tool-mark">YL</span><div><span class="cat">Free full text</span><h3>Your library card</h3></div></div>
+              <p>Most school and public libraries give you database access from home. Ask a librarian.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span><span class="tool-tag rec">Recommended</span></div>
+              <span class="tool-go plain">No link needed</span>
+            </article>
+            <article class="tool" data-cat="access" data-name="openalex">
+              <div class="tool-top"><span class="tool-mark">O</span><div><span class="cat">Free full text</span><h3>OpenAlex</h3></div></div>
+              <p>An open index of scholarly works, with links to free full text.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="https://openalex.org" target="_blank" rel="noopener">Open OpenAlex &nearr;</a>
+            </article>
+            <article class="tool" data-cat="access" data-name="core">
+              <div class="tool-top"><span class="tool-mark">C</span><div><span class="cat">Free full text</span><h3>CORE</h3></div></div>
+              <p>Millions of free, full-text research papers from repositories worldwide.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="https://core.ac.uk" target="_blank" rel="noopener">Open CORE &nearr;</a>
+            </article>
+            <article class="tool" data-cat="access" data-name="email the author">
+              <div class="tool-top"><span class="tool-mark">ET</span><div><span class="cat">Free full text</span><h3>Email the author</h3></div></div>
+              <p>Researchers are usually happy to send a PDF to students who ask politely. Use the template below.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="#tpl-email" data-open-tpl="tpl-email">See the template &darr;</a>
+            </article>
+            <article class="tool" data-cat="citations" data-name="zotero">
+              <div class="tool-top"><span class="tool-mark">Z</span><div><span class="cat">Citations</span><h3>Zotero</h3></div></div>
+              <p>Save sources in one click and build a reference list automatically.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span><span class="tool-tag rec">Recommended</span></div>
+              <a class="tool-go" href="https://www.zotero.org" target="_blank" rel="noopener">Open Zotero &nearr;</a>
+            </article>
+            <article class="tool" data-cat="citations" data-name="zotero connector">
+              <div class="tool-top"><span class="tool-mark">ZC</span><div><span class="cat">Citations</span><h3>Zotero Connector</h3></div></div>
+              <p>The browser extension that saves articles to Zotero as you browse.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="https://www.zotero.org/download/connectors" target="_blank" rel="noopener">Open Zotero Connector &nearr;</a>
+            </article>
+            <article class="tool" data-cat="citations" data-name="google docs citations">
+              <div class="tool-top"><span class="tool-mark">GD</span><div><span class="cat">Citations</span><h3>Google Docs citations</h3></div></div>
+              <p>Built-in citation tool, handy for short papers. Find it under Tools.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <span class="tool-go plain">No link needed</span>
+            </article>
+            <article class="tool" data-cat="data" data-name="google sheets">
+              <div class="tool-top"><span class="tool-mark">GS</span><div><span class="cat">Data &amp; analysis</span><h3>Google Sheets</h3></div></div>
+              <p>Spreadsheets in the browser &mdash; enough for most first projects.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="https://sheets.google.com" target="_blank" rel="noopener">Open Google Sheets &nearr;</a>
+            </article>
+            <article class="tool" data-cat="data" data-name="jamovi">
+              <div class="tool-top"><span class="tool-mark">J</span><div><span class="cat">Data &amp; analysis</span><h3>jamovi</h3></div></div>
+              <p>Free statistics software with a friendly point-and-click interface.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span><span class="tool-tag rec">Recommended</span></div>
+              <a class="tool-go" href="https://www.jamovi.org" target="_blank" rel="noopener">Open jamovi &nearr;</a>
+            </article>
+            <article class="tool" data-cat="data" data-name="google colab">
+              <div class="tool-top"><span class="tool-mark">GC</span><div><span class="cat">Data &amp; analysis</span><h3>Google Colab</h3></div></div>
+              <p>Write and run Python in your browser, with nothing to install.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="https://colab.research.google.com" target="_blank" rel="noopener">Open Google Colab &nearr;</a>
+            </article>
+            <article class="tool" data-cat="data" data-name="google forms">
+              <div class="tool-top"><span class="tool-mark">GF</span><div><span class="cat">Data &amp; analysis</span><h3>Google Forms</h3></div></div>
+              <p>Build and send surveys, with responses collected in a spreadsheet.</p>
+              <div class="tool-tags"><span class="tool-tag">Free</span></div>
+              <a class="tool-go" href="https://forms.google.com" target="_blank" rel="noopener">Open Google Forms &nearr;</a>
+            </article>
+            <article class="tool" data-cat="share" data-name="the yrp journal">
+              <div class="tool-top"><span class="tool-mark">YJ</span><div><span class="cat">Share your work</span><h3>The YRP Journal</h3></div></div>
+              <p>Submit your finished paper for review and publication.</p>
+              <div class="tool-tags"><span class="tool-tag rec">Recommended</span></div>
+              <a class="tool-go" href="journal.html">Open the journal &rarr;</a>
+            </article>
+            <article class="tool" data-cat="share" data-name="science fair or symposium">
+              <div class="tool-top"><span class="tool-mark">SF</span><div><span class="cat">Share your work</span><h3>Science fair or symposium</h3></div></div>
+              <p>Present at your school or a regional event &mdash; great practice for feedback.</p>
+              
+              <span class="tool-go plain">No link needed</span>
+            </article>
+            <article class="tool" data-cat="share" data-name="competitions">
+              <div class="tool-top"><span class="tool-mark">C</span><div><span class="cat">Share your work</span><h3>Competitions</h3></div></div>
+              <p>Regional and state research competitions in your field.</p>
+              
+              <span class="tool-go plain">No link needed</span>
+            </article>
+            <article class="tool" data-cat="share" data-name="your class">
+              <div class="tool-top"><span class="tool-mark">YC</span><div><span class="cat">Share your work</span><h3>Your class</h3></div></div>
+              <p>Give a talk to the class that inspired your question.</p>
+              
+              <span class="tool-go plain">No link needed</span>
+            </article>
+          </div>
+
+          <h3 class="lib-h" id="lib-tpl-h">Copy-ready templates <small>Open one, copy it, and fill in the brackets</small></h3>
+          <div class="tpl-list">
+            <details class="tpl-item" id="tpl-email" data-cat="templates" data-name="request a paper from its author">
+              <summary><span class="tool-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.8"/><path d="m4 7 8 6 8-6"/></svg></span><span class="t"><h3>Request a paper from its author</h3><p>When an article is behind a paywall.</p></span><svg class="chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></summary>
+              <div class="tpl-body">
+                <div class="tpl-text">Subject: Request for a copy of your article &quot;[Article title]&quot;
+
+Dear Dr. [Last name],
+
+I&#x27;m a high school student researching [your topic] for an independent research project. I came across your article &quot;[Article title]&quot; ([Year]), and it looks directly relevant to my question about [your question in a few words].
+
+Unfortunately, I don&#x27;t have access to the full text. Would you be willing to share a copy?
+
+Thank you for your time and for your work on this topic.
+
+Best regards,
+[Your full name]
+[Your school]</div>
+                <div class="tpl-actions">
+                  <button type="button" class="btn btn--primary btn--sm" data-copy="tpl-email">Copy template</button>
+                  <span class="note">Replace everything in [brackets].</span>
+                </div>
+              </div>
+            </details>
+            <details class="tpl-item" id="tpl-abstract" data-cat="templates" data-name="abstract formula">
+              <summary><span class="tool-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7l4 4v13h-11z"/><path d="M13.5 3.5v4h4M9 12h6M9 15.5h6"/></svg></span><span class="t"><h3>Abstract formula</h3><p>Five sentences, one job each. Write it last.</p></span><svg class="chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></summary>
+              <div class="tpl-body">
+                <div class="tpl-text">[1. Topic] [Topic] matters because [why it matters].
+[2. Gap or question] However, [what isn&#x27;t known yet]. This study asks [your research question].
+[3. Method] To answer this, [who / what you studied] using [your method].
+[4. Results] The results show that [your main finding, with a key number].
+[5. Significance] These findings suggest [what it means and why it matters].
+
+Keywords: [3–5 keywords]</div>
+                <div class="tpl-actions">
+                  <button type="button" class="btn btn--primary btn--sm" data-copy="tpl-abstract">Copy template</button>
+                  <span class="note">Replace everything in [brackets].</span>
+                </div>
+              </div>
+            </details>
+            <details class="tpl-item" id="tpl-imrad" data-cat="templates" data-name="imrad paper outline">
+              <summary><span class="tool-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h7l4 4v13h-11z"/><path d="M13.5 3.5v4h4M9 12h6M9 15.5h6"/></svg></span><span class="t"><h3>IMRaD paper outline</h3><p>The structure most empirical papers follow.</p></span><svg class="chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></summary>
+              <div class="tpl-body">
+                <div class="tpl-text">Title
+Abstract (150–250 words)
+
+1. Introduction
+   1.1 Background — why the topic matters
+   1.2 What we already know
+   1.3 The gap
+   1.4 Research question and hypothesis
+
+2. Methods
+   2.1 Participants or materials
+   2.2 Procedure
+   2.3 Data analysis
+
+3. Results
+   — What you found, without interpretation
+
+4. Discussion
+   4.1 What the results mean
+   4.2 Comparison with previous research
+   4.3 Limitations
+   4.4 Future research
+
+5. Conclusion
+
+References (APA 7)</div>
+                <div class="tpl-actions">
+                  <button type="button" class="btn btn--primary btn--sm" data-copy="tpl-imrad">Copy template</button>
+                  <span class="note">Replace everything in [brackets].</span>
+                </div>
+              </div>
+            </details>
+            <details class="tpl-item" id="tpl-consent" data-cat="templates" data-name="survey consent statement">
+              <summary><span class="tool-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 9.5 17 19 7.5"/></svg></span><span class="t"><h3>Survey consent statement</h3><p>Paste at the start of your survey.</p></span><svg class="chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></summary>
+              <div class="tpl-body">
+                <div class="tpl-text">Thank you for your interest in this survey.
+
+I&#x27;m [your name], a student at [school], and I&#x27;m researching [topic] for an independent research project. The survey takes about [X] minutes.
+
+Taking part is completely voluntary. You can skip any question or stop at any time. Your answers are anonymous — I won&#x27;t collect your name or email — and will only be reported as group results.
+
+If you have questions, you can contact me at [email] or my supervisor, [teacher&#x27;s name], at [email].
+
+By continuing, you confirm that you understand this information and agree to take part. If you are under 18, please make sure a parent or guardian has given permission.</div>
+                <div class="tpl-actions">
+                  <button type="button" class="btn btn--primary btn--sm" data-copy="tpl-consent">Copy template</button>
+                  <span class="note">Replace everything in [brackets].</span>
+                </div>
+              </div>
+            </details>
+            <details class="tpl-item" id="tpl-interview" data-cat="templates" data-name="interview consent script">
+              <summary><span class="tool-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 9.5 17 19 7.5"/></svg></span><span class="t"><h3>Interview consent script</h3><p>Read aloud before you start recording.</p></span><svg class="chev" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></summary>
+              <div class="tpl-body">
+                <div class="tpl-text">Thank you for agreeing to talk with me. I&#x27;m researching [topic] for an independent research project at [school].
+
+The interview will take about [X] minutes. With your permission, I&#x27;d like to record it so I can write down what you say accurately. Only I will listen to the recording, and I&#x27;ll delete it by [date].
+
+I&#x27;ll use a different name for you in my paper, and I&#x27;ll leave out details that could identify you.
+
+You can skip any question, take a break, or stop at any time, without giving a reason.
+
+Do you have any questions before we begin? Is it okay for me to start recording?</div>
+                <div class="tpl-actions">
+                  <button type="button" class="btn btn--primary btn--sm" data-copy="tpl-interview">Copy template</button>
+                  <span class="note">Replace everything in [brackets].</span>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <p class="lib-empty" id="lib-empty">Nothing matches that search. Try a different word, or choose <strong>All</strong>.</p>
         </div>
 
         <!-- JOURNAL -->
@@ -1602,6 +1868,65 @@ function renderSections() {
 }
 
 document.getElementById('p-type').addEventListener('change', () => { captureSections(); renderSections(); });
+
+/* ---- Templates & tools: filter, search, copy --------------------------- */
+(function () {
+  const pane = document.getElementById('pane-library');
+  if (!pane) return;
+  const input = document.getElementById('lib-filter');
+  const chips = pane.querySelectorAll('.lib-chip');
+  const items = pane.querySelectorAll('.tool, .tpl-item');
+  let cat = 'all';
+
+  function apply() {
+    const q = input.value.trim().toLowerCase();
+    let tools = 0, tpls = 0;
+    items.forEach((el) => {
+      const inCat = cat === 'all' || el.dataset.cat === cat;
+      const hit = !q || el.textContent.toLowerCase().indexOf(q) !== -1;
+      el.hidden = !(inCat && hit);
+      if (!el.hidden) { if (el.classList.contains('tool')) tools++; else tpls++; }
+    });
+    document.getElementById('lib-tools-h').hidden = tools === 0;
+    document.getElementById('lib-tpl-h').hidden = tpls === 0;
+    document.getElementById('lib-empty').style.display = (tools + tpls) ? 'none' : 'block';
+  }
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    cat = chip.dataset.filter;
+    chips.forEach((c) => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
+    apply();
+  }));
+  input.addEventListener('input', apply);
+
+  // "See the template" links open and scroll to the template.
+  pane.querySelectorAll('[data-open-tpl]').forEach((a) => a.addEventListener('click', (e) => {
+    const d = document.getElementById(a.dataset.openTpl);
+    if (!d) return;
+    e.preventDefault();
+    if (d.hidden) { cat = 'all'; input.value = ''; chips.forEach((c) => c.setAttribute('aria-pressed', c.dataset.filter === 'all' ? 'true' : 'false')); apply(); }
+    d.open = true;
+    d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
+
+  // Copy buttons, with a fallback for browsers without the clipboard API.
+  pane.querySelectorAll('[data-copy]').forEach((btn) => btn.addEventListener('click', () => {
+    const box = document.getElementById(btn.dataset.copy);
+    const text = box.querySelector('.tpl-text').textContent;
+    const done = () => {
+      btn.textContent = 'Copied \u2713';
+      setTimeout(() => { btn.textContent = 'Copy template'; }, 2000);
+    };
+    const fallback = () => {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) { /* leave the text selectable */ }
+      document.body.removeChild(ta);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  }));
+})();
 
 /* ---- Saving ------------------------------------------------------------ */
 document.getElementById('save-project').addEventListener('click', () => {
