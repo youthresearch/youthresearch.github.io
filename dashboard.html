@@ -1011,7 +1011,7 @@ window.YRP = (function () {
             </div>
             <div class="sec-intro">
               <h3>Your paper, section by section</h3>
-              <p>The boxes below match the sections your type of research needs. Draft each one here &mdash; word counts update as you type.</p>
+              <p>The boxes below match the sections your type of research needs. Draft each one here &mdash; word and character counts update as you type.</p>
             </div>
             <div id="p-sections"></div>
             <div style="margin-bottom:1.2rem;">
@@ -1020,7 +1020,7 @@ window.YRP = (function () {
             </div>
             <div class="save-row">
               <button class="btn btn--primary btn--sm" id="save-project">Save project</button>
-              <span class="total-wc" id="total-wc">0 words <span>total</span></span>
+              <span class="total-wc" id="total-wc">0 words &middot; 0 characters <span>total</span></span>
               <span class="status hidden" id="project-status">Saved</span>
             </div>
           </div>
@@ -1551,6 +1551,10 @@ let SECTION_TEXT = {};
 
 function countWords(s) { const m = (s || '').trim().match(/\S+/g); return m ? m.length : 0; }
 function wordLabel(n) { return n.toLocaleString() + (n === 1 ? ' word' : ' words'); }
+// Characters include spaces, as most character limits do.
+function countChars(s) { return Array.from(s || '').length; }
+function charLabel(n) { return n.toLocaleString() + (n === 1 ? ' character' : ' characters'); }
+function countLabel(s) { return wordLabel(countWords(s)) + ' \u00b7 ' + charLabel(countChars(s)); }
 
 function captureSections() {
   document.querySelectorAll('#p-sections textarea[data-sec]').forEach((ta) => {
@@ -1559,12 +1563,12 @@ function captureSections() {
 }
 
 function updateTotal() {
-  let total = 0;
+  let total = 0, chars = 0;
   document.querySelectorAll('#p-sections textarea[data-sec]').forEach((ta) => {
-    if (ta.dataset.counted === '1') total += countWords(ta.value);
+    if (ta.dataset.counted === '1') { total += countWords(ta.value); chars += countChars(ta.value); }
   });
   const hasUncounted = !!document.querySelector('#p-sections textarea[data-counted="0"]');
-  document.getElementById('total-wc').innerHTML = esc(wordLabel(total)) +
+  document.getElementById('total-wc').innerHTML = esc(wordLabel(total) + ' \u00b7 ' + charLabel(chars)) +
     ' <span>total' + (hasUncounted ? ', excluding references and appendix' : '') + '</span>';
 }
 
@@ -1584,13 +1588,13 @@ function renderSections() {
       '<a href="' + plan.page + '#' + anchor + '" target="_blank" rel="noopener">How to write this &rarr;</a></div>' +
       '<p class="sec-hint">' + esc(info.hint) + '</p>' +
       '<textarea id="' + id + '" data-sec="' + key + '" data-counted="' + (info.uncounted ? '0' : '1') + '"></textarea>' +
-      '<p class="sec-wc" id="' + id + '-wc">0 words</p>' +
+      '<p class="sec-wc" id="' + id + '-wc">0 words &middot; 0 characters</p>' +
       '</div>';
   }).join('');
   box.querySelectorAll('textarea[data-sec]').forEach((ta) => {
     ta.value = SECTION_TEXT[ta.dataset.sec] || '';
     const wc = document.getElementById(ta.id + '-wc');
-    const refresh = () => { wc.textContent = wordLabel(countWords(ta.value)); updateTotal(); };
+    const refresh = () => { wc.textContent = countLabel(ta.value); updateTotal(); };
     ta.addEventListener('input', () => { SECTION_TEXT[ta.dataset.sec] = ta.value; refresh(); });
     refresh();
   });
