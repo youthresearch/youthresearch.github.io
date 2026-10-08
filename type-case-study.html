@@ -855,12 +855,14 @@ window.YRP = (function () {
           <li><a href="#titlepage">Title page</a></li>
           <li><a href="#abstract">Abstract</a></li>
           <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#review">Literature review</a></li>
           <li><a href="#background">Case background</a></li>
           <li><a href="#methods">Methods</a></li>
           <li><a href="#findings">Findings</a></li>
           <li><a href="#discussion">Discussion</a></li>
           <li><a href="#limitations">Limitations</a></li>
           <li><a href="#conclusion">Conclusion</a></li>
+          <li><a href="#pitfalls">Pitfalls to avoid</a></li>
           <li><a href="#references">References</a></li>
           <li><a href="#checklist">Checklist</a></li>
         </ol>
@@ -877,7 +879,7 @@ window.YRP = (function () {
             <h3>What it looks like</h3>
             <ul>
               <li><strong>Shape:</strong> why this case &rarr; background &rarr; evidence gathered &rarr; analysis &rarr; what it does and doesn't generalize to</li>
-              <li><strong>Paper structure:</strong> abstract &rarr; introduction &rarr; case background &rarr; methods &rarr; findings &rarr; discussion &rarr; limitations &rarr; conclusion &rarr; references</li>
+              <li><strong>Paper structure:</strong> abstract &rarr; introduction &rarr; literature review &rarr; case background &rarr; methods &rarr; findings &rarr; discussion &rarr; limitations &rarr; conclusion &rarr; references</li>
               <li><strong>Common mistake:</strong> claiming a single case proves a general rule. It illustrates, suggests, and complicates &mdash; that's enough.</li>
             </ul>
           </div>
@@ -1080,6 +1082,15 @@ window.YRP = (function () {
               <ul><li>One or two sentences on how the rest of the paper is organized</li></ul>
             </div>
 
+            <h3>Four questions your introduction must answer</h3>
+            <p>A case study introduction does one extra job: it links the research problem to the case, and explains why the case is the right way to study it. Give each question a paragraph or two.</p>
+            <ol>
+              <li><strong>Who or what is being studied?</strong> Describe the research problem and the case you chose, and how they connect. Which parts of the case will shed light on the problem?</li>
+              <li><strong>Why does it matter?</strong> Explain why the problem is significant, and why a case study &mdash; and this case in particular &mdash; is a good way to investigate it.</li>
+              <li><strong>What did we already know?</strong> Briefly summarize prior research, including other case studies on the problem and where they fall short. If no one has used a case study for this problem, explain why you chose yours.</li>
+              <li><strong>What will this study add?</strong> Explain what new knowledge or understanding your case can offer.</li>
+            </ol>
+
             <div class="box box--example">
               <span class="box-label">Example &mdash; why this case</span>
               <p>National surveys show that most teachers support limiting phones in class (Smith et al., 2023), but they say little about how such policies work day to day. Northfield High School offers a useful case: it introduced a strict phone-free policy in 2024 after years of informal rules, making the shift unusually clear to observe.</p>
@@ -1090,7 +1101,7 @@ window.YRP = (function () {
             <ul>
               <li><strong>Definitions</strong> &mdash; define each key term exactly as you use it, citing a source</li>
               <li><strong>Key theories</strong> &mdash; name the theory or model that helps explain your case</li>
-              <li><strong>Previous research</strong> &mdash; keep only the studies relevant to your question</li>
+              <li><strong>Previous research</strong> &mdash; save the detailed review for the next section</li>
             </ul>
             <div class="box box--example">
               <span class="box-label">Example</span>
@@ -1104,9 +1115,47 @@ window.YRP = (function () {
           </div>
         </section>
 
+        <!-- ============================ LIT REVIEW ==================== -->
+        <section class="tpl-section" id="review">
+          <h2><span class="num">04</span> Literature review</h2>
+          <p class="sub">Structured like any literature review &mdash; organized by theme, comparing studies &mdash; but with one focus: showing where your case fits in the research on your problem, and why it's worth studying.</p>
+
+          <div class="card tpl-body">
+            <h4>Use the literature to</h4>
+            <ul>
+              <li><strong>Place similar studies in context</strong> &mdash; summarize research that used a similar case to study the same problem. If someone has studied the same or a very similar case, explain why it's worth revisiting (conditions have changed, the earlier study is old, and so on).</li>
+              <li><strong>Justify your case</strong> &mdash; describe any work that supports using this kind of case to investigate your question.</li>
+              <li><strong>Offer a new angle</strong> &mdash; if others studied the problem with surveys or experiments, explain what an in-depth case can reveal that they couldn't.</li>
+              <li><strong>Resolve contradictions</strong> &mdash; where earlier studies disagree, show how your case might help explain why.</li>
+              <li><strong>Expose the gap</strong> &mdash; show what previous research has missed and how your case helps fill it.</li>
+              <li><strong>Locate your own study</strong> &mdash; most important of all, end by placing your case clearly within the larger body of research.</li>
+            </ul>
+
+            <div class="vs">
+              <div class="box box--avoid" style="margin:0;">
+                <span class="box-label">Don't</span>
+                <ul style="padding-left:1.15rem;margin:0;">
+                  <li>Study A found&hellip;</li>
+                  <li>Study B found&hellip;</li>
+                  <li>Study C found&hellip;</li>
+                </ul>
+              </div>
+              <div class="box box--tip" style="margin:0;">
+                <span class="box-label">Do</span>
+                <p>Group findings under thematic subheadings, compare studies inside each one, and keep tying them back to your case.</p>
+              </div>
+            </div>
+
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>Surveys of teachers show broad support for phone restrictions (Smith et al., 2023), while classroom studies report mixed effects on engagement (Lee, 2022). These studies rarely examine how a policy is carried out day to day. A single-school case can trace that process directly, helping to explain why similar policies produce different results.</p>
+            </div>
+          </div>
+        </section>
+
         <!-- ============================ BACKGROUND ==================== -->
         <section class="tpl-section" id="background">
-          <h2><span class="num">04</span> Case background</h2>
+          <h2><span class="num">05</span> Case background</h2>
           <p class="sub">Describe the case so a reader who's never heard of it can follow your analysis. Stick to facts here &mdash; analysis comes later.</p>
 
           <div class="card tpl-body">
@@ -1132,7 +1181,7 @@ window.YRP = (function () {
 
         <!-- ============================ METHODS ======================= -->
         <section class="tpl-section" id="methods">
-          <h2><span class="num">05</span> Methods</h2>
+          <h2><span class="num">06</span> Methods</h2>
           <p class="sub">Explain how you studied the case, in the past tense, so a reader can judge how trustworthy your evidence is.</p>
 
           <div class="card tpl-body">
@@ -1141,6 +1190,37 @@ window.YRP = (function () {
             <div class="box box--example">
               <span class="box-label">Example</span>
               <p>A single-case design was chosen because the research question asks how a policy was experienced in practice, which requires detailed evidence from one setting. Northfield High School was selected because its policy change was recent, clearly dated, and accessible to the researcher.</p>
+            </div>
+
+            <h4>What to explain depends on your kind of case</h4>
+            <div class="cmp-scroll">
+            <table class="cmp">
+              <thead>
+                <tr><th scope="col">If your case is&hellip;</th><th scope="col">Explain</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>An event</strong></td>
+                  <td>When it happened, the circumstances that led up to it, and its consequences for your research problem. Say whether it's rare or typical &mdash; both can be useful.</td>
+                </tr>
+                <tr>
+                  <td><strong>A person or group</strong></td>
+                  <td>Why this person or group, what experiences make them worth studying, their relationships to other people, institutions, or events, and what sets them apart from others who could have been chosen.</td>
+                </tr>
+                <tr>
+                  <td><strong>A place</strong></td>
+                  <td>Its relevant features &mdash; physical, social, historical, cultural, economic, political &mdash; and why you chose it over similar places.</td>
+                </tr>
+                <tr>
+                  <td><strong>A phenomenon</strong></td>
+                  <td>What you observed, why its cause or explanation is still in question, and the system of people and surroundings it happens within.</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            <div class="box box--avoid">
+              <span class="box-label">Your choice can't look random</span>
+              <p>Show how you identified your case and why it fits your research problem, link that choice to your literature review, and cite any studies that helped you decide.</p>
             </div>
 
             <h3>Sources of evidence</h3>
@@ -1164,7 +1244,7 @@ window.YRP = (function () {
 
         <!-- ============================ FINDINGS ====================== -->
         <section class="tpl-section" id="findings">
-          <h2><span class="num">06</span> Findings</h2>
+          <h2><span class="num">07</span> Findings</h2>
           <p class="sub">Present what you found, organized by theme. Every claim should rest on specific evidence from your case.</p>
 
           <div class="card tpl-body">
@@ -1196,21 +1276,28 @@ window.YRP = (function () {
                 <li>Identifying anyone you promised to keep anonymous</li>
               </ul>
             </div>
+
+            <div class="box box--tip">
+              <span class="box-label">Pro tip</span>
+              <p>Many case studies combine findings and discussion into a single section, presenting each finding and its meaning together. Either structure is fine &mdash; pick one and use it consistently.</p>
+            </div>
           </div>
         </section>
 
         <!-- ============================ DISCUSSION ==================== -->
         <section class="tpl-section" id="discussion">
-          <h2><span class="num">07</span> Discussion</h2>
+          <h2><span class="num">08</span> Discussion</h2>
           <p class="sub">Step back from the details. What does this case teach us, and how far can that lesson travel?</p>
 
           <div class="card tpl-body">
             <h4>Answer these, in order</h4>
             <ol>
-              <li><strong>What's the answer to your question?</strong> Pull your themes together into one clear explanation.</li>
-              <li><strong>What does it mean for the theory?</strong> Does the case support, challenge, or extend your theoretical framework?</li>
-              <li><strong>How does it compare to previous research?</strong> Where does your case confirm or complicate earlier findings?</li>
-              <li><strong>Why does it matter?</strong> Practical implications &mdash; solutions or recommendations for people in similar situations.</li>
+              <li><strong>Restate the problem and your major findings.</strong> Briefly remind the reader of the research problem and why you chose this case, then state your findings directly. Highlight anything unexpected.</li>
+              <li><strong>Explain what the findings mean.</strong> Start with your most important or surprising finding, then work through the rest. Say what the case suggests about situations beyond it &mdash; carefully.</li>
+              <li><strong>Connect to theory and previous research.</strong> Does the case support, challenge, or extend your theoretical framework and the studies in your literature review?</li>
+              <li><strong>Consider alternative explanations.</strong> Research aims to discover, not prove. Weigh every explanation your evidence allows, not just the one you expected &mdash; even if it contradicts earlier research.</li>
+              <li><strong>Acknowledge limitations and open questions.</strong> Note what the case couldn't address, and why the limitations don't undermine your main findings.</li>
+              <li><strong>Why does it matter, and what's next?</strong> Practical recommendations for people in similar situations, and future research linked directly to your research problem.</li>
             </ol>
 
             <h3>What a single case can and can't show</h3>
@@ -1242,7 +1329,7 @@ window.YRP = (function () {
 
         <!-- ============================ LIMITATIONS =================== -->
         <section class="tpl-section" id="limitations">
-          <h2><span class="num">08</span> Limitations</h2>
+          <h2><span class="num">09</span> Limitations</h2>
           <p class="sub">Every case study has weaknesses. Naming yours honestly makes your paper more credible, not less.</p>
 
           <div class="card tpl-body">
@@ -1269,7 +1356,7 @@ window.YRP = (function () {
 
         <!-- ============================ CONCLUSION ==================== -->
         <section class="tpl-section" id="conclusion">
-          <h2><span class="num">09</span> Conclusion</h2>
+          <h2><span class="num">10</span> Conclusion</h2>
           <p class="sub">Bring the paper full circle. Remind the reader what you set out to do, then show that you did it.</p>
 
           <div class="card tpl-body">
@@ -1280,6 +1367,15 @@ window.YRP = (function () {
               <li><strong>State your contribution.</strong> What the case adds to the field, including any solutions or recommendations.</li>
               <li><strong>Point forward.</strong> Which questions future research should test across more cases.</li>
             </ol>
+
+            <h4>A strong conclusion should</h4>
+            <ul>
+              <li>Synthesize your key findings to show how they come together to address the research problem &mdash; not repeat the discussion</li>
+              <li>Say clearly how your findings support or differ from prior research, and why</li>
+              <li>Remind the reader why a case study was the right approach for this problem</li>
+              <li>Move from the details of your case back to the broader context you set up in the introduction</li>
+              <li>Mention limitations and further research, if you haven't already in the discussion</li>
+            </ul>
 
             <div class="box box--avoid">
               <span class="box-label">Avoid</span>
@@ -1292,9 +1388,44 @@ window.YRP = (function () {
           </div>
         </section>
 
+        <!-- ============================ PITFALLS ====================== -->
+        <section class="tpl-section" id="pitfalls">
+          <h2><span class="num">11</span> Pitfalls to avoid</h2>
+          <p class="sub">Three mistakes that weaken case studies more than any others.</p>
+
+          <div class="card tpl-body">
+            <h3>Overgeneralizing</h3>
+            <p>A case can point toward broader patterns, but every conclusion must rest on evidence from your case. Anything else is speculation. If you notice an interesting pattern you didn't set out to study, present it as a question for future research, not a finding.</p>
+            <div class="rewrite">
+              <div class="weak">
+                <span class="tag">Overreach</span>
+                <p>Phone bans improve student focus in all schools.</p>
+              </div>
+              <div class="better">
+                <span class="tag">Evidence-based</span>
+                <p>At Northfield, teachers who planned replacement activities reported better focus. Whether this holds in other schools is a question for future research.</p>
+              </div>
+            </div>
+
+            <h3>Not documenting limitations</h3>
+            <p>No case reveals everything about a problem. Be specific about how your case's setting, culture, or circumstances might limit how far your findings apply.</p>
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>A study of water conservation in a village where water is scarce may not apply in places where fresh water is plentiful, where conservation is more about managing access than protecting a scarce resource.</p>
+            </div>
+
+            <h3>Missing obvious implications</h3>
+            <p>Just as you shouldn't say too much, you shouldn't leave out what your evidence clearly suggests. Consider every reasonable outcome and recommendation, or readers will question your analysis.</p>
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>A case study of a railroad-crossing accident that recommends new warning signals but ignores the speed limit leaves an obvious gap in the analysis.</p>
+            </div>
+          </div>
+        </section>
+
         <!-- ============================ REFERENCES ==================== -->
         <section class="tpl-section" id="references">
-          <h2><span class="num">10</span> References</h2>
+          <h2><span class="num">12</span> References</h2>
           <p class="sub">Always APA 7.</p>
           <div class="card tpl-body">
             <ul>
@@ -1311,12 +1442,12 @@ window.YRP = (function () {
 
         <!-- ============================ CHECKLIST ===================== -->
         <section class="tpl-section" id="checklist">
-          <h2><span class="num">11</span> Checklist</h2>
+          <h2><span class="num">13</span> Checklist</h2>
           <p class="sub">Run through this before you gather evidence, and again before you submit. Your ticks are saved in this browser.</p>
           <div class="card">
             <div class="checklist-bar">
               <div class="checklist-track"><div class="checklist-fill" id="cl-fill"></div></div>
-              <span id="cl-count">0 of 13</span>
+              <span id="cl-count">0 of 15</span>
             </div>
 
             <p class="checklist-group">Before you start</p>
@@ -1329,12 +1460,14 @@ window.YRP = (function () {
 
             <p class="checklist-group">The paper</p>
             <ul class="checklist">
-              <li><label><input type="checkbox" data-cl="5"><span>Does my introduction explain why this case matters and end with my research question?</span></label></li>
+              <li><label><input type="checkbox" data-cl="5"><span>Does my introduction answer who or what, why it matters, what we knew, and what this study adds &mdash; and end with my research question?</span></label></li>
+              <li><label><input type="checkbox" data-cl="14"><span>Does my literature review place my case within prior research and show the gap it helps fill?</span></label></li>
               <li><label><input type="checkbox" data-cl="6"><span>Have I defined my key terms and named the theory I'm using to analyze the case?</span></label></li>
               <li><label><input type="checkbox" data-cl="7"><span>Could a reader unfamiliar with the case follow my background section?</span></label></li>
               <li><label><input type="checkbox" data-cl="8"><span>Does my methods section explain my case selection, evidence, and analysis?</span></label></li>
               <li><label><input type="checkbox" data-cl="9"><span>Are my findings organized by theme, with specific evidence for every claim?</span></label></li>
               <li><label><input type="checkbox" data-cl="10"><span>Does my discussion connect the case to theory without claiming it proves a general rule?</span></label></li>
+              <li><label><input type="checkbox" data-cl="15"><span>Have I considered alternative explanations for my findings, not just the one I expected?</span></label></li>
               <li><label><input type="checkbox" data-cl="11"><span>Have I named my limitations, including my own role, honestly?</span></label></li>
             </ul>
 
