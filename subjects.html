@@ -269,17 +269,24 @@ textarea { resize: vertical; min-height: 90px; }
 
     .hub-group { margin-top: 2rem; }
     .hub-group h2 { font-size: clamp(1.3rem, 2.6vw, 1.6rem); margin-bottom: 0.9rem; }
-    .hub-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+    .hub-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
     .subj-btn {
-      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; height: 100%;
-      text-decoration: none; color: var(--ink); font-weight: 500; font-size: 0.98rem;
+      display: flex; align-items: flex-start; gap: 1rem; height: 100%; min-height: 118px;
+      text-decoration: none; color: var(--body);
       background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm);
-      box-shadow: var(--shadow-sm); padding: 0.95rem 1.1rem;
-      transition: border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+      box-shadow: var(--shadow-sm); padding: 1.25rem 1.3rem;
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .subj-btn::after { content: "\2192"; color: var(--lavender); flex: none; }
-    .subj-btn:hover, .subj-btn:focus-visible { border-color: var(--lavender); color: var(--lavender-deep); transform: translateY(-2px); }
+    .subj-btn:hover, .subj-btn:focus-visible { border-color: var(--lavender); transform: translateY(-2px); }
+    .subj-btn .ic { flex: none; width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center;
+      background: var(--lavender-tint); color: var(--lavender-deep); }
+    .subj-btn .ic svg { width: 24px; height: 24px; }
+    .subj-btn .txt { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+    .subj-btn .name { font-family: var(--font-display); font-size: 1.18rem; color: var(--ink); line-height: 1.25; }
+    .subj-btn .name::after { content: " \2192"; color: var(--lavender); font-family: var(--font-body); font-size: 0.95rem; }
+    .subj-btn .desc { font-size: 0.88rem; line-height: 1.45; }
+    .subj-btn:hover .name, .subj-btn:focus-visible .name { color: var(--lavender-deep); }
 
   </style>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
@@ -753,49 +760,142 @@ window.YRP = (function () {
       <section class="hub-group">
         <h2>Sciences &amp; math</h2>
         <ul class="hub-grid">
-          <li><a class="subj-btn" href="subject-astronomy.html">Astronomy</a></li>
-          <li><a class="subj-btn" href="subject-biology.html">Biology &amp; lab sciences</a></li>
-          <li><a class="subj-btn" href="subject-chemistry.html">Chemistry</a></li>
-          <li><a class="subj-btn" href="subject-computer-science.html">Computer Science</a></li>
-          <li><a class="subj-btn" href="subject-ecology.html">Ecology</a></li>
-          <li><a class="subj-btn" href="subject-engineering.html">Engineering</a></li>
-          <li><a class="subj-btn" href="subject-environmental-studies.html">Environmental Studies</a></li>
-          <li><a class="subj-btn" href="subject-mathematics.html">Mathematics</a></li>
-          <li><a class="subj-btn" href="subject-neuroscience.html">Neuroscience</a></li>
-          <li><a class="subj-btn" href="subject-physics.html">Physics</a></li>
+          <li><a class="subj-btn" href="subject-astronomy.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M5.2 16.6c-1.9 1.6-2.6 3-1.9 3.6 1.3 1.2 6.4-1.3 11.4-5.6s8-8.9 6.7-10.1c-.6-.6-2.1-.2-3.9.9"/></svg></span>
+            <span class="txt"><span class="name">Astronomy</span><span class="desc">Stars, planets, and the universe, from telescope data you can access.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-biology.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3c0 5 8 6 8 9s-8 4-8 9"/><path d="M16 3c0 5-8 6-8 9s8 4 8 9"/><path d="M9.2 7h5.6M9.2 17h5.6"/></svg></span>
+            <span class="txt"><span class="name">Biology &amp; lab sciences</span><span class="desc">Living things, from cells to ecosystems, through experiments and observation.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-chemistry.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 3.5h5M10.5 3.5v5.2L5.4 18a1.8 1.8 0 0 0 1.6 2.6h10a1.8 1.8 0 0 0 1.6-2.6l-5.1-9.3V3.5"/><path d="M7.8 14.5h8.4"/></svg></span>
+            <span class="txt"><span class="name">Chemistry</span><span class="desc">What matter is made of and how substances react and change.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-computer-science.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="12" rx="1.6"/><path d="M8 20h8M12 16.5V20"/><path d="m9.5 8.7-2 1.8 2 1.8M14.5 8.7l2 1.8-2 1.8"/></svg></span>
+            <span class="txt"><span class="name">Computer Science</span><span class="desc">Algorithms, software, and data &mdash; building and testing things that compute.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-ecology.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5.5-13.5 14-14 .4 8.6-5 14-13 14Z"/><path d="m5 19 8-8"/></svg></span>
+            <span class="txt"><span class="name">Ecology</span><span class="desc">How organisms interact with each other and their environment.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-engineering.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5a4 4 0 0 0-4.6 5.4l-6 6a1.9 1.9 0 0 0 2.7 2.7l6-6A4 4 0 0 0 18.5 8l-2.6 2.6-2.4-.5-.5-2.4L15.6 5"/></svg></span>
+            <span class="txt"><span class="name">Engineering</span><span class="desc">Designing, building, and testing solutions to real problems.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-environmental-studies.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.7 5.4 3.7 8.5s-1.2 5.9-3.7 8.5c-2.5-2.6-3.7-5.4-3.7-8.5S9.5 6.1 12 3.5Z"/></svg></span>
+            <span class="txt"><span class="name">Environmental Studies</span><span class="desc">How people and the planet affect each other, and what to do about it.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-mathematics.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 5H7l5.5 7L7 19h10"/></svg></span>
+            <span class="txt"><span class="name">Mathematics</span><span class="desc">Patterns, proofs, and problems, where evidence means proof.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-neuroscience.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5.5a3 3 0 0 0-5.5 1.3A3 3 0 0 0 5 12a3 3 0 0 0 1.5 5.2A3 3 0 0 0 12 18.5Z"/><path d="M12 5.5a3 3 0 0 1 5.5 1.3A3 3 0 0 1 19 12a3 3 0 0 1-1.5 5.2A3 3 0 0 1 12 18.5"/><path d="M12 5.5v13"/></svg></span>
+            <span class="txt"><span class="name">Neuroscience</span><span class="desc">The brain and nervous system, and how they shape behavior.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-physics.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1.3"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/></svg></span>
+            <span class="txt"><span class="name">Physics</span><span class="desc">Matter, energy, and motion, tested against careful measurement.</span></span>
+          </a></li>
         </ul>
       </section>
 
       <section class="hub-group">
         <h2>Social sciences</h2>
         <ul class="hub-grid">
-          <li><a class="subj-btn" href="subject-anthropology.html">Anthropology</a></li>
-          <li><a class="subj-btn" href="subject-business.html">Business</a></li>
-          <li><a class="subj-btn" href="subject-criminology.html">Criminology</a></li>
-          <li><a class="subj-btn" href="subject-economics.html">Economics &amp; public policy</a></li>
-          <li><a class="subj-btn" href="subject-education.html">Education</a></li>
-          <li><a class="subj-btn" href="subject-gender-studies.html">Gender Studies</a></li>
-          <li><a class="subj-btn" href="subject-international-relations.html">International Relations</a></li>
-          <li><a class="subj-btn" href="subject-linguistics.html">Linguistics</a></li>
-          <li><a class="subj-btn" href="subject-political-science.html">Political Science</a></li>
-          <li><a class="subj-btn" href="subject-psychology.html">Psychology &amp; social science</a></li>
-          <li><a class="subj-btn" href="subject-public-health.html">Public Health</a></li>
-          <li><a class="subj-btn" href="subject-sociology.html">Sociology</a></li>
+          <li><a class="subj-btn" href="subject-anthropology.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="16.5" cy="9" r="2.4"/><path d="M15.5 14.1c2.4-.3 4.3 1.3 5 4.4"/></svg></span>
+            <span class="txt"><span class="name">Anthropology</span><span class="desc">Human cultures and communities, studied up close.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-business.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.8"/><path d="M9 7.5V5.8a1.3 1.3 0 0 1 1.3-1.3h3.4A1.3 1.3 0 0 1 15 5.8v1.7"/><path d="M3.5 12.5h17"/></svg></span>
+            <span class="txt"><span class="name">Business</span><span class="desc">How organizations, markets, and consumers make decisions.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-criminology.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.3-3 7.6-7 9-4-1.4-7-4.7-7-9V6l7-2.5Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+            <span class="txt"><span class="name">Criminology</span><span class="desc">The causes of crime and how societies respond to it.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-economics.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5h16"/><path d="m6 16 4-4.5 3 2.5 5-6"/><path d="M15 8h3v3"/></svg></span>
+            <span class="txt"><span class="name">Economics &amp; public policy</span><span class="desc">Choices, markets, and policies, measured with real data.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-education.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 5 9 4.5-9 4.5-9-4.5L12 5Z"/><path d="M7 11.5v4c1.4 1.4 3.1 2 5 2s3.6-.6 5-2v-4"/><path d="M21 9.5v5"/></svg></span>
+            <span class="txt"><span class="name">Education</span><span class="desc">How people learn, and how schools can help them learn better.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-gender-studies.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8 10.2h8M8 13.8h8"/></svg></span>
+            <span class="txt"><span class="name">Gender Studies</span><span class="desc">How gender shapes identity, experience, and institutions.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-international-relations.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 21V4"/><path d="M5.5 4.5h11l-2 3.5 2 3.5h-11"/></svg></span>
+            <span class="txt"><span class="name">International Relations</span><span class="desc">How states, institutions, and people interact across borders.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-linguistics.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 6.2a1.7 1.7 0 0 1 1.7-1.7h11.6a1.7 1.7 0 0 1 1.7 1.7v8.1a1.7 1.7 0 0 1-1.7 1.7H10l-4.5 3.5V16a1.7 1.7 0 0 1-1-1.6Z"/><path d="M8.5 9h7M8.5 12h4.5"/></svg></span>
+            <span class="txt"><span class="name">Linguistics</span><span class="desc">How language is structured, used, and changes over time.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-political-science.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 9.5 12 4.5l8.5 5"/><path d="M5 9.5h14M6.5 9.5v8M10 9.5v8M14 9.5v8M17.5 9.5v8M4 19.5h16"/></svg></span>
+            <span class="txt"><span class="name">Political Science</span><span class="desc">Government, power, and how people take part in politics.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-psychology.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 20.5v-3h2.2a1.6 1.6 0 0 0 1.6-1.6v-2.4l1.6-.6-1.6-3.4A6.5 6.5 0 1 0 8 15.4v5.1"/></svg></span>
+            <span class="txt"><span class="name">Psychology &amp; social science</span><span class="desc">The mind and behavior, studied with people as participants.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-public-health.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.3 4.3 4.3 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10Z"/><path d="M7.5 12H10l1.3-2 2 4 1.2-2h2"/></svg></span>
+            <span class="txt"><span class="name">Public Health</span><span class="desc">Patterns of health and illness across populations.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-sociology.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="6" r="2.3"/><circle cx="5.5" cy="17" r="2.3"/><circle cx="18.5" cy="17" r="2.3"/><path d="m10.9 8-4.2 6.9M13.1 8l4.2 6.9M7.8 17h8.4"/></svg></span>
+            <span class="txt"><span class="name">Sociology</span><span class="desc">Patterns in how groups, not just individuals, behave.</span></span>
+          </a></li>
         </ul>
       </section>
 
       <section class="hub-group">
         <h2>Humanities &amp; arts</h2>
         <ul class="hub-grid">
-          <li><a class="subj-btn" href="subject-architecture.html">Architecture</a></li>
-          <li><a class="subj-btn" href="subject-art.html">Art (studio &amp; practice-based)</a></li>
-          <li><a class="subj-btn" href="subject-art-history.html">Art History</a></li>
-          <li><a class="subj-btn" href="subject-film-studies.html">Film Studies</a></li>
-          <li><a class="subj-btn" href="subject-history.html">History</a></li>
-          <li><a class="subj-btn" href="subject-literature.html">Literature &amp; English</a></li>
-          <li><a class="subj-btn" href="subject-media-studies.html">Media Studies</a></li>
-          <li><a class="subj-btn" href="subject-music.html">Music</a></li>
-          <li><a class="subj-btn" href="subject-philosophy.html">Philosophy</a></li>
+          <li><a class="subj-btn" href="subject-architecture.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 20.5V9L12 4l7.5 5v11.5"/><path d="M9.5 20.5v-6h5v6"/><path d="M3 20.5h18"/></svg></span>
+            <span class="txt"><span class="name">Architecture</span><span class="desc">Buildings and spaces, and how people use and experience them.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-art.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 0 0 0 17c1.2 0 1.8-.8 1.8-1.7 0-1.2-1-1.6-1-2.7 0-1 .8-1.6 1.8-1.6h2.2a3.7 3.7 0 0 0 3.7-3.7c0-4-3.8-7.3-8.5-7.3Z"/><circle cx="7.8" cy="11" r="1.1"/><circle cx="10" cy="7.4" r="1.1"/><circle cx="14.4" cy="7.4" r="1.1"/></svg></span>
+            <span class="txt"><span class="name">Art (studio &amp; practice-based)</span><span class="desc">Making art as research, from process to finished work.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-art-history.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="1.6"/><path d="m3.5 16 5-5 4 4 2.5-2.5 5.5 5"/><circle cx="15.5" cy="9" r="1.5"/></svg></span>
+            <span class="txt"><span class="name">Art History</span><span class="desc">Artworks in context &mdash; who made them, how, and why.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-film-studies.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="10" width="17" height="10" rx="1.6"/><path d="M3.5 10 19.6 5.7l.6 2.1L4.1 12"/><path d="m8.5 8.7 2.2 1.9M13.7 7.3l2.2 1.9"/></svg></span>
+            <span class="txt"><span class="name">Film Studies</span><span class="desc">Reading films closely for form, story, and context.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-history.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11M6.5 20.5h11M7.5 3.5c0 4.5 4.5 5.5 4.5 8.5s-4.5 4-4.5 8.5M16.5 3.5c0 4.5-4.5 5.5-4.5 8.5s4.5 4 4.5 8.5"/></svg></span>
+            <span class="txt"><span class="name">History</span><span class="desc">The past, built from primary sources and turned into an argument.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-literature.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5c-2-1.5-4.6-2-8-2v13c3.4 0 6 .5 8 2 2-1.5 4.6-2 8-2v-13c-3.4 0-6 .5-8 2Z"/><path d="M12 6.5v13"/></svg></span>
+            <span class="txt"><span class="name">Literature &amp; English</span><span class="desc">Close reading of texts to make an argument about meaning.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-media-studies.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="7.5" width="17" height="12" rx="1.8"/><path d="m8.5 3.5 3.5 4 3.5-4"/></svg></span>
+            <span class="txt"><span class="name">Media Studies</span><span class="desc">How media shapes, and is shaped by, the people who use it.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-music.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5.5l10-2V16"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></span>
+            <span class="txt"><span class="name">Music</span><span class="desc">The structure, history, and meaning of music.</span></span>
+          </a></li>
+          <li><a class="subj-btn" href="subject-philosophy.html">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 17.5h5M10.5 20.5h3"/><path d="M12 3.5a5.5 5.5 0 0 0-3.2 10c.7.5 1.2 1.3 1.2 2.1v1.9h4v-1.9c0-.8.5-1.6 1.2-2.1a5.5 5.5 0 0 0-3.2-10Z"/></svg></span>
+            <span class="txt"><span class="name">Philosophy</span><span class="desc">Big questions about knowledge, ethics, and existence, answered with argument.</span></span>
+          </a></li>
         </ul>
       </section>
     </div>
@@ -936,7 +1036,8 @@ YRP.guard().then(function (ctx) {
     document.querySelectorAll('.hub-group').forEach(function (group) {
       var shown = 0;
       group.querySelectorAll('li').forEach(function (li) {
-        var match = !q || li.textContent.toLowerCase().indexOf(q) !== -1;
+        var name = li.querySelector('.name');
+        var match = !q || (name ? name.textContent : li.textContent).toLowerCase().indexOf(q) !== -1;
         li.hidden = !match;
         if (match) shown++;
       });
