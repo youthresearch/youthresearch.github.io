@@ -253,18 +253,141 @@ textarea { resize: vertical; min-height: 90px; }
   </style>
   <style>
 
-    /* ---- Single-type page ------------------------------------------------ */
-    .type-wrap { max-width: 760px; margin-inline: auto; padding-block: clamp(1.5rem, 4vw, 2.5rem); }
-    .type-crumb { font-size: 0.82rem; margin-bottom: 1.4rem; }
-    .type-crumb a { color: var(--body); }
-    .type-crumb a:hover { color: var(--lavender-deep); }
-    .type-wrap h1 { font-size: clamp(2rem, 4.4vw, 2.7rem); margin-bottom: 0.7rem; }
-    .type-wrap .card p { font-size: 0.98rem; }
-    .type-wrap .card p:last-child { margin-bottom: 0; }
-    .type-pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.75rem; }
-    .type-pager a { flex: 1; }
-    .type-pager .btn { width: 100%; }
-    .type-pager .end { text-align: right; }
+    /* ---- Template page ---------------------------------------------------
+       Same layout as type-literature-review.html: a sticky contents rail
+       beside the template body, collapsing to one column under 1000px.
+       --------------------------------------------------------------------- */
+    .tpl-layout { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: start;
+      padding-block: clamp(1.5rem, 4vw, 2.5rem); }
+    @media (min-width: 1000px) { .tpl-layout { grid-template-columns: 220px minmax(0, 1fr); } }
+
+    .tpl-crumb { font-size: 0.82rem; margin-bottom: 1.4rem; }
+    .tpl-crumb a { color: var(--body); }
+    .tpl-crumb a:hover { color: var(--lavender-deep); }
+
+    /* Contents rail */
+    .toc { position: sticky; top: 96px; }
+    .toc h4 { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.18em;
+      text-transform: uppercase; font-weight: 600; color: var(--ink); margin-bottom: 0.9rem; }
+    .toc ol { list-style: none; margin: 0; padding: 0; }
+    .toc li { margin-bottom: 0.15rem; }
+    .toc a { display: block; text-decoration: none; color: var(--body); font-size: 0.88rem;
+      padding: 0.4rem 0.7rem; border-left: 2px solid var(--line); border-radius: 0 6px 6px 0;
+      transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease; }
+    .toc a:hover { color: var(--ink); background: var(--cream-2); }
+    .toc a.active { color: var(--lavender-deep); border-left-color: var(--lavender); background: var(--lavender-tint); }
+    @media (max-width: 999px) { .toc { position: static; } }
+
+    /* Section headings carry their number, because a paper genuinely is
+       a document read in this order. */
+    .tpl-section { scroll-margin-top: 96px; margin-bottom: clamp(1.75rem, 4vw, 2.5rem); }
+    .tpl-section > h2 { font-size: clamp(1.5rem, 3vw, 2rem); display: flex; align-items: baseline; gap: 0.7rem; }
+    .tpl-section > h2 .num { font-family: var(--font-body); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.16em; color: var(--lavender-deep); flex: none; }
+    .tpl-section > .sub { max-width: 62ch; margin-bottom: 1.1rem; }
+
+    .tpl-body h3 { font-size: 1.15rem; margin-top: 1.6rem; }
+    .tpl-body h3:first-child { margin-top: 0; }
+    .tpl-body h4 { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.16em;
+      text-transform: uppercase; font-weight: 600; color: var(--ink); margin: 1.4rem 0 0.6rem; }
+    .tpl-body ul, .tpl-body ol { padding-left: 1.15rem; margin: 0 0 1rem; }
+    .tpl-body li { margin-bottom: 0.4rem; }
+    .tpl-body li::marker { color: var(--lavender); }
+    .tpl-body > *:last-child { margin-bottom: 0; }
+
+    /* Callouts: example, avoid, tip. Each does one job. */
+    .box { border-radius: var(--radius-sm); padding: 1rem 1.15rem; margin: 1rem 0;
+      border: 1px solid var(--line); background: var(--cream); font-size: 0.95rem; }
+    .box > *:last-child { margin-bottom: 0; }
+    .box .box-label { display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; margin-bottom: 0.55rem; }
+
+    .box--example { background: var(--lavender-tint); border-color: #ddd0ec; }
+    .box--example .box-label { color: var(--lavender-deep); }
+    .box--avoid { background: var(--danger-tint); border-color: #eccdd4; color: #7a2c40; }
+    .box--avoid .box-label { color: var(--danger); }
+    .box--tip { background: var(--success-tint); border-color: #cbe3d3; color: #2f6244; }
+    .box--tip .box-label { color: var(--success); }
+
+    /* Weak vs better rewrite pair */
+    .rewrite { display: grid; gap: 0.75rem; margin: 1rem 0; }
+    @media (min-width: 760px) { .rewrite { grid-template-columns: 1fr 1.4fr; } }
+    .rewrite.even { grid-template-columns: 1fr; }
+    @media (min-width: 760px) { .rewrite.even { grid-template-columns: 1fr 1fr; } }
+    .rewrite > div { border-radius: var(--radius-sm); padding: 0.9rem 1.05rem; font-size: 0.94rem; border: 1px solid; }
+    .rewrite .weak { background: var(--danger-tint); border-color: #eccdd4; color: #7a2c40; }
+    .rewrite .better { background: var(--success-tint); border-color: #cbe3d3; color: #2f6244; }
+    .rewrite .tag { display: block; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; margin-bottom: 0.4rem; opacity: 0.85; }
+    .rewrite p { margin: 0; }
+
+    /* Structure example, shown as an outline the way it appears in a paper */
+    .outline { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm);
+      padding: 1.1rem 1.3rem; margin: 1rem 0; font-size: 0.94rem; }
+    .outline .lvl1 { color: var(--ink); font-weight: 600; margin: 0.9rem 0 0.35rem; }
+    .outline .lvl1:first-child { margin-top: 0; }
+    .outline ul { padding-left: 1.15rem; margin: 0 0 0.4rem; }
+    .outline ul ul { margin-top: 0.3rem; }
+
+    /* Don't / do comparison, and any two-up pairing */
+    .vs { display: grid; gap: 1rem; margin: 1rem 0; }
+    @media (min-width: 760px) { .vs { grid-template-columns: 1fr 1fr; } }
+
+    /* Intro vs literature review table */
+    .tpl-main { min-width: 0; }
+    .cmp-scroll { overflow-x: auto; margin: 1rem 0; }
+    .cmp-scroll .cmp { margin: 0; min-width: 520px; }
+    .cmp { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.94rem; }
+    .cmp th, .cmp td { text-align: left; vertical-align: top; padding: 0.75rem 0.9rem; border: 1px solid var(--line); }
+    .cmp thead th { background: var(--cream-2); font-family: var(--font-body); font-size: 0.7rem;
+      letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--ink); }
+    .cmp tbody tr:nth-child(odd) td { background: var(--paper); }
+
+    /* The question → hypothesis → methodology chain */
+    .chain { display: grid; gap: 0.6rem; margin: 1rem 0; }
+    @media (min-width: 720px) { .chain { grid-template-columns: repeat(3, 1fr); align-items: stretch; } }
+    .chain-link { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm);
+      padding: 0.9rem 1.05rem; position: relative; }
+    .chain-link strong { display: block; font-family: var(--font-display); font-weight: 400;
+      font-size: 1.05rem; color: var(--ink); margin-bottom: 0.25rem; }
+    .chain-link span { font-size: 0.92rem; }
+    @media (min-width: 720px) {
+      .chain-link:not(:last-child)::after { content: "\2192"; position: absolute; right: -0.72rem; top: 50%;
+        transform: translateY(-50%); color: var(--lavender); font-size: 1.1rem; line-height: 1; z-index: 2; }
+    }
+
+    /* Fill-in-the-blank prompts */
+    .blanks { counter-reset: blank; list-style: none; padding: 0; margin: 1rem 0; }
+    .blanks li { counter-increment: blank; background: var(--paper); border: 1px solid var(--line);
+      border-radius: var(--radius-sm); padding: 0.8rem 1rem 0.8rem 2.6rem; position: relative;
+      margin-bottom: 0.55rem; font-size: 0.95rem; }
+    .blanks li::before { content: counter(blank); position: absolute; left: 0.9rem; top: 0.8rem;
+      font-size: 0.8rem; font-weight: 600; color: var(--lavender-deep); }
+    .blanks .fill { display: inline-block; min-width: 9rem; border-bottom: 1.5px dashed var(--lavender);
+      height: 1.1em; vertical-align: bottom; }
+
+    /* Checklist */
+    .checklist { list-style: none; padding: 0; margin: 0; }
+    .checklist li { margin-bottom: 0.5rem; }
+    .checklist label { display: flex; gap: 0.75rem; align-items: flex-start; cursor: pointer;
+      font-family: var(--font-body); font-size: 0.98rem; font-weight: 400; letter-spacing: 0;
+      text-transform: none; color: var(--body); margin: 0;
+      padding: 0.65rem 0.9rem; border: 1px solid var(--line); border-radius: var(--radius-sm);
+      background: var(--cream); transition: border-color 0.2s ease, background-color 0.2s ease; }
+    .checklist label:hover { border-color: var(--lavender); }
+    .checklist input { width: 1.1rem; height: 1.1rem; margin: 0.25rem 0 0; flex: none; accent-color: var(--lavender); }
+    .checklist input:checked + span { color: var(--success); text-decoration: line-through; text-decoration-color: #a9cbb6; }
+    .checklist-bar { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.1rem; font-size: 0.88rem; }
+    .checklist-track { flex: 1; height: 6px; border-radius: 999px; background: var(--cream-2); overflow: hidden; }
+    .checklist-fill { height: 100%; width: 0%; background: var(--lavender); transition: width 0.25s ease; }
+    .checklist-group { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.16em;
+      text-transform: uppercase; font-weight: 600; color: var(--ink); margin: 1.4rem 0 0.6rem; }
+    .checklist-group:first-child { margin-top: 0; }
+
+    .tpl-pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+    .tpl-pager .btn { width: 100%; }
+    .tpl-pager > * { flex: 1; }
+    .tpl-pager .end { text-align: right; }
 
   </style>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
@@ -722,21 +845,512 @@ window.YRP = (function () {
   </header>
 
   <main class="wrap">
-    <div class="type-wrap">
-      <p class="type-crumb"><a href="dashboard.html#types">&larr; Back to types of research</a></p>
+    <div class="tpl-layout">
 
-      <h1>Case study</h1>
-      <p class="lede" style="max-width:60ch;">One person, organization, event, or place, examined in depth.</p>
+      <aside class="toc" aria-label="Contents">
+        <p class="tpl-crumb"><a href="dashboard.html#types">&larr; Back to dashboard</a></p>
+        <h4>On this page</h4>
+        <ol>
+          <li><a href="#plan">Plan your case study</a></li>
+          <li><a href="#titlepage">Title page</a></li>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#background">Case background</a></li>
+          <li><a href="#methods">Methods</a></li>
+          <li><a href="#findings">Findings</a></li>
+          <li><a href="#discussion">Discussion</a></li>
+          <li><a href="#limitations">Limitations</a></li>
+          <li><a href="#conclusion">Conclusion</a></li>
+          <li><a href="#references">References</a></li>
+          <li><a href="#checklist">Checklist</a></li>
+        </ol>
+      </aside>
 
-      <div class="card">
-        <p>One person, organization, event, or place, examined in depth. Trades breadth for detail, and works well when you have unusual access &mdash; a local business, a family archive, a program at your school.</p>
-        <p><strong>Shape:</strong> why this case &rarr; background &rarr; evidence gathered &rarr; analysis &rarr; what it does and doesn't generalize to.</p>
-        <p><strong>Common mistake:</strong> claiming a single case proves a general rule. It illustrates, suggests, and complicates &mdash; that's enough.</p>
-      </div>
+      <div class="tpl-main">
 
-      <div class="type-pager">
-        <a class="btn btn--ghost" href="type-original-empirical-study.html">&larr; Original empirical study</a>
-        <div class="end"><a class="btn btn--primary" href="type-survey-study.html">Survey study &rarr;</a></div>
+        <!-- ============================ PLAN ========================== -->
+        <section class="tpl-section" id="plan">
+          <h2><span class="num">00</span> Plan your case study</h2>
+          <p class="sub">A case study examines one person, organization, event, or place in depth. It trades breadth for detail, and it works best when you have unusual access &mdash; a local business, a family archive, a program at your school.</p>
+
+          <div class="card tpl-body">
+            <h3>What it looks like</h3>
+            <ul>
+              <li><strong>Shape:</strong> why this case &rarr; background &rarr; evidence gathered &rarr; analysis &rarr; what it does and doesn't generalize to</li>
+              <li><strong>Paper structure:</strong> abstract &rarr; introduction &rarr; case background &rarr; methods &rarr; findings &rarr; discussion &rarr; limitations &rarr; conclusion &rarr; references</li>
+              <li><strong>Common mistake:</strong> claiming a single case proves a general rule. It illustrates, suggests, and complicates &mdash; that's enough.</li>
+            </ul>
+          </div>
+
+          <!-- Choosing a case -->
+          <div class="card tpl-body">
+            <h3>Choose your case</h3>
+            <p>The best case is one you can study deeply <em>and</em> one that teaches something beyond itself. Ask two questions: can I get the evidence, and why is this case worth studying?</p>
+            <div class="cmp-scroll">
+            <table class="cmp">
+              <thead>
+                <tr><th scope="col">Kind of case</th><th scope="col">Why it's useful</th><th scope="col">Student-sized example</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Typical</strong></td>
+                  <td>Shows how something usually works</td>
+                  <td>A typical neighborhood library adapting to digital lending</td>
+                </tr>
+                <tr>
+                  <td><strong>Unusual</strong></td>
+                  <td>Reveals what happens at the edges, or what's possible</td>
+                  <td>A small-town restaurant that survived when most nearby closed</td>
+                </tr>
+                <tr>
+                  <td><strong>Turning point</strong></td>
+                  <td>Captures a change as it happens</td>
+                  <td>Your school's first year with a phone-free policy</td>
+                </tr>
+                <tr>
+                  <td><strong>Comparative</strong></td>
+                  <td>Two or three cases side by side show what differs and why</td>
+                  <td>Two community gardens, one thriving and one abandoned</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+            <div class="box box--tip">
+              <span class="box-label">Pro tip</span>
+              <p>Access is everything. Before you commit, confirm you can actually talk to the people involved or see the documents you need. A fascinating case with no evidence becomes a summary of news articles.</p>
+            </div>
+          </div>
+
+          <!-- Question -->
+          <div class="card tpl-body">
+            <h3>Ask a &ldquo;how&rdquo; or &ldquo;why&rdquo; question</h3>
+            <p>Case studies are strongest at explaining how something happened or why it turned out the way it did.</p>
+            <div class="rewrite even">
+              <div class="weak">
+                <span class="tag">Too broad</span>
+                <p>Are school phone bans a good idea?</p>
+              </div>
+              <div class="better">
+                <span class="tag">Case-study question</span>
+                <p>How did teachers and students at one high school adapt during the first year of its phone-free policy, and why did some classes adjust more easily than others?</p>
+              </div>
+            </div>
+
+            <h4>Exercise: fill in the blanks</h4>
+            <ol class="blanks">
+              <li>My case is <span class="fill"></span></li>
+              <li>It's worth studying because <span class="fill"></span></li>
+              <li>I want to understand how or why <span class="fill"></span></li>
+            </ol>
+          </div>
+
+          <!-- Evidence -->
+          <div class="card tpl-body">
+            <h3>Gather more than one kind of evidence</h3>
+            <p>A case study's strength comes from looking at the same case from several angles. When different sources point the same way &mdash; called <strong>triangulation</strong> &mdash; your conclusions are much more convincing.</p>
+            <ul>
+              <li><strong>Interviews</strong> with people involved, using the same core questions for each</li>
+              <li><strong>Documents</strong> &mdash; policies, emails, meeting minutes, newsletters, records</li>
+              <li><strong>Observation</strong> of the setting, with careful field notes</li>
+              <li><strong>Numbers</strong> &mdash; attendance, sales, grades, or other data the organization already keeps</li>
+              <li><strong>Artifacts</strong> &mdash; photos, products, posters, websites</li>
+            </ul>
+            <p>Aim for at least three types of evidence.</p>
+
+            <h3>Get ethics and permission right</h3>
+            <ul>
+              <li>Get <strong>permission</strong> from the organization before you start, in writing if possible</li>
+              <li>Get <strong>informed consent</strong> from everyone you interview, and parental consent for anyone under 18</li>
+              <li>Decide whether to <strong>anonymize</strong> the case &mdash; a small organization can be identified from details alone</li>
+              <li>Ask your teacher whether your school requires approval before you begin</li>
+            </ul>
+            <div class="box box--avoid">
+              <span class="box-label">Never</span>
+              <ul style="padding-left:1.15rem;margin:0;">
+                <li>Record anyone without their permission</li>
+                <li>Publish private documents or personal details you were trusted with</li>
+                <li>Promise an organization a positive write-up in exchange for access</li>
+              </ul>
+            </div>
+
+            <h3>Build a timeline</h3>
+            <div class="outline">
+              <p class="lvl1">Weeks 1&ndash;2 &middot; Choose and read</p>
+              <ul><li>Pick your case, secure access, read background and theory</li></ul>
+              <p class="lvl1">Week 3 &middot; Prepare</p>
+              <ul><li>Research question, interview guide, consent forms, approval</li></ul>
+              <p class="lvl1">Weeks 4&ndash;6 &middot; Gather evidence</p>
+              <ul><li>Interviews, documents, observation &mdash; write up notes the same day</li></ul>
+              <p class="lvl1">Weeks 7&ndash;8 &middot; Analyze and write</p>
+              <ul><li>Code your evidence for themes, draft every section, then revise</li></ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ TITLE PAGE ==================== -->
+        <section class="tpl-section" id="titlepage">
+          <h2><span class="num">01</span> Title page</h2>
+          <p class="sub">APA 7 puts a running head at the top of every page, in capitals, with the page number.</p>
+          <div class="card tpl-body">
+            <div class="outline">
+              <p class="lvl1" style="letter-spacing:0.05em;">RUNNING HEAD: SHORTENED TITLE OF CASE STUDY &nbsp;&nbsp;&nbsp; 1</p>
+              <ul>
+                <li>Title of the case study</li>
+                <li>Your name</li>
+              </ul>
+            </div>
+            <div class="rewrite even">
+              <div class="weak">
+                <span class="tag">Vague title</span>
+                <p>Phones at School</p>
+              </div>
+              <div class="better">
+                <span class="tag">Informative title</span>
+                <p>Adapting to a Phone-Free Classroom: A Case Study of One High School's First Year</p>
+              </div>
+            </div>
+            <p style="margin-bottom:0;">Many case study titles follow a pattern: the topic, a colon, then &ldquo;A Case Study of&rdquo; and the case.</p>
+          </div>
+        </section>
+
+        <!-- ============================ ABSTRACT ====================== -->
+        <section class="tpl-section" id="abstract">
+          <h2><span class="num">02</span> Abstract</h2>
+          <p class="sub">A one-paragraph summary of the whole study: the case, the question, the evidence, and what you found.</p>
+
+          <div class="card tpl-body">
+            <h3>The formula</h3>
+            <ol>
+              <li>The topic and why it matters</li>
+              <li>The case and why you chose it</li>
+              <li>Your research question</li>
+              <li>Your evidence &mdash; what kinds, and how much</li>
+              <li>Your main findings and what they suggest</li>
+            </ol>
+
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>Schools across the country are restricting student phone use, but little is known about how these policies play out inside individual classrooms. This case study examines the first year of a phone-free policy at one public high school. Drawing on interviews with eight teachers and twelve students, school policy documents, and classroom observations, it explores how teachers and students adapted. Findings suggest that classes with consistent enforcement and planned replacement activities adjusted most smoothly, while inconsistent enforcement created frustration. The case highlights implementation, not just policy design, as central to a policy's success.</p>
+              <p style="margin-bottom:0;"><strong>Keywords:</strong> phone policy, classroom engagement, policy implementation, case study</p>
+            </div>
+
+            <div class="box box--avoid">
+              <span class="box-label">Common mistakes</span>
+              <ul style="padding-left:1.15rem;margin:0;">
+                <li>Describing the case without saying what you found</li>
+                <li>Citing sources or quoting interviews in the abstract</li>
+                <li>Writing more than one paragraph, or more than 150&ndash;250 words</li>
+                <li>Claiming the findings apply to every school, business, or person</li>
+              </ul>
+            </div>
+
+            <div class="box box--tip">
+              <span class="box-label">Pro tip</span>
+              <p>Write your abstract last. Once every other section is finished, you can summarize your own study accurately in one paragraph.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ INTRODUCTION ================== -->
+        <section class="tpl-section" id="introduction">
+          <h2><span class="num">03</span> Introduction</h2>
+          <p class="sub">Move from the broad issue to your specific case. By the end, the reader should know why this case, why now, and what you want to find out.</p>
+
+          <div class="card tpl-body">
+            <h3>Funnel structure</h3>
+            <div class="outline">
+              <p class="lvl1">1. The big picture</p>
+              <ul>
+                <li>Introduce the broader issue and why it matters</li>
+                <li>Name the real-world problem your case speaks to</li>
+              </ul>
+              <p class="lvl1">2. What we already know</p>
+              <ul><li>Summarize the key research on this issue, organized by theme</li></ul>
+              <p class="lvl1">3. The gap</p>
+              <ul>
+                <li>What hasn't been studied closely, or what large studies can't show</li>
+                <li>How an in-depth look at one case can help</li>
+              </ul>
+              <p class="lvl1">4. This case</p>
+              <ul>
+                <li>The case, why you chose it, and your research question</li>
+                <li>Any limits on scope &mdash; what you deliberately did <em>not</em> study</li>
+              </ul>
+              <p class="lvl1">5. Roadmap</p>
+              <ul><li>One or two sentences on how the rest of the paper is organized</li></ul>
+            </div>
+
+            <div class="box box--example">
+              <span class="box-label">Example &mdash; why this case</span>
+              <p>National surveys show that most teachers support limiting phones in class (Smith et al., 2023), but they say little about how such policies work day to day. Northfield High School offers a useful case: it introduced a strict phone-free policy in 2024 after years of informal rules, making the shift unusually clear to observe.</p>
+            </div>
+
+            <h3>Theoretical framework</h3>
+            <p>Give the reader the concepts they need to make sense of your case. A theory gives your analysis a lens &mdash; and turns a story into research.</p>
+            <ul>
+              <li><strong>Definitions</strong> &mdash; define each key term exactly as you use it, citing a source</li>
+              <li><strong>Key theories</strong> &mdash; name the theory or model that helps explain your case</li>
+              <li><strong>Previous research</strong> &mdash; keep only the studies relevant to your question</li>
+            </ul>
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>This study uses the idea of <em>policy implementation</em> &mdash; the gap between what a policy says and how it is carried out by the people responsible for it. Research on implementation suggests that teachers act as interpreters of school rules, which may explain why the same policy plays out differently from one classroom to the next.</p>
+            </div>
+
+            <div class="box box--example">
+              <span class="box-label">Citation format</span>
+              <p style="margin-bottom:0;">Use APA 7 for references and in-text citations, and cite every piece of information you take from a source.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ BACKGROUND ==================== -->
+        <section class="tpl-section" id="background">
+          <h2><span class="num">04</span> Case background</h2>
+          <p class="sub">Describe the case so a reader who's never heard of it can follow your analysis. Stick to facts here &mdash; analysis comes later.</p>
+
+          <div class="card tpl-body">
+            <h4>Cover</h4>
+            <ul>
+              <li><strong>Setting</strong> &mdash; where and when, and what the place or organization is like</li>
+              <li><strong>Key people or groups</strong> &mdash; who's involved and what roles they play</li>
+              <li><strong>History</strong> &mdash; what led up to the moment you're studying</li>
+              <li><strong>Key events</strong> &mdash; a short timeline of what happened</li>
+            </ul>
+
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>Northfield High School is a public school of about 1,200 students. Before 2024, phone rules were left to individual teachers. In June 2024, the school board approved a policy requiring students to store phones in lockers during class. The policy took effect that September, with detention as the consequence for repeated violations.</p>
+            </div>
+
+            <div class="box box--tip">
+              <span class="box-label">Pro tip</span>
+              <p>A simple timeline table or diagram makes a complicated case much easier to follow.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ METHODS ======================= -->
+        <section class="tpl-section" id="methods">
+          <h2><span class="num">05</span> Methods</h2>
+          <p class="sub">Explain how you studied the case, in the past tense, so a reader can judge how trustworthy your evidence is.</p>
+
+          <div class="card tpl-body">
+            <h3>Approach and case selection</h3>
+            <p>Say that you used a case study design, why it's the best fit for your question, and why you chose this particular case over others.</p>
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>A single-case design was chosen because the research question asks how a policy was experienced in practice, which requires detailed evidence from one setting. Northfield High School was selected because its policy change was recent, clearly dated, and accessible to the researcher.</p>
+            </div>
+
+            <h3>Sources of evidence</h3>
+            <p>List every source, how much of it you gathered, and how you chose it. Explain who you interviewed and why, and what you included or left out.</p>
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>Evidence included semi-structured interviews with eight teachers from four departments and twelve students across grades 9&ndash;12, the school's written policy and two parent newsletters, and observation of six class periods. Teachers were chosen to include both supporters and critics of the policy.</p>
+            </div>
+
+            <h3>Collection</h3>
+            <p>How, when, and where you gathered evidence &mdash; including how you recorded interviews and took notes, and how you protected participants' identities.</p>
+
+            <h3>Analysis</h3>
+            <p>How you made sense of the evidence. Most student case studies use <strong>thematic coding</strong>: reading through transcripts and notes, labeling recurring ideas, and grouping them into themes.</p>
+            <div class="box box--tip">
+              <span class="box-label">Pro tip</span>
+              <p>Keep a simple spreadsheet with one row per quote or observation and a column for its theme. When it's time to write, each theme already has its evidence lined up.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ FINDINGS ====================== -->
+        <section class="tpl-section" id="findings">
+          <h2><span class="num">06</span> Findings</h2>
+          <p class="sub">Present what you found, organized by theme. Every claim should rest on specific evidence from your case.</p>
+
+          <div class="card tpl-body">
+            <h4>For each theme</h4>
+            <ol>
+              <li><strong>State the theme</strong> as a clear claim</li>
+              <li><strong>Support it</strong> with evidence &mdash; quotes, documents, observations, numbers</li>
+              <li><strong>Show where sources agree or disagree</strong></li>
+              <li><strong>Say what it means</strong> for your research question</li>
+            </ol>
+
+            <div class="rewrite">
+              <div class="weak">
+                <span class="tag">Weak</span>
+                <p>Teachers had mixed feelings about the policy.</p>
+              </div>
+              <div class="better">
+                <span class="tag">Better</span>
+                <p>Teachers who planned replacement activities reported an easier transition. Six of the eight teachers described the first month as &ldquo;rocky,&rdquo; but the two who introduced short discussion warm-ups said students &ldquo;stopped reaching for their pockets&rdquo; within two weeks &mdash; a pattern also visible in classroom observations.</p>
+              </div>
+            </div>
+
+            <div class="box box--avoid">
+              <span class="box-label">Avoid</span>
+              <ul style="padding-left:1.15rem;margin:0;">
+                <li>Retelling interviews one person at a time instead of by theme</li>
+                <li>Relying on a single quote to support a whole theme</li>
+                <li>Leaving out evidence that doesn't fit your story</li>
+                <li>Identifying anyone you promised to keep anonymous</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ DISCUSSION ==================== -->
+        <section class="tpl-section" id="discussion">
+          <h2><span class="num">07</span> Discussion</h2>
+          <p class="sub">Step back from the details. What does this case teach us, and how far can that lesson travel?</p>
+
+          <div class="card tpl-body">
+            <h4>Answer these, in order</h4>
+            <ol>
+              <li><strong>What's the answer to your question?</strong> Pull your themes together into one clear explanation.</li>
+              <li><strong>What does it mean for the theory?</strong> Does the case support, challenge, or extend your theoretical framework?</li>
+              <li><strong>How does it compare to previous research?</strong> Where does your case confirm or complicate earlier findings?</li>
+              <li><strong>Why does it matter?</strong> Practical implications &mdash; solutions or recommendations for people in similar situations.</li>
+            </ol>
+
+            <h3>What a single case can and can't show</h3>
+            <div class="vs">
+              <div class="box box--tip" style="margin:0;">
+                <span class="box-label">A case can</span>
+                <ul style="padding-left:1.15rem;margin:0;">
+                  <li>Show how something works in real life</li>
+                  <li>Suggest explanations worth testing more widely</li>
+                  <li>Complicate a theory or a common assumption</li>
+                </ul>
+              </div>
+              <div class="box box--avoid" style="margin:0;">
+                <span class="box-label">A case can't</span>
+                <ul style="padding-left:1.15rem;margin:0;">
+                  <li>Prove a general rule</li>
+                  <li>Tell you how common something is</li>
+                  <li>Show that one factor caused an outcome everywhere</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>The Northfield case suggests that a phone policy's success depends less on the rule itself than on how teachers put it into practice. This supports implementation research describing teachers as interpreters of policy. Schools introducing similar rules might pair them with training and shared classroom strategies, though studies of more schools would be needed to confirm this pattern.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ LIMITATIONS =================== -->
+        <section class="tpl-section" id="limitations">
+          <h2><span class="num">08</span> Limitations</h2>
+          <p class="sub">Every case study has weaknesses. Naming yours honestly makes your paper more credible, not less.</p>
+
+          <div class="card tpl-body">
+            <h4>Consider</h4>
+            <ul>
+              <li><strong>Generalizability</strong> &mdash; how your case might differ from others like it</li>
+              <li><strong>Access</strong> &mdash; who you couldn't reach, and what documents you couldn't see</li>
+              <li><strong>Your role</strong> &mdash; whether being an insider (a student at the school, a relative of the owner) shaped what people told you</li>
+              <li><strong>Time</strong> &mdash; whether a longer view would change the picture</li>
+            </ul>
+
+            <div class="rewrite">
+              <div class="weak">
+                <span class="tag">Weak</span>
+                <p>This is only one school.</p>
+              </div>
+              <div class="better">
+                <span class="tag">Better</span>
+                <p>As a student at Northfield, the researcher may have received more candid answers from peers than from teachers. Interviews were also limited to the policy's first year, so longer-term effects remain unknown.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ CONCLUSION ==================== -->
+        <section class="tpl-section" id="conclusion">
+          <h2><span class="num">09</span> Conclusion</h2>
+          <p class="sub">Bring the paper full circle. Remind the reader what you set out to do, then show that you did it.</p>
+
+          <div class="card tpl-body">
+            <h4>Four steps</h4>
+            <ol>
+              <li><strong>Restate your aim and research question.</strong> Remind the reader what you set out to understand.</li>
+              <li><strong>Answer it.</strong> Summarize your main findings about the case.</li>
+              <li><strong>State your contribution.</strong> What the case adds to the field, including any solutions or recommendations.</li>
+              <li><strong>Point forward.</strong> Which questions future research should test across more cases.</li>
+            </ol>
+
+            <div class="box box--avoid">
+              <span class="box-label">Avoid</span>
+              <ul style="padding-left:1.15rem;margin:0;">
+                <li>Introducing new evidence or sources</li>
+                <li>Repeating the introduction or abstract word for word</li>
+                <li>Claiming your case proves something about every similar case</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ REFERENCES ==================== -->
+        <section class="tpl-section" id="references">
+          <h2><span class="num">10</span> References</h2>
+          <p class="sub">Always APA 7.</p>
+          <div class="card tpl-body">
+            <ul>
+              <li>Only include sources you actually cited</li>
+              <li>Cite published documents from your case, such as policies, reports, and newsletters</li>
+              <li>Interviews you conducted yourself are usually cited in the text only, not in the reference list</li>
+            </ul>
+            <div class="box box--example">
+              <span class="box-label">Example</span>
+              <p>Keegan, J. (1999). <em>The First World War</em>. Alfred A. Knopf.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================ CHECKLIST ===================== -->
+        <section class="tpl-section" id="checklist">
+          <h2><span class="num">11</span> Checklist</h2>
+          <p class="sub">Run through this before you gather evidence, and again before you submit. Your ticks are saved in this browser.</p>
+          <div class="card">
+            <div class="checklist-bar">
+              <div class="checklist-track"><div class="checklist-fill" id="cl-fill"></div></div>
+              <span id="cl-count">0 of 13</span>
+            </div>
+
+            <p class="checklist-group">Before you start</p>
+            <ul class="checklist">
+              <li><label><input type="checkbox" data-cl="1"><span>Can I explain why this case is worth studying, and have I confirmed I can access it?</span></label></li>
+              <li><label><input type="checkbox" data-cl="2"><span>Is my research question a focused &ldquo;how&rdquo; or &ldquo;why&rdquo; question about the case?</span></label></li>
+              <li><label><input type="checkbox" data-cl="3"><span>Have I planned at least three types of evidence?</span></label></li>
+              <li><label><input type="checkbox" data-cl="4"><span>Do I have permission from the organization, consent from participants, and any approval my school requires?</span></label></li>
+            </ul>
+
+            <p class="checklist-group">The paper</p>
+            <ul class="checklist">
+              <li><label><input type="checkbox" data-cl="5"><span>Does my introduction explain why this case matters and end with my research question?</span></label></li>
+              <li><label><input type="checkbox" data-cl="6"><span>Have I defined my key terms and named the theory I'm using to analyze the case?</span></label></li>
+              <li><label><input type="checkbox" data-cl="7"><span>Could a reader unfamiliar with the case follow my background section?</span></label></li>
+              <li><label><input type="checkbox" data-cl="8"><span>Does my methods section explain my case selection, evidence, and analysis?</span></label></li>
+              <li><label><input type="checkbox" data-cl="9"><span>Are my findings organized by theme, with specific evidence for every claim?</span></label></li>
+              <li><label><input type="checkbox" data-cl="10"><span>Does my discussion connect the case to theory without claiming it proves a general rule?</span></label></li>
+              <li><label><input type="checkbox" data-cl="11"><span>Have I named my limitations, including my own role, honestly?</span></label></li>
+            </ul>
+
+            <p class="checklist-group">The document</p>
+            <ul class="checklist">
+              <li><label><input type="checkbox" data-cl="12"><span>Is my abstract one paragraph of 150&ndash;250 words that includes my main findings?</span></label></li>
+              <li><label><input type="checkbox" data-cl="13"><span>Are all in-text citations and references in APA 7, and is everyone I promised anonymity unidentifiable?</span></label></li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="tpl-pager">
+          <div><a class="btn btn--ghost" href="type-original-empirical-study.html">&larr; Original empirical study</a></div>
+          <div class="end"><a class="btn btn--primary" href="type-survey-study.html">Survey study &rarr;</a></div>
+        </div>
+
       </div>
     </div>
   </main>
@@ -813,6 +1427,54 @@ window.YRP = (function () {
   }
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
+
+  /* ---- Contents rail: highlight the section you're reading ------------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if ('IntersectionObserver' in window && sections.length) {
+    var seen = {};
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+      for (var i = 0; i < sections.length; i++) {
+        if (seen[sections[i].id]) {
+          links.forEach(function (a) { a.classList.remove('active'); });
+          links[i].classList.add('active');
+          break;
+        }
+      }
+    }, { rootMargin: '-90px 0px -65% 0px' });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+
+  /* ---- Checklist: count, progress bar, and per-browser memory ---------- */
+  var KEY = 'yrp-casestudy-checklist';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checklist input[type="checkbox"]'));
+  var fill = document.getElementById('cl-fill');
+  var count = document.getElementById('cl-count');
+
+  function readSaved() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
+  }
+  function save(state) {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* private mode */ }
+  }
+  function refresh() {
+    var done = boxes.filter(function (b) { return b.checked; }).length;
+    if (fill) fill.style.width = (boxes.length ? (done / boxes.length) * 100 : 0) + '%';
+    if (count) count.textContent = done + ' of ' + boxes.length;
+  }
+
+  var saved = readSaved();
+  boxes.forEach(function (b) {
+    if (saved[b.dataset.cl]) b.checked = true;
+    b.addEventListener('change', function () {
+      var state = readSaved();
+      state[b.dataset.cl] = b.checked;
+      save(state);
+      refresh();
+    });
+  });
+  refresh();
 })();
 
 YRP.guard().then(function (ctx) {
