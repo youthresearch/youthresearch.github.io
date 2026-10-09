@@ -825,8 +825,6 @@ window.YRP = (function () {
 
   function providerFor(name) {
     if (name === "Google") return new firebase.auth.GoogleAuthProvider();
-    if (name === "Apple") return new firebase.auth.OAuthProvider("apple.com");
-    if (name === "Microsoft") return new firebase.auth.OAuthProvider("microsoft.com");
     return null;
   }
 
@@ -1409,7 +1407,7 @@ Do you have any questions before we begin? Is it okay for me to start recording?
 
           <div class="card">
             <h3>Password</h3>
-            <p>We'll email you a link to set a new one. Accounts created with Google, Apple, or Microsoft manage passwords there instead.</p>
+            <p>We'll email you a link to set a new one. Accounts created with Google manage their password through Google instead.</p>
             <div class="save-row">
               <button class="btn btn--ghost btn--sm" id="reset-pw">Send reset link</button>
               <span class="status hidden" id="pw-status"></span>

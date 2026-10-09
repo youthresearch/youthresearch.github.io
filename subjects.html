@@ -646,8 +646,6 @@ window.YRP = (function () {
 
   function providerFor(name) {
     if (name === "Google") return new firebase.auth.GoogleAuthProvider();
-    if (name === "Apple") return new firebase.auth.OAuthProvider("apple.com");
-    if (name === "Microsoft") return new firebase.auth.OAuthProvider("microsoft.com");
     return null;
   }
 
